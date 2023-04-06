@@ -27,27 +27,43 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
-        float h = Input.GetAxisRaw("Horizontal");
-        movement.MoveTo(new Vector3(h, 0, 0));
-
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walk_Nomal01"))
+        {
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                movement.MoveTo(Vector3.left);
+            }
+            else if (Input.GetKey(KeyCode.RightArrow))
+            {
+                movement.MoveTo(Vector3.right);
+            }
+            else if (!Input.anyKey)
+            {
+                movement.MoveTo(Vector3.zero);
+            }
+        }
         if (Input.GetButtonDown("Jump") && IsOnGround())
         {
             movement.JumpTo();
         }
         IsOnGround();
 
-        //if (h > 0)
-        //{
-        //    spriteRenderer.flipX = true;
-        //}
-        //else if (h < 0)
-        //{
-        //    spriteRenderer.flipX = false;
-        //}
-        //if (h != anim.GetInteger("h"))
-        //{
-        //    anim.SetInteger("h", (int)h);
-        //}
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            StartCoroutine(Attack_co());
+        }
+    }
+
+    IEnumerator Attack_co()
+    {
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || 
+            anim.GetCurrentAnimatorStateInfo(0).IsName("Walk_Nomal") || 
+            anim.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+        {
+            anim.SetBool("isAttack", true);
+            yield return new WaitForSeconds(0.1f);
+            anim.SetBool("isAttack", false);
+        }
     }
 
     private bool IsOnGround()
