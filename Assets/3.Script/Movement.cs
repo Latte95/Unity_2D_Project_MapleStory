@@ -5,6 +5,8 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     private Rigidbody2D rigid;
+    private Animator anim;
+    private SpriteRenderer spriteRenderer;
 
     [SerializeField]
     private float speed = 0.3f;
@@ -17,12 +19,28 @@ public class Movement : MonoBehaviour
     private void Awake()
     {
         TryGetComponent(out rigid);
+        TryGetComponent(out anim);
+        TryGetComponent(out spriteRenderer);
         deltaTime = Time.deltaTime;
     }
 
     void Update()
     {
         transform.position += speed * Time.deltaTime * moveDirection;
+        if (moveDirection.Equals(Vector3.left))
+        {
+            anim.SetInteger("h", -1);
+            spriteRenderer.flipX = false;
+        }
+        else if (moveDirection.Equals(Vector3.right))
+        {
+            anim.SetInteger("h", 1);
+            spriteRenderer.flipX = true;
+        }
+        else
+        {
+            anim.SetInteger("h", 0);
+        }
     }
 
     public void MoveTo(Vector3 direction)
