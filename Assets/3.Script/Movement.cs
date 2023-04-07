@@ -8,6 +8,9 @@ public class Movement : MonoBehaviour
     private Animator anim;
     private SpriteRenderer spriteRenderer;
 
+    private Vector2 boxCastSize = new Vector2(0.4f, 0.05f);
+    private float boxCastMaxDistance = 0.7f;
+
     [SerializeField]
     private float speed = 0.3f;
     [SerializeField]
@@ -50,6 +53,7 @@ public class Movement : MonoBehaviour
 
     public void JumpTo()
     {
+        rigid.velocity = Vector3.zero;
         rigid.AddForce(jumpForce * Vector3.up, ForceMode2D.Impulse);
     }
 }

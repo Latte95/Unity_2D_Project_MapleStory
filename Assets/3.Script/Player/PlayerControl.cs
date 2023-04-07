@@ -10,8 +10,12 @@ public class PlayerControl : MonoBehaviour
     Animator anim;
     private Rigidbody2D rigid;
 
-    private Vector2 boxCastSize = new Vector2(0.4f, 0.05f);
-    private float boxCastMaxDistance = 0.7f;
+    [SerializeField]
+    private Vector2 boxCastSize = new Vector2(0.3f, 0.05f);
+    private float boxCastMaxDistance = 0.48f;
+    private bool isGrounded = false;
+    private bool isSlope = false;
+    public bool IsSlope => isSlope;
 
     float deltaTime;
 
@@ -27,6 +31,15 @@ public class PlayerControl : MonoBehaviour
 
     void Update()
     {
+        isGrounded = IsOnGround();
+        if(isSlope)
+        {
+            rigid.constraints = ~RigidbodyConstraints2D.FreezePositionY;
+        }
+        else
+        {
+            rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName("Walk_Nomal01"))
         {
             if (Input.GetKey(KeyCode.LeftArrow))
@@ -42,11 +55,11 @@ public class PlayerControl : MonoBehaviour
                 movement.MoveTo(Vector3.zero);
             }
         }
-        if (Input.GetButtonDown("Jump") && IsOnGround())
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             movement.JumpTo();
         }
-        IsOnGround();
+        
 
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -69,10 +82,18 @@ public class PlayerControl : MonoBehaviour
     private bool IsOnGround()
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(transform.position, boxCastSize, 0f, Vector2.down,
-                                                    boxCastMaxDistance, LayerMask.GetMask("Ground"));
+                                                    boxCastMaxDistance, LayerMask.GetMask("Ground", "Slope"));
         if (raycastHit.collider != null)
         {
             anim.SetBool("isGrounded", true);
+            if (raycastHit.collider.gameObject.layer == LayerMask.NameToLayer("Slope"))
+            {
+                isSlope = true;
+            }
+            else
+            {
+                isSlope = false;
+            }
         }
         else
         {
