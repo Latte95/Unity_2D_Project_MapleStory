@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    private SpriteRenderer spriteRenderer;
     private Rigidbody2D rigid;
     private Animator anim;
-    private SpriteRenderer spriteRenderer;
-
-    private Vector2 boxCastSize = new Vector2(0.4f, 0.05f);
-    private float boxCastMaxDistance = 0.7f;
 
     [SerializeField]
     private float speed = 0.3f;
@@ -21,15 +18,18 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
+        TryGetComponent(out spriteRenderer);
         TryGetComponent(out rigid);
         TryGetComponent(out anim);
-        TryGetComponent(out spriteRenderer);
+
         deltaTime = Time.deltaTime;
     }
 
     void FixedUpdate()
     {
+        // 이동 -> 리지드바디 이용 : 속도향상, 버벅임 없음
         rigid.position += speed * deltaTime * (Vector2)moveDirection;
+        // 방향 설정
         if (moveDirection.Equals(Vector3.left))
         {
             anim.SetInteger("h", -1);
@@ -45,6 +45,7 @@ public class Movement : MonoBehaviour
             anim.SetInteger("h", 0);
         }
     }
+
 
     public void MoveTo(Vector3 direction)
     {
