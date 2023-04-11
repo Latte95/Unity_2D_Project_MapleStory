@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Bottom
   - Other
+  - Enemy
+  - Middle
   layers:
   - Default
   - TransparentFX
@@ -18,12 +20,12 @@ TagManager:
   - Ground
   - Slope
   - 
+  - Player
+  - Invincible
+  - Enemy
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Bottom
+  - Middle
   - 
   - 
   - 

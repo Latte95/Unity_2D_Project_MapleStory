@@ -27,9 +27,9 @@ public class Movement : MonoBehaviour
         deltaTime = Time.deltaTime;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        transform.position += speed * Time.deltaTime * moveDirection;
+        rigid.position += speed * deltaTime * (Vector2)moveDirection;
         if (moveDirection.Equals(Vector3.left))
         {
             anim.SetInteger("h", -1);
