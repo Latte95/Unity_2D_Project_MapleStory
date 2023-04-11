@@ -12,7 +12,7 @@ public class Movement : MonoBehaviour
     private float speed = 0.3f;
     [SerializeField]
     private float jumpForce = 20f;
-    private Vector3 moveDirection = Vector3.zero;
+    private Vector2 moveDirection = Vector2.zero;
 
     float deltaTime;
 
@@ -28,14 +28,14 @@ public class Movement : MonoBehaviour
     void FixedUpdate()
     {
         // 이동 -> 리지드바디 이용 : 속도향상, 버벅임 없음
-        rigid.position += speed * deltaTime * (Vector2)moveDirection;
+        rigid.position += speed * deltaTime * moveDirection;
         // 방향 설정
-        if (moveDirection.Equals(Vector3.left))
+        if (moveDirection.Equals(Vector2.left))
         {
             anim.SetInteger("h", -1);
             spriteRenderer.flipX = false;
         }
-        else if (moveDirection.Equals(Vector3.right))
+        else if (moveDirection.Equals(Vector2.right))
         {
             anim.SetInteger("h", 1);
             spriteRenderer.flipX = true;
@@ -47,7 +47,7 @@ public class Movement : MonoBehaviour
     }
 
 
-    public void MoveTo(Vector3 direction)
+    public void MoveTo(Vector2 direction)
     {
         moveDirection = direction;
     }
