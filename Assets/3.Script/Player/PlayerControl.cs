@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class PlayerControl : ControlManager
 {
+    protected WaitForSeconds ignorePlatTime_wait;
+
+    private void OnEnable()
+    {
+        ignorePlatTime_wait = new WaitForSeconds(1f);
+    }
+
     protected override void Attack()
     {
         if (Input.GetKeyDown(KeyCode.A))

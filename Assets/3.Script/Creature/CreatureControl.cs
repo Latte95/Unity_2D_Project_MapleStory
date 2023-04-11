@@ -11,29 +11,43 @@ public abstract class ControlManager : MonoBehaviour
     protected Animator anim;
 
     [SerializeField]
-    protected Vector2 boxCastSize = new Vector2(0.3f, 0.05f);
+    // 바닥, 경사면 확인하는 박스캐스트
+    protected Vector2 boxCastSize;
+    // 박스캐스트 충돌 감지 거리
     protected float boxCastMaxDistance = 0.05f;
 
     [SerializeField]
+    // 땅 밟고 있는지
     protected bool isGrounded = false;
+    // 경사면 밟고 있는지
     protected bool isSlope = false;
     public bool IsSlope => isSlope;
     // 피격시 일정 시간동안 이동 불가
     protected bool isImmobile = false;
+    // 가장 최근에 밟은 땅의 태그이름 -> 이를 이용해서 벽 뚫고 지나감
     protected string lastGroundTag;
 
     // 캐싱
+    //
     float deltaTime;
-    protected WaitForSeconds ignorePlatTime_wait;
     protected WaitForSeconds invincibleTime_wait;
+    // 발 위치
     protected Transform FootTrans;
 
     // 하드코딩
+    //
     protected int myLayer;
+    // 무적 레이어 번호
     protected int invincibleLayer;
+    // 땅 레이어 번호
     protected int groundLayer;
-    protected string MoveAni = "Move";
+    // 이동 애니메이션 이름
+    protected string moveAni = "Move";
+    protected string[] platLayer = new string[] { "Ground", "Slope" };
+    [SerializeField]
+    // 무적 시간
     protected float invincibleTime = 2f;
+
 
     protected void Awake()
     {
@@ -42,7 +56,8 @@ public abstract class ControlManager : MonoBehaviour
         TryGetComponent(out rigid);
         TryGetComponent(out anim);
 
-        ignorePlatTime_wait = new WaitForSeconds(1f);
+        invincibleLayer = LayerMask.NameToLayer("Invincible");
+        groundLayer = LayerMask.NameToLayer("Ground");
         invincibleTime_wait = new WaitForSeconds(invincibleTime);
         deltaTime = Time.deltaTime;
     }
@@ -50,16 +65,15 @@ public abstract class ControlManager : MonoBehaviour
     protected void Start()
     {
         myLayer = gameObject.layer;
-        invincibleLayer = LayerMask.NameToLayer("Invincible");
-        groundLayer = LayerMask.NameToLayer("Ground");
-        Debug.Log(gameObject.name);
         FootTrans = gameObject.transform.GetChild(1);
     }
 
     protected void Update()
     {
+        // 땅 밟고 있는지 체크
         isGrounded = IsOnGround();
 
+        // 비탈길 밟고 있을 시 미끄러짐 방지
         if (isSlope)
         {
             rigid.constraints = ~RigidbodyConstraints2D.FreezePositionY;
@@ -71,21 +85,23 @@ public abstract class ControlManager : MonoBehaviour
 
         Attack();
 
+        // 벽통과 여부 결정
         StartCoroutine(nameof(CheckWall_co));
         Move();
 
+        // 땅에서 할 행동들. 공통 : 점프 / 플레이어 : 엎드리기
         GroundAct();
-
     }
 
-    protected abstract void Attack();
-    protected abstract void Move();
-    protected abstract void GroundAct();
-
+    // 땅 밟은지 체크
     protected bool IsOnGround()
     {
+        // 발밑에서 박스캐스트 생성
+        // ground나 slope만 체크
         RaycastHit2D raycastHit = Physics2D.BoxCast(FootTrans.position, boxCastSize, 0f, Vector2.down,
-                                                    boxCastMaxDistance, LayerMask.GetMask("Ground", "Slope"));
+                                                    boxCastMaxDistance, LayerMask.GetMask(platLayer));
+        // 바닥과 충돌중이고, 올라가는중이 아닐때만 체크
+        // 0.1을 한 이유는 비탈길에서 가만히 있어도 조금씩 올라가기 때문
         if (raycastHit.collider != null && rigid.velocity.y <= 0.1)
         {
             isImmobile = false;
@@ -128,6 +144,7 @@ public abstract class ControlManager : MonoBehaviour
         }
     }
 
+
     IEnumerator OffDamaged_co()
     {
         yield return invincibleTime_wait;
@@ -158,6 +175,10 @@ public abstract class ControlManager : MonoBehaviour
         yield return null;
     }
 
+
+    protected abstract void Attack();
+    protected abstract void Move();
+    protected abstract void GroundAct();
 
     void OnDrawGizmos()
     {
