@@ -47,7 +47,7 @@ public abstract class CreatureControl : MonoBehaviour
     protected int slopeLayer;
     // 이동 애니메이션 이름
     protected string moveAni = "Move";
-    protected string[] platLayer = new string[] { "Ground", "Slope" };
+    protected string[] platLayer = new string[] { "Ground", "Slope", "Other" };
     [SerializeField]
     // 무적 시간
     protected float invincibleTime = 2f;
@@ -182,7 +182,7 @@ public abstract class CreatureControl : MonoBehaviour
         // 레이캐스트 방향 설정
         int dir = transform.localScale.x < 0 ? 1 : -1;
         // 벽 레이어 이름
-        string[] platLayer = new string[] { "Middle", "Bottom" };
+        string[] platLayer = new string[] { "Middle", "Bottom"};
         // 캐릭터 바로앞의 충돌을 감지할 박스캐스트
         RaycastHit2D raycastHit = Physics2D.BoxCast(transform.position + dir * 0.5f * Vector3.right, new Vector2(0.3f, 1f), 0f,
                                                     dir * Vector2.right, boxCastMaxDistance, LayerMask.GetMask(platLayer));
