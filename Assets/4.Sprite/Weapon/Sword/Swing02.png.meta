@@ -1,7 +1,34 @@
 fileFormatVersion: 2
 guid: b62ee1007e3668646b51ac960ece6358
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 7612230721317932864
+    second: Swing02_0
+  - first:
+      213: -5142357588774970369
+    second: Swing02_1
+  - first:
+      213: 4344343916410601683
+    second: Swing02_2
+  - first:
+      213: 6130263649387586595
+    second: Swing02_3
+  - first:
+      213: 3519670197030347233
+    second: Swing02_4
+  - first:
+      213: -8928399432900742655
+    second: Swing02_5
+  - first:
+      213: -2114604477073986824
+    second: Swing02_6
+  - first:
+      213: 8142879659058451615
+    second: Swing02_7
+  - first:
+      213: -8031012514838833208
+    second: Swing02_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -41,7 +68,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -75,9 +102,234 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Swing02_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 29
+        height: 42
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04f887c728314a960800000000000000
+      internalID: 7612230721317932864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swing02_1
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 0
+        width: 29
+        height: 42
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffb9805b40da2a8b0800000000000000
+      internalID: -5142357588774970369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swing02_2
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 0
+        width: 29
+        height: 42
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d088cf46c53a4c30800000000000000
+      internalID: 4344343916410601683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swing02_3
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 0
+        width: 29
+        height: 42
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 324ac314f42131550800000000000000
+      internalID: 6130263649387586595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swing02_4
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 0
+        width: 29
+        height: 42
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e1e58c656168d030800000000000000
+      internalID: 3519670197030347233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swing02_5
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 0
+        width: 29
+        height: 42
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 102f62d3504f71480800000000000000
+      internalID: -8928399432900742655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swing02_6
+      rect:
+        serializedVersion: 2
+        x: 174
+        y: 0
+        width: 29
+        height: 42
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8faed878e6a67a2e0800000000000000
+      internalID: -2114604477073986824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swing02_7
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 0
+        width: 29
+        height: 42
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f94dee638e1510170800000000000000
+      internalID: 8142879659058451615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swing02_8
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 0
+        width: 29
+        height: 42
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c7905afaac1c8090800000000000000
+      internalID: -8031012514838833208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

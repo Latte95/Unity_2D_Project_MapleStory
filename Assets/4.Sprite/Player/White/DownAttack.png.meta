@@ -1,7 +1,13 @@
 fileFormatVersion: 2
 guid: 66a4cc8d00582504285ac5fe8ee255e4
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 2523462890193717752
+    second: DownAttack_0
+  - first:
+      213: 6533152992189064857
+    second: DownAttack_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -113,7 +119,49 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: DownAttack_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 63
+        height: 36
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f980e5f024250320800000000000000
+      internalID: 2523462890193717752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DownAttack_1
+      rect:
+        serializedVersion: 2
+        x: 63
+        y: 0
+        width: 63
+        height: 36
+      alignment: 2
+      pivot: {x: 0.5, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 996a5b2480c6aaa50800000000000000
+      internalID: 6533152992189064857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

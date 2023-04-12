@@ -1,7 +1,19 @@
 fileFormatVersion: 2
 guid: cd1aea33295e1d34a9d24e809fa3a393
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 8101147765832793907
+    second: Walk02_0
+  - first:
+      213: -7629306923432313386
+    second: Walk02_1
+  - first:
+      213: 2224559687014284875
+    second: Walk02_2
+  - first:
+      213: 2339088647538042853
+    second: Walk02_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -113,7 +125,91 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Walk02_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 39
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33fb967a8fe0d6070800000000000000
+      internalID: 8101147765832793907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk02_1
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 0
+        width: 39
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dd736266c14f1690800000000000000
+      internalID: -7629306923432313386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk02_2
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 0
+        width: 39
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4ef326cf393fde10800000000000000
+      internalID: 2224559687014284875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Walk02_3
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 0
+        width: 39
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e767ae5bbc167020800000000000000
+      internalID: 2339088647538042853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

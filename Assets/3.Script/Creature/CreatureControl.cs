@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ControlManager : MonoBehaviour
+public abstract class CreatureControl : MonoBehaviour
 {
     [SerializeField]
     protected Movement movement;
     protected SpriteRenderer spriteRenderer;
     protected Rigidbody2D rigid;
     protected Animator anim;
+    protected AudioSource audioSource;
 
     [SerializeField]
     // 바닥, 경사면 확인하는 박스캐스트
@@ -25,6 +26,7 @@ public abstract class ControlManager : MonoBehaviour
     // 피격시 일정 시간동안 이동 불가, 다단히트 방지도 겸함
     protected bool isImmobile = false;
     // 가장 최근에 밟은 땅의 태그이름 -> 이를 이용해서 벽 뚫고 지나감
+    [SerializeField]
     protected string lastGroundTag;
 
     // 캐싱
@@ -32,6 +34,7 @@ public abstract class ControlManager : MonoBehaviour
     float deltaTime;
     protected WaitForSeconds invincibleTime_wait;
     // 발 위치
+    [SerializeField]
     protected Transform FootTrans;
 
     // 하드코딩
@@ -52,11 +55,6 @@ public abstract class ControlManager : MonoBehaviour
 
     protected void Awake()
     {
-        TryGetComponent(out movement);
-        TryGetComponent(out spriteRenderer);
-        TryGetComponent(out rigid);
-        TryGetComponent(out anim);
-
         invincibleLayer = LayerMask.NameToLayer("Invincible");
         groundLayer = LayerMask.NameToLayer("Ground");
         slopeLayer = LayerMask.NameToLayer("Slope");
@@ -64,7 +62,16 @@ public abstract class ControlManager : MonoBehaviour
         deltaTime = Time.deltaTime;
     }
 
-    protected void Start()
+    protected virtual void OnEnable()
+    {
+        TryGetComponent(out movement);
+        TryGetComponent(out spriteRenderer);
+        TryGetComponent(out rigid);
+        TryGetComponent(out anim);
+        TryGetComponent(out audioSource);
+    }
+
+    protected virtual void Start()
     {
         myLayer = gameObject.layer;
         FootTrans = gameObject.transform.GetChild(1);
@@ -125,6 +132,7 @@ public abstract class ControlManager : MonoBehaviour
             anim.SetBool("isGrounded", false);
             isSlope = false;
             isGrounded = false;
+            Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(lastGroundTag), true);
         }
         //return (raycastHit.collider != null);
     }
@@ -154,6 +162,7 @@ public abstract class ControlManager : MonoBehaviour
         }
     }
 
+    protected abstract void PlaySound(string action);
 
     IEnumerator OffDamaged_co()
     {
@@ -171,16 +180,19 @@ public abstract class ControlManager : MonoBehaviour
     IEnumerator CheckWall_co()
     {
         // 레이캐스트 방향 설정
-        int dir = spriteRenderer.flipX ? 1 : -1;
+        int dir = transform.localScale.x < 0 ? 1 : -1;
         // 벽 레이어 이름
         string[] platLayer = new string[] { "Middle", "Bottom" };
         // 캐릭터 바로앞의 충돌을 감지할 박스캐스트
-        RaycastHit2D raycastHit = Physics2D.BoxCast(transform.position + dir * 0.25f * Vector3.right, new Vector2(1f, 1f), 0f, dir * Vector2.right, boxCastMaxDistance, LayerMask.GetMask(platLayer));
+        RaycastHit2D raycastHit = Physics2D.BoxCast(transform.position + dir * 0.5f * Vector3.right, new Vector2(0.3f, 1f), 0f,
+                                                    dir * Vector2.right, boxCastMaxDistance, LayerMask.GetMask(platLayer));
 
         // 가장 최근 밟았던 바닥의 태그 이름과 캐릭터 앞의 벽 레이어 이름이 일치하면
         // 벽과 충돌해야함
-        if (raycastHit.collider != null && raycastHit.collider.gameObject.layer.Equals(LayerMask.NameToLayer(lastGroundTag)))
+        if (raycastHit.collider != null && raycastHit.collider.gameObject.layer.Equals(LayerMask.NameToLayer(lastGroundTag)) &&
+            isGrounded)
         {
+            Debug.Log(1);
             Physics2D.IgnoreLayerCollision(myLayer, raycastHit.collider.gameObject.layer, false);
             Physics2D.IgnoreLayerCollision(invincibleLayer, raycastHit.collider.gameObject.layer, false);
         }
@@ -188,6 +200,7 @@ public abstract class ControlManager : MonoBehaviour
         // 벽과 충돌하면 안됨
         else if (raycastHit.collider != null && !raycastHit.collider.gameObject.layer.Equals(LayerMask.NameToLayer(lastGroundTag)))
         {
+            Debug.Log(2);
             Physics2D.IgnoreLayerCollision(myLayer, raycastHit.collider.gameObject.layer, true);
             Physics2D.IgnoreLayerCollision(invincibleLayer, raycastHit.collider.gameObject.layer, true);
         }
@@ -218,9 +231,9 @@ public abstract class ControlManager : MonoBehaviour
                 Gizmos.DrawRay(transform.position, Vector2.down * boxCastMaxDistance);
                 Gizmos.DrawWireCube(FootTrans.position + Vector3.down * raycastHit.distance, boxCastSize);
             }
-            int dir = spriteRenderer.flipX ? 1 : -1;
-            Vector2 boxCastSize2 = new Vector2(1f, 1f);
-            Vector3 boxCastOrigin = transform.position + dir * 0.25f * Vector3.right;
+            int dir = transform.localScale.x < 0 ? 1 : -1;
+            Vector2 boxCastSize2 = new Vector2(0.3f, 1f);
+            Vector3 boxCastOrigin = transform.position + dir * 0.5f * Vector3.right;
             Gizmos.DrawWireCube(boxCastOrigin, boxCastSize2);
         }
 

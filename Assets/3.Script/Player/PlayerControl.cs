@@ -2,13 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControl : ControlManager
+public class PlayerControl : CreatureControl
 {
+    protected AudioClip audioJump;
+    private PlayerStat Stat;
+
+    public Define.MoveDirection currentMoveDirection = Define.MoveDirection.None;
+
     // 아래점프시 바닥 충돌 무시할 시간
     protected WaitForSeconds ignorePlatTime_wait;
 
-    private void OnEnable()
+
+    private new void OnEnable()
     {
+        base.OnEnable();
+        TryGetComponent(out audioJump);
+        TryGetComponent(out Stat);
+        Stat.Init();
         ignorePlatTime_wait = new WaitForSeconds(0.35f);
     }
 
@@ -59,6 +69,7 @@ public class PlayerControl : ControlManager
             Prone();
             if (Input.GetButtonDown("Jump"))
             {
+                PlaySound("Jump");
                 // 서있을 때 점프
                 if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
                 {
@@ -95,6 +106,19 @@ public class PlayerControl : ControlManager
         }
     }
 
+    protected override void PlaySound(string action)
+    {
+        switch (action)
+        {
+            case "Jump":
+                audioSource.clip = audioJump;
+                break;
+            case "Hit":
+                //audioSource.clip = audioHit;
+                break;
+        }
+    }
+
 
     IEnumerator Attack_co()
     {
@@ -109,7 +133,7 @@ public class PlayerControl : ControlManager
             anim.SetBool("isAttack", false);
         }
     }
-        
+
     IEnumerator DownJump_co()
     {
         // 일정 시간동안 충돌 무시함
@@ -118,6 +142,6 @@ public class PlayerControl : ControlManager
         Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(lastGroundTag), true);
         yield return ignorePlatTime_wait;
         Physics2D.IgnoreLayerCollision(myLayer, groundLayer, false);
-        Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(lastGroundTag), false);
+        //Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(lastGroundTag), false);
     }
 }
