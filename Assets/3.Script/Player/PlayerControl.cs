@@ -115,6 +115,7 @@ public class PlayerControl : CreatureControl
             anim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
         {
             anim.SetBool("isAttack", true);
+
             yield return null; // ¼öÁ¤
             anim.SetBool("isAttack", false);
         }
