@@ -11,6 +11,11 @@ public class CameraControl : MonoBehaviour
     [SerializeField]
     GameObject player;
 
+    private void Start()
+    {
+        transform.position = (Vector2)player.transform.position;
+    }
+
     // 플레이어 이동 후 카메라 따라감
     private void LateUpdate()
     {

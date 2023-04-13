@@ -26,36 +26,41 @@ public class Movement : MonoBehaviour
     private void FixedUpdate()
     {
         // 이동 -> 리지드바디 이용 : 속도향상, 버벅임 없음
-        rigid.position += Stat.Speed * deltaTime * moveDirection;
+        //rigid.position += Stat.Speed * deltaTime * moveDirection;
+        rigid.velocity = new Vector3(Stat.Speed * moveDirection.x, rigid.velocity.y, 0);
         // 방향 설정
         if (moveDirection.Equals(Vector2.left))
         {
-            anim.SetInteger("h", -1);
-            if(transform.localScale.x < 0)
+            if (transform.localScale.x < 0)
             {
-                transform.localScale = new Vector3(-1 * transform.localScale.x, transform.localScale.y, transform.localScale.z); ;
+                transform.localScale = new Vector3(-1 * transform.localScale.x, transform.localScale.y, 0); ;
             }
-            //spriteRenderer.flipX = false;
         }
         else if (moveDirection.Equals(Vector2.right))
         {
-            anim.SetInteger("h", 1);
             if (transform.localScale.x > 0)
             {
-                transform.localScale = new Vector3(-1 * transform.localScale.x, transform.localScale.y, transform.localScale.z); ;
+                transform.localScale = new Vector3(-1 * transform.localScale.x, transform.localScale.y, 0); ;
             }
-            //spriteRenderer.flipX = true;
-        }
-        else
-        {
-            anim.SetInteger("h", 0);
         }
     }
 
 
-    public void MoveTo(Vector2 direction)
+    public void MoveTo(float h)
     {
-        moveDirection = direction;
+        switch (h)
+        {
+            case 1:
+                moveDirection = Vector2.right;
+                break;
+            case 0:
+                moveDirection = Vector2.zero;
+                break;
+            case -1:
+                moveDirection = Vector2.left;
+                break;
+        }
+        anim.SetInteger("h", (int)h);
     }
 
     public void JumpTo()

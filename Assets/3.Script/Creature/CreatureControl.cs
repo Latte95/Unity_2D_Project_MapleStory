@@ -46,8 +46,9 @@ public abstract class CreatureControl : MonoBehaviour
     protected int groundLayer;
     protected int slopeLayer;
     // 이동 애니메이션 이름
-    protected string moveAni = "Move";
+    protected string walkAni = "Walk";
     protected string[] platLayer = new string[] { "Ground", "Slope", "Other" };
+    protected string[] wallLayer = new string[] { "Bottom", "Front", "Middle" };
     [SerializeField]
     // 무적 시간
     protected float invincibleTime = 2f;
@@ -83,7 +84,7 @@ public abstract class CreatureControl : MonoBehaviour
         IsOnGround();
 
         // 비탈길 밟고 있을 시 미끄러짐 방지
-        if (isSlope)
+        if (isSlope && anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
             rigid.constraints = ~RigidbodyConstraints2D.FreezePositionY;
         }
@@ -109,32 +110,35 @@ public abstract class CreatureControl : MonoBehaviour
         // ground나 slope만 체크
         RaycastHit2D raycastHit = Physics2D.BoxCast(FootTrans.position, boxCastSize, 0f, Vector2.down,
                                                     boxCastMaxDistance, LayerMask.GetMask(platLayer));
-        // 바닥과 충돌중이고, 올라가는중이 아닐때만 체크
-        // 0.1을 한 이유는 비탈길에서 가만히 있어도 조금씩 올라가기 때문
-        if (raycastHit.collider != null && rigid.velocity.y <= 0.1)
+        // 바닥과 충돌
+        if (raycastHit.collider != null)
         {
-            isImmobile = false;
-            isGrounded = true;
-            anim.SetBool("isGrounded", true);
+            if (rigid.velocity.y < 0.1f)
+            {
+                anim.SetBool("isGrounded", true);
+                isGrounded = true;
+                if (rigid.velocity.y < 0.5f)
+                {
+                    lastGroundTag = raycastHit.collider.tag;
+                }
+            }
+            // 경사면 체크
             if (raycastHit.collider.gameObject.layer.Equals(slopeLayer))
-            {
-                isSlope = true;
-            }
-            else
-            {
-                isSlope = false;
-            }
-            lastGroundTag = raycastHit.collider.tag;
+                {
+                    isSlope = true;
+                }
+                else
+                {
+                    isSlope = false;
+                }
         }
-        // 땅을 밟고 있지 않으면
+        // 공중이면
         else
         {
             anim.SetBool("isGrounded", false);
-            isSlope = false;
             isGrounded = false;
-            Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(lastGroundTag), true);
+            isSlope = false;
         }
-        //return (raycastHit.collider != null);
     }
 
     protected void OnDamaged(Vector2 targetPos)
@@ -181,28 +185,20 @@ public abstract class CreatureControl : MonoBehaviour
     {
         // 레이캐스트 방향 설정
         int dir = transform.localScale.x < 0 ? 1 : -1;
-        // 벽 레이어 이름
-        string[] platLayer = new string[] { "Middle", "Bottom"};
-        // 캐릭터 바로앞의 충돌을 감지할 박스캐스트
-        RaycastHit2D raycastHit = Physics2D.BoxCast(transform.position + dir * 0.5f * Vector3.right, new Vector2(0.3f, 1f), 0f,
-                                                    dir * Vector2.right, boxCastMaxDistance, LayerMask.GetMask(platLayer));
 
-        // 가장 최근 밟았던 바닥의 태그 이름과 캐릭터 앞의 벽 레이어 이름이 일치하면
-        // 벽과 충돌해야함
-        if (raycastHit.collider != null && raycastHit.collider.gameObject.layer.Equals(LayerMask.NameToLayer(lastGroundTag)) &&
-            isGrounded)
+        // 캐릭터 바로앞의 충돌을 감지할 박스캐스트
+        RaycastHit2D raycastHit = Physics2D.BoxCast(transform.position + 0.5f * (-transform.localScale.x * 0.75f) * Vector3.right, new Vector2(0.3f, 1f), 0f,
+                                                    dir * Vector2.right, boxCastMaxDistance, LayerMask.GetMask(wallLayer));
+
+        // 밟은 땅이랑 벽이 같은 태그면 벽 통과 x
+        if (raycastHit.collider != null && raycastHit.collider.CompareTag(lastGroundTag))
         {
-            Debug.Log(1);
             Physics2D.IgnoreLayerCollision(myLayer, raycastHit.collider.gameObject.layer, false);
-            Physics2D.IgnoreLayerCollision(invincibleLayer, raycastHit.collider.gameObject.layer, false);
         }
-        // 태그와 벽 레이어 이름이 일치하지 않으면
-        // 벽과 충돌하면 안됨
-        else if (raycastHit.collider != null && !raycastHit.collider.gameObject.layer.Equals(LayerMask.NameToLayer(lastGroundTag)))
+        // 태그 다르면 벽 통과 o 
+        else if (raycastHit.collider != null)
         {
-            Debug.Log(2);
             Physics2D.IgnoreLayerCollision(myLayer, raycastHit.collider.gameObject.layer, true);
-            Physics2D.IgnoreLayerCollision(invincibleLayer, raycastHit.collider.gameObject.layer, true);
         }
 
         yield return null;
@@ -231,11 +227,9 @@ public abstract class CreatureControl : MonoBehaviour
                 Gizmos.DrawRay(transform.position, Vector2.down * boxCastMaxDistance);
                 Gizmos.DrawWireCube(FootTrans.position + Vector3.down * raycastHit.distance, boxCastSize);
             }
-            int dir = transform.localScale.x < 0 ? 1 : -1;
             Vector2 boxCastSize2 = new Vector2(0.3f, 1f);
-            Vector3 boxCastOrigin = transform.position + dir * 0.5f * Vector3.right;
+            Vector3 boxCastOrigin = transform.position + 0.5f * (-transform.localScale.x * 0.6f) * Vector3.right;
             Gizmos.DrawWireCube(boxCastOrigin, boxCastSize2);
         }
-
     }
 }

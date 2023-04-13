@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
     AudioSource[] audioSources = new AudioSource[(int)Define.Sound.SoundCount];
     Dictionary<string, AudioClip> audioClips = new Dictionary<string, AudioClip>();
 
+
     public void Init()
     {
         GameObject root = GameObject.Find("SoundManager");

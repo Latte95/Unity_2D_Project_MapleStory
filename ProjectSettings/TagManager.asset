@@ -8,6 +8,7 @@ TagManager:
   - Other
   - Enemy
   - Middle
+  - Front
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - Wall
   - Ground
   - Slope
   - 

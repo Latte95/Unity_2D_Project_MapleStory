@@ -19,7 +19,7 @@ public class PlayerControl : CreatureControl
         TryGetComponent(out audioJump);
         TryGetComponent(out Stat);
         Stat.Init();
-        ignorePlatTime_wait = new WaitForSeconds(0.35f);
+        ignorePlatTime_wait = new WaitForSeconds(0.5f);
     }
 
     // 공격
@@ -35,29 +35,15 @@ public class PlayerControl : CreatureControl
     protected override void Move()
     {
         // 이동
-        // 가만히 있거나 걷는 중에만 이동 가능, 피격중일 땐 이동 불가능
-        if ((anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(moveAni)) &&
-            !isImmobile)
+        // 가만히 있거나 걷는 중에만 이동 가능
+        if ((anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni)))
         {
-            if (Input.GetKey(KeyCode.LeftArrow))
+            float h = Input.GetAxisRaw("Horizontal");
+            movement.MoveTo(h);
+            if (Input.GetButtonDown("Jump"))
             {
-                movement.MoveTo(Vector2.left);
+                movement.JumpTo();
             }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                movement.MoveTo(Vector2.right);
-            }
-            // 이동중 키 때면 멈춤
-            else
-            {
-                movement.MoveTo(Vector2.zero);
-            }
-        }
-        // 점프중에는 이동 불가능
-        // => 점프중이 아닐때만 이동 멈춤
-        else if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
-        {
-            movement.MoveTo(Vector2.zero);//수정
         }
     }
 
@@ -124,7 +110,7 @@ public class PlayerControl : CreatureControl
     {
         // 공격 가능한 상태일 때만 공격 실행
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
-            anim.GetCurrentAnimatorStateInfo(0).IsName(moveAni) ||
+            anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni) ||
             anim.GetCurrentAnimatorStateInfo(0).IsName("Jump") ||
             anim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
         {
@@ -141,6 +127,7 @@ public class PlayerControl : CreatureControl
         Physics2D.IgnoreLayerCollision(myLayer, groundLayer, true);
         Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(lastGroundTag), true);
         yield return ignorePlatTime_wait;
+        Debug.Log(1);
         Physics2D.IgnoreLayerCollision(myLayer, groundLayer, false);
         //Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(lastGroundTag), false);
     }

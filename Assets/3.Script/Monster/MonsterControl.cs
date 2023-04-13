@@ -29,10 +29,10 @@ public class MonsterControl : CreatureControl
         //StartCoroutine(nameof(CheckWall_co));
         // 이동
         // 가만히 있거나 걷는 중에만 이동 가능, 피격중일 땐 이동 불가능
-        if ((anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(moveAni)) &&
+        if ((anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni)) &&
             !isImmobile)
         {
-            movement.MoveTo(Vector2.left);
+            movement.MoveTo(-1);
             //movement.MoveTo(Vector2.right);
             //movement.MoveTo(Vector2.zero);
         }
@@ -40,7 +40,7 @@ public class MonsterControl : CreatureControl
         // => 점프중이 아닐때만 이동 멈춤
         else if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
         {
-            movement.MoveTo(Vector2.zero);
+            movement.MoveTo(0);
         }
     }
 
