@@ -60,6 +60,7 @@ public abstract class CreatureControl : MonoBehaviour
         groundLayer = LayerMask.NameToLayer("Ground");
         slopeLayer = LayerMask.NameToLayer("Slope");
         invincibleTime_wait = new WaitForSeconds(invincibleTime);
+        lastGroundTag = "Bottom";
         deltaTime = Time.deltaTime;
     }
 
@@ -158,6 +159,8 @@ public abstract class CreatureControl : MonoBehaviour
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
             // 피격에 의한 밀림
             int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
+            Debug.Log("맞기 실행");
+
             rigid.AddForce(7 * new Vector2(dirc, 2), ForceMode2D.Impulse);
 
             StopCoroutine(nameof(OffDamaged_co));

@@ -44,9 +44,9 @@ public class DataManager : MonoBehaviour
     }
 
     // Reset player data
-    public void NewGame()
+    public void NewChar(int _str, int _int, int _dex, int _luk)
     {
-        nowPlayer = new PlayerData();
+        nowPlayer = new PlayerData(_str, _int, _dex, _luk);
     }
 
     // Load data from save file and update all data persistence object
@@ -62,10 +62,6 @@ public class DataManager : MonoBehaviour
 
         // Load player data from JSON
         nowPlayer = Load();
-        if (nowPlayer == null)
-        {
-            NewGame();
-        }
 
         // Update all data persistence objects
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
@@ -212,7 +208,7 @@ public class DataManager : MonoBehaviour
     // Sava data file initialize
     public void ClearData()
     {
-        nowPlayer = new PlayerData();
+        //nowPlayer = new PlayerData();
         Save(nowPlayer);
     }
 

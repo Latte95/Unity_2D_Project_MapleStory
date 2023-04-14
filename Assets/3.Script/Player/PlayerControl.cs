@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerControl : CreatureControl
 {
     protected AudioClip audioJump;
-    private PlayerStat Stat;
+    private PlayerData Stat;
 
     public Define.MoveDirection currentMoveDirection = Define.MoveDirection.None;
 
@@ -70,9 +70,17 @@ public class PlayerControl : CreatureControl
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
+    //private void OnCollisionEnter2D(Collision2D col)
+    //{
+    //    // 적과 부딪힌 경우 피격당함
+    //    if (col.gameObject.CompareTag("Enemy"))
+    //    {
+    //        OnDamaged(col.gameObject.transform.position);
+    //    }
+    //}
+
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        // 적과 부딪힌 경우 피격당함
         if (col.gameObject.CompareTag("Enemy"))
         {
             OnDamaged(col.gameObject.transform.position);

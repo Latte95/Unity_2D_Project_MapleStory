@@ -27,6 +27,7 @@ public class Movement : MonoBehaviour
     {
         // 이동 -> 리지드바디 이용 : 속도향상, 버벅임 없음
         //rigid.position += Stat.Speed * deltaTime * moveDirection;
+        Debug.Log("이동 실행"); //수정
         rigid.velocity = new Vector3(Stat.Speed * moveDirection.x, rigid.velocity.y, 0);
         // 방향 설정
         if (moveDirection.Equals(Vector2.left))

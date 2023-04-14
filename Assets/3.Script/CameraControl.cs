@@ -13,12 +13,22 @@ public class CameraControl : MonoBehaviour
 
     private void Start()
     {
-        transform.position = (Vector2)player.transform.position;
+        if (player != null)
+        {
+            transform.position = (Vector2)player.transform.position;
+        }
+        else
+        {
+            transform.position = Vector2.zero;
+        }
     }
 
     // 플레이어 이동 후 카메라 따라감
     private void LateUpdate()
     {
-        transform.position = (Vector3)Vector2.Lerp(transform.position, player.transform.position,0.01f) + delta;
+        if (player != null)
+        {
+            transform.position = (Vector3)Vector2.Lerp(transform.position, player.transform.position, 0.01f) + delta;
+        }
     }
 }

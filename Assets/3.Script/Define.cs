@@ -14,7 +14,7 @@ public class Define
     public enum Scene
     {
         Login,
-        Henesys_Town,
+        HenesysTown,
         Henesys_Field
     }
 
