@@ -54,7 +54,7 @@ public abstract class CreatureControl : MonoBehaviour
     protected float invincibleTime = 2f;
 
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         invincibleLayer = LayerMask.NameToLayer("Invincible");
         groundLayer = LayerMask.NameToLayer("Ground");

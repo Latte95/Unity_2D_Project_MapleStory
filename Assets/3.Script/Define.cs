@@ -11,6 +11,13 @@ public class Define
         Right
     }
 
+    public enum Scene
+    {
+        Login,
+        Henesys_Town,
+        Henesys_Field
+    }
+
     public enum Sound
     {
         Bgm,

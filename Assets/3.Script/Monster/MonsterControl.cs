@@ -72,7 +72,7 @@ public class MonsterControl : CreatureControl
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out PlayerStat player))
+        if (collision.gameObject.TryGetComponent(out PlayerData player))
         {
             int damage = 1;
             if(Stat.Atk - player.Def > 1)

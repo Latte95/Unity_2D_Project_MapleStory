@@ -15,14 +15,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    SoundManager _sound = new SoundManager();
-    public static SoundManager Sound
-    { 
-        get 
-        { 
-            return Instance._sound; 
-        } 
-    }
+    //SoundManager _sound = new SoundManager();
+    //public static SoundManager Sound
+    //{ 
+    //    get 
+    //    { 
+    //        return Instance._sound; 
+    //    } 
+    //}
 
 
     private void Start()
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
     }
     public static void Clear()
     {
-        Sound.Clear();
+        //Sound.Clear();
         //Scene.Clear();
         //UI.Clear();
     }

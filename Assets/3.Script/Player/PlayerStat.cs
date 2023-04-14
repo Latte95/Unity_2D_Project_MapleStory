@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStat : Stat
+public class PlayerData : Stat
 {
     protected int strong;
     protected int intelligence;
@@ -12,13 +12,18 @@ public class PlayerStat : Stat
     protected int exp;
     protected int gold;
 
-    public int Strong { get => strong; set => strong = value; }
+    protected Define.Scene scene;
+
+    public int Str { get => strong; set => strong = value; }
     public int Int { get => intelligence; set => intelligence = value; }
     public int Dex { get => dexterity; set => dexterity = value; }
     public int Luk { get => luck; set => luck = value; }
 
     public int Exp { get => exp; set => exp = value; }
     public int Gold { get => gold; set => gold = value; }
+
+    public Define.Scene Scene { get => scene; set => scene = value; }
+
 
     public void Init()
     {
@@ -31,5 +36,6 @@ public class PlayerStat : Stat
         jumpForce = 23f;
         exp = 0;
         gold = 1000;
+        scene = Define.Scene.Henesys_Field;
     }
 }
