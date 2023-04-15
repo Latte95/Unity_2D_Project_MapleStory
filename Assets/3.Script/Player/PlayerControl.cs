@@ -12,6 +12,10 @@ public class PlayerControl : CreatureControl
     // 아래점프시 바닥 충돌 무시할 시간
     protected WaitForSeconds ignorePlatTime_wait;
 
+    // 공격 관련 변수
+    public Transform atkPos;
+    public Vector2 atkBoxSize;
+
 
     private new void OnEnable()
     {
@@ -19,7 +23,7 @@ public class PlayerControl : CreatureControl
         TryGetComponent(out audioJump);
         TryGetComponent(out Stat);
         Stat.Init();
-        ignorePlatTime_wait = new WaitForSeconds(0.5f);
+        ignorePlatTime_wait = new WaitForSeconds(1f);
     }
 
     // 공격
@@ -28,22 +32,41 @@ public class PlayerControl : CreatureControl
         // 기본 공격
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
+            StopCoroutine(nameof(Attack_co));
             StartCoroutine(nameof(Attack_co));
         }
     }
 
     protected override void Move()
     {
+        bool isIdleOrWalking = (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni));
+        bool leftArrowPressed = Input.GetKey(KeyCode.LeftArrow);
+        bool rightArrowPressed = Input.GetKey(KeyCode.RightArrow);
+
         // 이동
         // 가만히 있거나 걷는 중에만 이동 가능
-        if ((anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni)))
+        if (isIdleOrWalking && !isImmobile)
         {
-            float h = Input.GetAxisRaw("Horizontal");
-            movement.MoveTo(h);
+            if (leftArrowPressed && !rightArrowPressed)
+            {
+                movement.MoveTo(Vector2.left);
+            }
+            else if (!leftArrowPressed && rightArrowPressed)
+            {
+                movement.MoveTo(Vector2.right);
+            }
+            else
+            {
+                movement.MoveTo(Vector2.zero);
+            }
             if (Input.GetButtonDown("Jump"))
             {
                 movement.JumpTo();
             }
+        }
+        else
+        {
+            movement.MoveTo(new Vector2(rigid.velocity.x / Stat.Speed, 0));
         }
     }
 
@@ -55,7 +78,8 @@ public class PlayerControl : CreatureControl
             Prone();
             if (Input.GetButtonDown("Jump"))
             {
-                PlaySound("Jump");
+                SoundManager.instance.PlaySfx(Define.Sfx.Jump);
+                //GameManager.Sound.PlaySfx(Define.Sfx.Jump);
                 // 서있을 때 점프
                 if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
                 {
@@ -70,17 +94,30 @@ public class PlayerControl : CreatureControl
         }
     }
 
-    //private void OnCollisionEnter2D(Collision2D col)
-    //{
-    //    // 적과 부딪힌 경우 피격당함
-    //    if (col.gameObject.CompareTag("Enemy"))
-    //    {
-    //        OnDamaged(col.gameObject.transform.position);
-    //    }
-    //}
+    public override void OnDamaged(Vector2 targetPos)
+    {
+        if (!isImmobile)
+        {
+            base.OnDamaged(targetPos);
+
+
+            // 자식 오브젝트 포함 모두 무적상태로 변경
+            gameObject.layer = invincibleLayer;
+            foreach (Transform child in transform)
+            {
+                child.gameObject.layer = invincibleLayer;
+            }
+            spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+
+
+            StopCoroutine(nameof(OffDamaged_co));
+            StartCoroutine(nameof(OffDamaged_co));
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        // 적과 부딪힌 경우 피격당함
         if (col.gameObject.CompareTag("Enemy"))
         {
             OnDamaged(col.gameObject.transform.position);
@@ -100,19 +137,6 @@ public class PlayerControl : CreatureControl
         }
     }
 
-    protected override void PlaySound(string action)
-    {
-        switch (action)
-        {
-            case "Jump":
-                audioSource.clip = audioJump;
-                break;
-            case "Hit":
-                //audioSource.clip = audioHit;
-                break;
-        }
-    }
-
 
     IEnumerator Attack_co()
     {
@@ -122,9 +146,26 @@ public class PlayerControl : CreatureControl
             anim.GetCurrentAnimatorStateInfo(0).IsName("Jump") ||
             anim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
         {
+            SoundManager.instance.PlaySfx(Define.Sfx.AttackS);
+            //GameManager.Sound.PlaySfx(Define.Sfx.AttackS);
+
+            Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(atkPos.position, atkBoxSize, 0, LayerMask.GetMask("Enemy"));
+            foreach (Collider2D collider in collider2Ds)
+            {
+                collider.TryGetComponent(out MonsterControl monster);
+                monster.OnDamaged((Vector2)transform.position);
+
+                collider.TryGetComponent(out MonsterData monsterData);
+                int damage = 1;
+                if (Stat.Atk - monsterData.Def > 1)
+                {
+                    damage = Stat.Atk - monsterData.Def;
+                }
+                monsterData.Hp -= damage;
+            }
             anim.SetBool("isAttack", true);
 
-            yield return null; // 수정
+            yield return null;
             anim.SetBool("isAttack", false);
         }
     }
@@ -136,8 +177,26 @@ public class PlayerControl : CreatureControl
         Physics2D.IgnoreLayerCollision(myLayer, groundLayer, true);
         Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(lastGroundTag), true);
         yield return ignorePlatTime_wait;
-        Debug.Log(1);
         Physics2D.IgnoreLayerCollision(myLayer, groundLayer, false);
-        //Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(lastGroundTag), false);
+    }
+
+    protected override IEnumerator OffDamaged_co()
+    {
+        // 무적시간 경과 후 원래 상태로 돌아옴
+        yield return invincibleTime_wait;
+        isImmobile = false;
+        gameObject.layer = myLayer;
+        foreach (Transform child in transform)
+        {
+            child.gameObject.layer = myLayer;
+        }
+        spriteRenderer.color = new Color(1, 1, 1, 1);
+    }
+
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(atkPos.position, atkBoxSize);
     }
 }

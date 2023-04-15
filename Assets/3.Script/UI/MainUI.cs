@@ -10,7 +10,9 @@ public enum BTNType
     Exit,
     NextScene,
     Dice,
-    Play
+    Play,
+    Create,
+    BackToFirst,
 }
 
 public class MainUI : MonoBehaviour

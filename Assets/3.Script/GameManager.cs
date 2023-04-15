@@ -15,16 +15,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //SoundManager _sound = new SoundManager();
-    //public static SoundManager Sound
-    //{ 
-    //    get 
-    //    { 
-    //        return Instance._sound; 
-    //    } 
-    //}
-
-
     private void Start()
     {
         Init();

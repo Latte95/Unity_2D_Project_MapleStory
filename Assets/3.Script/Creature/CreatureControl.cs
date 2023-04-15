@@ -15,7 +15,7 @@ public abstract class CreatureControl : MonoBehaviour
     // 바닥, 경사면 확인하는 박스캐스트
     protected Vector2 boxCastSize;
     // 박스캐스트 충돌 감지 거리
-    protected float boxCastMaxDistance = 0.05f;
+    protected float boxCastMaxDistance = 0.0001f;
 
     [SerializeField]
     // 땅 밟고 있는지
@@ -24,6 +24,7 @@ public abstract class CreatureControl : MonoBehaviour
     protected bool isSlope = false;
     public bool IsSlope => isSlope;
     // 피격시 일정 시간동안 이동 불가, 다단히트 방지도 겸함
+    [SerializeField]
     protected bool isImmobile = false;
     // 가장 최근에 밟은 땅의 태그이름 -> 이를 이용해서 벽 뚫고 지나감
     [SerializeField]
@@ -114,24 +115,26 @@ public abstract class CreatureControl : MonoBehaviour
         // 바닥과 충돌
         if (raycastHit.collider != null)
         {
-            if (rigid.velocity.y < 0.1f)
+            if (rigid.velocity.y < 0.01f)
             {
                 anim.SetBool("isGrounded", true);
                 isGrounded = true;
-                if (rigid.velocity.y < 0.5f)
+                isImmobile = false;
+                if (!raycastHit.collider.tag.Equals(lastGroundTag))
                 {
-                    lastGroundTag = raycastHit.collider.tag;
+                    Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(raycastHit.collider.tag), false);
                 }
+                lastGroundTag = raycastHit.collider.tag;
             }
             // 경사면 체크
             if (raycastHit.collider.gameObject.layer.Equals(slopeLayer))
-                {
-                    isSlope = true;
-                }
-                else
-                {
-                    isSlope = false;
-                }
+            {
+                isSlope = true;
+            }
+            else
+            {
+                isSlope = false;
+            }
         }
         // 공중이면
         else
@@ -142,47 +145,22 @@ public abstract class CreatureControl : MonoBehaviour
         }
     }
 
-    protected void OnDamaged(Vector2 targetPos)
+    public virtual void OnDamaged(Vector2 targetPos)
     {
-        if (!isImmobile)
-        {
-            // 이동 불가능, 다단히트 방지
-            isImmobile = true;
-            // 피격 밀림 이전에 속도를 0으로 초기화
-            rigid.velocity = Vector3.zero;
-            // 자식 오브젝트 포함 모두 무적상태로 변경
-            gameObject.layer = invincibleLayer;
-            foreach (Transform child in transform)
-            {
-                child.gameObject.layer = invincibleLayer;
-            }
-            spriteRenderer.color = new Color(1, 1, 1, 0.4f);
-            // 피격에 의한 밀림
-            int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
-            Debug.Log("맞기 실행");
+        // 이동 불가능, 다단히트 방지
+        isImmobile = true;
+        // 피격 밀림 이전에 속도를 0으로 초기화
+        rigid.velocity = Vector3.zero;
+        // 피격에 의한 밀림
+        int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
 
-            rigid.AddForce(7 * new Vector2(dirc, 2), ForceMode2D.Impulse);
+        rigid.AddForce(7 * new Vector2(dirc, 2), ForceMode2D.Impulse);
 
-            StopCoroutine(nameof(OffDamaged_co));
-            StartCoroutine(nameof(OffDamaged_co));
-
-        }
+        StopCoroutine(nameof(OffDamaged_co));
+        StartCoroutine(nameof(OffDamaged_co));
     }
 
-    protected abstract void PlaySound(string action);
-
-    IEnumerator OffDamaged_co()
-    {
-        // 무적시간 경과 후 원래 상태로 돌아옴
-        yield return invincibleTime_wait;
-        isImmobile = false;
-        gameObject.layer = myLayer;
-        foreach (Transform child in transform)
-        {
-            child.gameObject.layer = myLayer;
-        }
-        spriteRenderer.color = new Color(1, 1, 1, 1);
-    }
+    protected abstract IEnumerator OffDamaged_co();
     // 자신이 밟고있는 땅과 다른 계층의 벽은 통과
     IEnumerator CheckWall_co()
     {
@@ -190,16 +168,11 @@ public abstract class CreatureControl : MonoBehaviour
         int dir = transform.localScale.x < 0 ? 1 : -1;
 
         // 캐릭터 바로앞의 충돌을 감지할 박스캐스트
-        RaycastHit2D raycastHit = Physics2D.BoxCast(transform.position + 0.5f * (-transform.localScale.x * 0.75f) * Vector3.right, new Vector2(0.3f, 1f), 0f,
+        RaycastHit2D raycastHit = Physics2D.BoxCast(transform.position + 0.5f * (-transform.localScale.x * 0.6f) * Vector3.right, new Vector2(0.3f, 1f), 0f,
                                                     dir * Vector2.right, boxCastMaxDistance, LayerMask.GetMask(wallLayer));
 
-        // 밟은 땅이랑 벽이 같은 태그면 벽 통과 x
-        if (raycastHit.collider != null && raycastHit.collider.CompareTag(lastGroundTag))
-        {
-            Physics2D.IgnoreLayerCollision(myLayer, raycastHit.collider.gameObject.layer, false);
-        }
         // 태그 다르면 벽 통과 o 
-        else if (raycastHit.collider != null)
+        if (raycastHit.collider != null && !raycastHit.collider.CompareTag(lastGroundTag))
         {
             Physics2D.IgnoreLayerCollision(myLayer, raycastHit.collider.gameObject.layer, true);
         }
@@ -213,7 +186,7 @@ public abstract class CreatureControl : MonoBehaviour
     protected abstract void GroundAct();
 
     // 씬뷰에서 레이캐스트 그림
-    void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         if (FootTrans != null)
         {

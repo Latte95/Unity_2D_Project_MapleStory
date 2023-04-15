@@ -5,7 +5,7 @@ using UnityEngine;
 public class MonsterControl : CreatureControl
 {
     protected AudioClip audioHit;
-    private MonsterStat Stat;
+    private MonsterData Stat;
 
     private new void OnEnable()
     {
@@ -32,7 +32,7 @@ public class MonsterControl : CreatureControl
         if ((anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni)) &&
             !isImmobile)
         {
-            movement.MoveTo(-1);
+            movement.MoveTo(Vector2.left);
             //movement.MoveTo(Vector2.right);
             //movement.MoveTo(Vector2.zero);
         }
@@ -40,7 +40,7 @@ public class MonsterControl : CreatureControl
         // => 점프중이 아닐때만 이동 멈춤
         else if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
         {
-            movement.MoveTo(0);
+            movement.MoveTo(Vector2.zero);
         }
     }
 
@@ -52,21 +52,11 @@ public class MonsterControl : CreatureControl
         }
     }
 
-    private new void OnDamaged(Vector2 targetPos)
+    public override void OnDamaged(Vector2 targetPos)
     {
-        base.OnDamaged(targetPos);
-    }
-
-    protected override void PlaySound(string action)
-    {
-        switch (action)
+        if (!isImmobile)
         {
-            case "Jump":
-                //audioSource.clip = audioJump;
-                break;
-            case "Hit":
-                audioSource.clip = audioHit;
-                break;
+            base.OnDamaged(targetPos);
         }
     }
 
@@ -81,6 +71,13 @@ public class MonsterControl : CreatureControl
             }
             player.Hp -= damage;
         }
+    }
+
+    protected override IEnumerator OffDamaged_co()
+    {
+        // 무적시간 경과 후 원래 상태로 돌아옴
+        yield return invincibleTime_wait;
+        isImmobile = false;
     }
 
 }
