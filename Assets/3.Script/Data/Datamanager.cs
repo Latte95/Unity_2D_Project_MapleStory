@@ -13,7 +13,7 @@ public class DataManager : MonoBehaviour
     // Singleton
     public static DataManager instance;
 
-    public PlayerData nowPlayer;
+    public Player nowPlayer;
     private List<IDataPersistence> dataPersistenceObjects;
 
     private string path;
@@ -23,6 +23,13 @@ public class DataManager : MonoBehaviour
     private byte[] key;
     private static readonly byte[] salt = new byte[] { 0x26, 0x19, 0x36, 0x29, 0x3F, 0x10, 0x01, 0x1A };
     private const int Iterations = 10000;
+
+    // 아이템
+    public string[] var_name;
+    public float[] var;
+    public string[] switch_name;
+    public bool[] switches;
+    public List<Item> itemList = new List<Item>();
 
     // Initialize
     private void Awake()
@@ -39,14 +46,30 @@ public class DataManager : MonoBehaviour
             return;
         }
         #endregion
-        path = Path.Combine(Application.persistentDataPath, "Saves/");
+        path = Path.Combine(Application.dataPath, "Saves/");
         dataPersistenceObjects = FindAllDataPersistenceObjects();
+    }
+
+    private void Start()
+    {
+        itemList.Add(new Item(02000000, "빨간 포션", "HP를 50 증가시킨다", 0, 0, 0, 0, 0, 0, 50, 0, 10, Item.ItemType.Consume));
+        itemList.Add(new Item(02000001, "주황 포션", "HP를 100 증가시킨다", 0, 0, 0, 0, 0, 0, 100, 0, 18, Item.ItemType.Consume));
+        itemList.Add(new Item(02000003, "파란 포션", "MP를 50 증가시킨다", 0, 0, 0, 0, 0, 0, 0, 50, 20, Item.ItemType.Consume));
+        itemList.Add(new Item(02000004, "엘릭서", "HP, MP를 50 증가시킨다", 0, 0, 0, 0, 0, 0, 50, 50, 25, Item.ItemType.Consume));
+        itemList.Add(new Item(01302000, "검", "한손검", 5, 0, 0, 0, 0, 0, 0, 0, 100, Item.ItemType.Equip));
+        itemList.Add(new Item(01040002, "하얀 반팔 면티", "하얀 반팔 면티", 0, 5, 0, 0, 0, 0, 0, 0, 100, Item.ItemType.Equip));
+        itemList.Add(new Item(01302000, "파란 청 바지", "파란 청 바지", 0, 3, 0, 0, 0, 0, 0, 20, 100, Item.ItemType.Equip));
+        itemList.Add(new Item(04000000, "파란 달팽이의 껍질", "파란 달팽이의 껍질을 벗긴 것이다.", 0, 0, 0, 0, 0, 0, 0, 0, 50, Item.ItemType.Etc));
+        itemList.Add(new Item(04000001, "주황버섯의 갓", "주황버섯의 갓을 자른 것이다.", 0, 0, 0, 0, 0, 0, 0, 0, 500, Item.ItemType.Etc));
+        itemList.Add(new Item(04000003, "나뭇가지", "나무의 가지를 꺾어온 것이다.", 0, 0, 0, 0, 0, 0, 0, 0, 100, Item.ItemType.Etc));
+        itemList.Add(new Item(04000004, "물컹물컹한 액체", "점성이 높아 끈적끈적한 액체이다.", 0, 0, 0, 0, 0, 0, 0, 0, 150, Item.ItemType.Etc));
+    
     }
 
     // Reset player data
     public void NewChar(int _str, int _int, int _dex, int _luk)
     {
-        nowPlayer = new PlayerData(_str, _int, _dex, _luk);
+        nowPlayer = new Player(_str, _int, _dex, _luk);
     }
 
     // Load data from save file and update all data persistence object
@@ -61,8 +84,15 @@ public class DataManager : MonoBehaviour
         }
 
         // Load player data from JSON
-        nowPlayer = Load();
-
+        PlayerData playerData = Load();
+        if (playerData == null)
+        {
+            NewChar(4, 4, 4, 4);
+        }
+        else
+        {
+            nowPlayer.SetData(playerData);
+        }
         // Update all data persistence objects
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
         {
@@ -79,13 +109,14 @@ public class DataManager : MonoBehaviour
             dataPersistenceObj.SaveData(ref nowPlayer);
         }
         // Save player data as JSON
-        Save(nowPlayer);
+        Save(nowPlayer.ToPlayerData());
     }
 
     // Reads data stored in a json file
     public PlayerData Load()
     {
         string fullPath = Path.Combine(path, fileName);
+        //Player loadedData = null;
         PlayerData loadedData = null;
         try
         {
@@ -98,6 +129,7 @@ public class DataManager : MonoBehaviour
                         string encryptedData = reader.ReadToEnd();
                         string decryptedData = Decrypt(encryptedData);
                         loadedData = JsonUtility.FromJson<PlayerData>(decryptedData);
+                        //loadedData = JsonUtility.FromJson<Player>(encryptedData);
                     }
                 }
             }
@@ -208,8 +240,8 @@ public class DataManager : MonoBehaviour
     // Sava data file initialize
     public void ClearData()
     {
-        //nowPlayer = new PlayerData();
-        Save(nowPlayer);
+        //nowPlayer = new Player();
+        Save(nowPlayer.ToPlayerData());
     }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects()

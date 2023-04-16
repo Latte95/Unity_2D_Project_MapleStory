@@ -17,5 +17,21 @@ public enum BTNType
 
 public class MainUI : MonoBehaviour
 {
+    public GameObject inventoryUI;
+    bool activeInventory = false;
 
+    private void Start()
+    {
+        inventoryUI.SetActive(activeInventory);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            activeInventory = !activeInventory;
+            inventoryUI.SetActive(activeInventory);
+            //Inventory.ShowTab();
+        }
+    }
 }

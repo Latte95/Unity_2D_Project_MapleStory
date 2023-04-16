@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerControl : CreatureControl
 {
     protected AudioClip audioJump;
-    private PlayerData Stat;
+    private Player Stat;
 
     public Define.MoveDirection currentMoveDirection = Define.MoveDirection.None;
 
@@ -22,7 +22,6 @@ public class PlayerControl : CreatureControl
         base.OnEnable();
         TryGetComponent(out audioJump);
         TryGetComponent(out Stat);
-        Stat.Init();
         ignorePlatTime_wait = new WaitForSeconds(1f);
     }
 
@@ -155,7 +154,7 @@ public class PlayerControl : CreatureControl
                 collider.TryGetComponent(out MonsterControl monster);
                 monster.OnDamaged((Vector2)transform.position);
 
-                collider.TryGetComponent(out MonsterData monsterData);
+                collider.TryGetComponent(out MonsterStat monsterData);
                 int damage = 1;
                 if (Stat.Atk - monsterData.Def > 1)
                 {

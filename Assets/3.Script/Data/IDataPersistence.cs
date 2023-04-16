@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public interface IDataPersistence
 {
-    void LoadData(PlayerData data);
+    void LoadData(Player data);
 
-    void SaveData(ref PlayerData data);
+    void SaveData(ref Player data);
 }

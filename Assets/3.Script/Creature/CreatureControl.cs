@@ -122,9 +122,9 @@ public abstract class CreatureControl : MonoBehaviour
                 isImmobile = false;
                 if (!raycastHit.collider.tag.Equals(lastGroundTag))
                 {
-                    Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(raycastHit.collider.tag), false);
+                    Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(raycastHit.collider.gameObject.tag), false);
                 }
-                lastGroundTag = raycastHit.collider.tag;
+                lastGroundTag = raycastHit.collider.gameObject.tag;
             }
             // 경사면 체크
             if (raycastHit.collider.gameObject.layer.Equals(slopeLayer))

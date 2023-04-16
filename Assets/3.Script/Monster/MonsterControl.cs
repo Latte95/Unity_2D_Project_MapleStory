@@ -5,7 +5,7 @@ using UnityEngine;
 public class MonsterControl : CreatureControl
 {
     protected AudioClip audioHit;
-    private MonsterData Stat;
+    private MonsterStat Stat;
 
     private new void OnEnable()
     {
@@ -62,10 +62,10 @@ public class MonsterControl : CreatureControl
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out PlayerData player))
+        if (collision.gameObject.TryGetComponent(out Player player))
         {
             int damage = 1;
-            if(Stat.Atk - player.Def > 1)
+            if (Stat.Atk - player.Def > 1)
             {
                 damage = Stat.Atk - player.Def;
             }

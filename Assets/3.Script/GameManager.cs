@@ -1,45 +1,58 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IDataPersistence
 {
-    private static GameManager instance;
-    public static GameManager Instance
+    private static GameManager Instance;
+
+    public GameObject player;
+    public SoundManager soundManager;
+
+    private void Awake()
     {
-        // Start 되기전에 다른곳에서 호출되면 실행하기 위함
-        get
+        if (Instance == null)
         {
-            Init();
-            return instance;
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(Instance.gameObject);
+            return;
         }
     }
 
     private void Start()
     {
-        Init();
+        DataManager.instance.LoadGame();
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F11))
+        {
+            OnSaveGameClicked();
+        }
     }
 
-    static void Init()
+    public void LoadData(Player data)
     {
-        // 유일성 보장
-        if (instance == null)
-        {
-            // 게임 매니저를 찾아서 없으면 오브젝트 생성하고 스크립트 붙이기
-            GameObject gm = GameObject.Find("GameManager");
-            if (gm == null)
-            {
-                gm = new GameObject { name = "GameManager" };
-                gm.AddComponent<GameManager>();
-            }
+        player.transform.position = data.playerPosition;
+    }
+    public void SaveData(ref Player data)
+    {
+        data.playerPosition = player.transform.position;
+    }
 
-            DontDestroyOnLoad(gm);
-            gm.TryGetComponent(out instance);
-        }
+    public void OnSaveGameClicked()
+    {
+        DataManager.instance.SaveGame();
+    }
+    public void GameExit()
+    {
+        Application.Quit();
     }
     public static void Clear()
     {

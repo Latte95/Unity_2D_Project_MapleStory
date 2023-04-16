@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Stat : MonoBehaviour
 {
     [SerializeField]
@@ -37,5 +38,4 @@ public class Stat : MonoBehaviour
     public int Def { get => defense; set => defense = value; }
     public float Speed { get => speed; set => speed = value; }
     public float JumpForce { get => jumpForce; set => jumpForce = value; }
-
 }
