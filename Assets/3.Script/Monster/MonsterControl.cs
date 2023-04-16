@@ -52,24 +52,19 @@ public class MonsterControl : CreatureControl
         }
     }
 
-    public override void OnDamaged(Vector2 targetPos)
+    public override void OnDamaged(Vector2 targetPos, int damage)
     {
         if (!isImmobile)
         {
-            base.OnDamaged(targetPos);
+            base.OnDamaged(targetPos, damage);
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out Player player))
+        if (collision.gameObject.TryGetComponent(out PlayerControl player))
         {
-            int damage = 1;
-            if (Stat.Atk - player.Def > 1)
-            {
-                damage = Stat.Atk - player.Def;
-            }
-            player.Hp -= damage;
+            player.OnDamaged(transform.position, Stat.Atk);
         }
     }
 

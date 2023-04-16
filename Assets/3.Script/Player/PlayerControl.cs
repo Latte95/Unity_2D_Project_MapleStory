@@ -93,12 +93,20 @@ public class PlayerControl : CreatureControl
         }
     }
 
-    public override void OnDamaged(Vector2 targetPos)
+    public override void OnDamaged(Vector2 targetPos, int damage)
     {
         if (!isImmobile)
         {
-            base.OnDamaged(targetPos);
-
+            base.OnDamaged(targetPos, damage);
+            if (damage - Stat.Def > 1)
+            {
+                damage = damage - Stat.Def;
+            }
+            else
+            {
+                damage = 1;
+            }
+            Stat.Hp -= damage;
 
             // 자식 오브젝트 포함 모두 무적상태로 변경
             gameObject.layer = invincibleLayer;
@@ -114,14 +122,14 @@ public class PlayerControl : CreatureControl
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        // 적과 부딪힌 경우 피격당함
-        if (col.gameObject.CompareTag("Enemy"))
-        {
-            OnDamaged(col.gameObject.transform.position);
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D col)
+    //{
+    //    // 적과 부딪힌 경우 피격당함
+    //    if (col.gameObject.CompareTag("Enemy"))
+    //    {
+    //        OnDamaged(col.gameObject.transform.position);
+    //    }
+    //}
 
     private void Prone()
     {
@@ -152,7 +160,7 @@ public class PlayerControl : CreatureControl
             foreach (Collider2D collider in collider2Ds)
             {
                 collider.TryGetComponent(out MonsterControl monster);
-                monster.OnDamaged((Vector2)transform.position);
+                monster.OnDamaged((Vector2)transform.position, Stat.Atk);
 
                 collider.TryGetComponent(out MonsterStat monsterData);
                 int damage = 1;

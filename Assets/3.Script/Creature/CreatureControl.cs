@@ -145,7 +145,7 @@ public abstract class CreatureControl : MonoBehaviour
         }
     }
 
-    public virtual void OnDamaged(Vector2 targetPos)
+    public virtual void OnDamaged(Vector2 targetPos, int damage)
     {
         // 이동 불가능, 다단히트 방지
         isImmobile = true;
