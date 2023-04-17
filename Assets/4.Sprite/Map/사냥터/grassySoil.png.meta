@@ -1,0 +1,873 @@
+fileFormatVersion: 2
+guid: ae531c6268f50724e89bf47c5e4c6ba9
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7046031157461283276
+    second: grassySoil_0
+  - first:
+      213: -7476502628398391778
+    second: grassySoil_1
+  - first:
+      213: -436284119924857778
+    second: grassySoil_2
+  - first:
+      213: -8173251219168916617
+    second: grassySoil_3
+  - first:
+      213: -740980701331403775
+    second: grassySoil_4
+  - first:
+      213: -4734568577572077897
+    second: grassySoil_5
+  - first:
+      213: 4011298498821208702
+    second: grassySoil_6
+  - first:
+      213: -8305310957650952749
+    second: grassySoil_7
+  - first:
+      213: -5826698451318733747
+    second: grassySoil_8
+  - first:
+      213: -933842173092184360
+    second: grassySoil_9
+  - first:
+      213: 1359565663777810127
+    second: grassySoil_10
+  - first:
+      213: -5974007740564022388
+    second: grassySoil_11
+  - first:
+      213: -6561835383312604266
+    second: grassySoil_12
+  - first:
+      213: 3099184980408047466
+    second: grassySoil_13
+  - first:
+      213: -7895930075046693671
+    second: grassySoil_14
+  - first:
+      213: 7287646064395213789
+    second: grassySoil_15
+  - first:
+      213: -8208901386898818371
+    second: grassySoil_16
+  - first:
+      213: -2116473042493126365
+    second: grassySoil_17
+  - first:
+      213: -5557320175980053288
+    second: grassySoil_18
+  - first:
+      213: -1320793408773969913
+    second: grassySoil_19
+  - first:
+      213: -24859019190029504
+    second: grassySoil_20
+  - first:
+      213: -5245236465849733420
+    second: grassySoil_21
+  - first:
+      213: 8827549023594408503
+    second: grassySoil_22
+  - first:
+      213: -8712700162690011825
+    second: grassySoil_23
+  - first:
+      213: -1674282009080603495
+    second: grassySoil_24
+  - first:
+      213: 3032481522295632971
+    second: grassySoil_25
+  - first:
+      213: 2228147783563751145
+    second: grassySoil_26
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 60
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: grassySoil_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 120
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 8, y: 30}
+        - {x: 8, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc170d8910888c160800000000000000
+      internalID: 7046031157461283276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_1
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 120
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: -2}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: -2}
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1e1a00c8702e3890800000000000000
+      internalID: -7476502628398391778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_2
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 120
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: -2}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: -2}
+      tessellationDetail: 0
+      bones: []
+      spriteID: e442cba87e102f9f0800000000000000
+      internalID: -436284119924857778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_3
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 120
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: -2}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: -2}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77b8865e157c29e80800000000000000
+      internalID: -8173251219168916617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_4
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 120
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: -2}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: -2}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10cc8bf5af187b5f0800000000000000
+      internalID: -740980701331403775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_5
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 120
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: -2}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: -2}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bef619a6fe6b4eb0800000000000000
+      internalID: -4734568577572077897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_6
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 120
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: -2}
+        - {x: -30, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: -2}
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7abb4e5bbefaa730800000000000000
+      internalID: 4011298498821208702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_7
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 120
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: -2, y: -30}
+        - {x: -2, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dd3e0cffab9dbc80800000000000000
+      internalID: -8305310957650952749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 60
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 8, y: 30}
+        - {x: 8, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4404d331a8632fa0800000000000000
+      internalID: -5826698451318733747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_9
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 60
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: 6, y: 30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8debf84cd735a03f0800000000000000
+      internalID: -933842173092184360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_10
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 60
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: 6, y: 30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc66b4694c52ed210800000000000000
+      internalID: 1359565663777810127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_11
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 60
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: 6, y: 30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8b5f329c9f081da0800000000000000
+      internalID: -5974007740564022388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_12
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 60
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: 6, y: 30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69320172c7dafe4a0800000000000000
+      internalID: -6561835383312604266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_13
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 60
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: 6, y: 30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: a67927ac154820b20800000000000000
+      internalID: 3099184980408047466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_14
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 60
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: 6, y: 30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d4b4816e650c6290800000000000000
+      internalID: -7895930075046693671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_15
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 60
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: 6, y: 30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddbdc05eb7be22560800000000000000
+      internalID: 7287646064395213789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_16
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 60
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: 6, y: 30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: dba3fa56eaf141e80800000000000000
+      internalID: -8208901386898818371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_17
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 60
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: 6, y: 30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 329c18d3bf6c0a2e0800000000000000
+      internalID: -2116473042493126365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_18
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 60
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: -2, y: -30}
+        - {x: -2, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8dcf89f6ebe60e2b0800000000000000
+      internalID: -5557320175980053288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_19
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: 8, y: 30}
+        - {x: 8, y: -30}
+        - {x: 30, y: -30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 708a95084699bade0800000000000000
+      internalID: -1320793408773969913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_20
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 0
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: 6, y: 30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 043b6bf8adea7aff0800000000000000
+      internalID: -24859019190029504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_21
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: 6, y: 30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4dee91a893d2537b0800000000000000
+      internalID: -5245236465849733420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_22
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 0
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: 6, y: 30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73ae0bc0111c18a70800000000000000
+      internalID: 8827549023594408503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_23
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: 6, y: 30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4daf582d55461780800000000000000
+      internalID: -8712700162690011825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_24
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 0
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: 6, y: 30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99c5cea2261c3c8e0800000000000000
+      internalID: -1674282009080603495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_25
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 0
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: 6, y: 30}
+        - {x: 30, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: b44fd54b0e9851a20800000000000000
+      internalID: 3032481522295632971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: grassySoil_26
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 0
+        width: 60
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape:
+      - - {x: -30, y: 30}
+        - {x: -30, y: -30}
+        - {x: -2, y: -30}
+        - {x: -2, y: 30}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ee246a9a98fbee10800000000000000
+      internalID: 2228147783563751145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
