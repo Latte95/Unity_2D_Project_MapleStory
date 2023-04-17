@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class MonsterStat : Stat
 {
+    [SerializeField]
     protected int exp;
+    [SerializeField]
     protected int gold;
 
     public int Exp { get => exp; set => exp = value; }
@@ -12,14 +14,6 @@ public class MonsterStat : Stat
 
     public void Init()
     {
-        level = 1;
-        maxHp = 20;
         hp = maxHp;
-        attack = 3;
-        defense = 2;
-        speed = 0.9f;
-        jumpForce = 20f;
-        exp = 0;
-        gold = 1000;
     }
 }

@@ -45,7 +45,7 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             case BTNType.Dice:
                 RollringDice();
                 break;
-            case BTNType.Play:
+            case BTNType.Play:                
                 SceneManagerEX.LoadScene(Define.Scene.HenesysTown);
                 break;
             case BTNType.Create:

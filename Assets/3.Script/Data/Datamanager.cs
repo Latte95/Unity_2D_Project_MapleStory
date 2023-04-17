@@ -42,7 +42,10 @@ public class DataManager : MonoBehaviour
         }
         else
         {
-            Destroy(instance.gameObject);
+            if (instance != this)
+            {
+                Destroy(this.gameObject);
+            }
             return;
         }
         #endregion
@@ -75,6 +78,10 @@ public class DataManager : MonoBehaviour
     // Load data from save file and update all data persistence object
     public void LoadGame()
     {
+        if(nowPlayer == null)
+        {
+            nowPlayer = FindObjectOfType<Player>();
+        }
         fileName = "saveData.json";
 
         // Generate a key based on the file name and salt

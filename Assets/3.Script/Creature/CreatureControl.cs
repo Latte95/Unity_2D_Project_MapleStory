@@ -34,6 +34,8 @@ public abstract class CreatureControl : MonoBehaviour
     //
     float deltaTime;
     protected WaitForSeconds invincibleTime_wait;
+    protected WaitUntil dieAni;
+    protected WaitUntil dieHp;
     // 발 위치
     [SerializeField]
     protected Transform FootTrans;
@@ -72,12 +74,15 @@ public abstract class CreatureControl : MonoBehaviour
         TryGetComponent(out rigid);
         TryGetComponent(out anim);
         TryGetComponent(out audioSource);
+        dieAni = new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f &&
+                                              anim.GetCurrentAnimatorStateInfo(0).IsName("Die"));
     }
 
     protected virtual void Start()
     {
         myLayer = gameObject.layer;
         FootTrans = gameObject.transform.GetChild(1);
+        StartCoroutine(nameof(OnDie_co));
     }
 
     protected void Update()
@@ -145,7 +150,7 @@ public abstract class CreatureControl : MonoBehaviour
         }
     }
 
-    public virtual void OnDamaged(Vector2 targetPos, int damage)
+    public virtual void OnDamaged(Vector2 targetPos)
     {
         // 이동 불가능, 다단히트 방지
         isImmobile = true;
@@ -155,12 +160,13 @@ public abstract class CreatureControl : MonoBehaviour
         int dirc = transform.position.x - targetPos.x > 0 ? 1 : -1;
 
         rigid.AddForce(7 * new Vector2(dirc, 2), ForceMode2D.Impulse);
-
         StopCoroutine(nameof(OffDamaged_co));
         StartCoroutine(nameof(OffDamaged_co));
     }
 
     protected abstract IEnumerator OffDamaged_co();
+    protected abstract IEnumerator OnDie_co();
+
     // 자신이 밟고있는 땅과 다른 계층의 벽은 통과
     IEnumerator CheckWall_co()
     {

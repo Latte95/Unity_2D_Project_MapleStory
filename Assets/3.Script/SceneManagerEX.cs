@@ -12,6 +12,5 @@ public class SceneManagerEX
     public static void LoadScene(Define.Scene type)
     {
         loadScene = System.Enum.GetName(typeof(Define.Scene), type);
-        SceneManager.LoadScene(loadScene);
     }
 }

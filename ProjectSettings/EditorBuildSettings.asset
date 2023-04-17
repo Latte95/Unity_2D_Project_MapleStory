@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/1.Scene/HenesysTown.unity
     guid: 91868b94a921d1c4dadadba3787d70bf
+  - enabled: 1
+    path: Assets/1.Scene/HenesysField.unity
+    guid: 3690ecf1d3e5e384c93966415027fd6e
   m_configObjects: {}

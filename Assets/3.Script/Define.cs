@@ -11,7 +11,7 @@ public class Define
 
     public enum Scene
     {
-        Login, HenesysTown, Henesys_Field
+        Title, HenesysTown, HenesysField
     }
 
     public enum Sound

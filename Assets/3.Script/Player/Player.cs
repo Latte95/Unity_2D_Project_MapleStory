@@ -10,7 +10,11 @@ public class Player : Stat
     protected int dexterity;
     protected int luck;
 
+    [SerializeField]
     protected int exp;
+    [SerializeField]
+    protected int levelUpExp;
+    [SerializeField]
     protected int gold;
 
     protected Define.Scene scene;
@@ -27,6 +31,8 @@ public class Player : Stat
 
     public Define.Scene Scene { get => scene; set => scene = value; }
 
+
+    private WaitUntil leverUp_wait;
     public Player(int _str, int _int, int _dex, int _luk)
     {
         this.playerPosition = Vector3.zero;
@@ -39,7 +45,7 @@ public class Player : Stat
         jumpForce = 23f;
         exp = 0;
         gold = 1000;
-        scene = Define.Scene.Henesys_Field;
+        scene = Define.Scene.HenesysField;
 
         strong = _str;
         intelligence = _int;
@@ -75,6 +81,9 @@ public class Player : Stat
     private void Awake()
     {
         Init(4, 4, 4, 4);
+        levelUpExp = 100 + (level * level + 10);
+        leverUp_wait = new WaitUntil(() => exp >= levelUpExp);
+        StartCoroutine(nameof(LevelUp_co));
     }
     public void SetData(PlayerData data)
     {
@@ -111,7 +120,7 @@ public class Player : Stat
         jumpForce = 23f;
         exp = 0;
         gold = 1000;
-        scene = Define.Scene.Henesys_Field;
+        scene = Define.Scene.HenesysField;
 
         strong = _str;
         intelligence = _int;
@@ -119,6 +128,18 @@ public class Player : Stat
         luck = _luk;
 
         inventory = new Inventory();
-        inventoryUI.SetInventory(inventory);
+        //inventoryUI.SetInventory(inventory);
+    }
+
+    private IEnumerator LevelUp_co()
+    {
+        while (true)
+        {
+            yield return leverUp_wait;
+            SoundManager.instance.PlaySfx(Define.Sfx.LevelUp);
+            level++;
+            exp += -levelUpExp;
+            levelUpExp = 100 + (level * level + 10);
+        }
     }
 }

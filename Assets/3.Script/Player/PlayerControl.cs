@@ -11,6 +11,10 @@ public class PlayerControl : CreatureControl
 
     // 아래점프시 바닥 충돌 무시할 시간
     protected WaitForSeconds ignorePlatTime_wait;
+    protected WaitForSeconds offHit_wait;
+    protected WaitForSeconds recover_wait;
+    private float offHitTime = 5f;
+    private float recoverTime = 2f;
 
     // 공격 관련 변수
     public Transform atkPos;
@@ -22,7 +26,12 @@ public class PlayerControl : CreatureControl
         base.OnEnable();
         TryGetComponent(out audioJump);
         TryGetComponent(out Stat);
-        ignorePlatTime_wait = new WaitForSeconds(1f);
+        ignorePlatTime_wait = new WaitForSeconds(0.2f);
+
+        dieHp = new WaitUntil(() => Stat.Hp <= 0);
+        offHit_wait = new WaitForSeconds(offHitTime - invincibleTime);
+        recover_wait = new WaitForSeconds(recoverTime);
+        anim.SetBool("isNomal", true);
     }
 
     // 공격
@@ -38,7 +47,7 @@ public class PlayerControl : CreatureControl
 
     protected override void Move()
     {
-        bool isIdleOrWalking = (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni));
+        bool isIdleOrWalking = (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni) || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"));
         bool leftArrowPressed = Input.GetKey(KeyCode.LeftArrow);
         bool rightArrowPressed = Input.GetKey(KeyCode.RightArrow);
 
@@ -57,10 +66,6 @@ public class PlayerControl : CreatureControl
             else
             {
                 movement.MoveTo(Vector2.zero);
-            }
-            if (Input.GetButtonDown("Jump"))
-            {
-                movement.JumpTo();
             }
         }
         else
@@ -93,21 +98,12 @@ public class PlayerControl : CreatureControl
         }
     }
 
-    public override void OnDamaged(Vector2 targetPos, int damage)
+    public override void OnDamaged(Vector2 targetPos)
     {
         if (!isImmobile)
         {
-            base.OnDamaged(targetPos, damage);
-            if (damage - Stat.Def > 1)
-            {
-                damage = damage - Stat.Def;
-            }
-            else
-            {
-                damage = 1;
-            }
-            Stat.Hp -= damage;
-
+            base.OnDamaged(targetPos);
+            anim.SetBool("isNomal", false);
             // 자식 오브젝트 포함 모두 무적상태로 변경
             gameObject.layer = invincibleLayer;
             foreach (Transform child in transform)
@@ -122,14 +118,6 @@ public class PlayerControl : CreatureControl
         }
     }
 
-    //private void OnTriggerEnter2D(Collider2D col)
-    //{
-    //    // 적과 부딪힌 경우 피격당함
-    //    if (col.gameObject.CompareTag("Enemy"))
-    //    {
-    //        OnDamaged(col.gameObject.transform.position);
-    //    }
-    //}
 
     private void Prone()
     {
@@ -151,7 +139,8 @@ public class PlayerControl : CreatureControl
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
             anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni) ||
             anim.GetCurrentAnimatorStateInfo(0).IsName("Jump") ||
-            anim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
+            anim.GetCurrentAnimatorStateInfo(0).IsName("Down") ||
+            anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
         {
             SoundManager.instance.PlaySfx(Define.Sfx.AttackS);
             //GameManager.Sound.PlaySfx(Define.Sfx.AttackS);
@@ -160,15 +149,19 @@ public class PlayerControl : CreatureControl
             foreach (Collider2D collider in collider2Ds)
             {
                 collider.TryGetComponent(out MonsterControl monster);
-                monster.OnDamaged((Vector2)transform.position, Stat.Atk);
+                monster.OnDamaged(transform.position);
 
                 collider.TryGetComponent(out MonsterStat monsterData);
-                int damage = 1;
-                if (Stat.Atk - monsterData.Def > 1)
+                int damage = Stat.Atk - monsterData.Def;
+                if (damage < 1)
                 {
-                    damage = Stat.Atk - monsterData.Def;
+                    damage = 1;
                 }
                 monsterData.Hp -= damage;
+                if(monsterData.Hp <= 0)
+                {
+                    Stat.Exp += monsterData.Exp;
+                }
             }
             anim.SetBool("isAttack", true);
 
@@ -198,6 +191,23 @@ public class PlayerControl : CreatureControl
             child.gameObject.layer = myLayer;
         }
         spriteRenderer.color = new Color(1, 1, 1, 1);
+        yield return offHit_wait;
+        anim.SetBool("isNomal", true);
+    }
+    protected override IEnumerator OnDie_co()
+    {
+        yield return dieHp;
+        yield return null;
+        anim.SetTrigger("isDie");
+        rigid.velocity = Vector2.zero;
+        yield return recover_wait;
+        Recovery();
+    }
+
+    private void Recovery()
+    {
+        anim.Play("Idle");
+        Stat.Hp = Stat.MaxHp;
     }
 
     protected override void OnDrawGizmos()
