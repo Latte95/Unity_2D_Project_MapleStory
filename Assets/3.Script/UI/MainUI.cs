@@ -13,6 +13,7 @@ public enum BTNType
     Play,
     Create,
     BackToFirst,
+    Item,
 }
 
 public class MainUI : MonoBehaviour

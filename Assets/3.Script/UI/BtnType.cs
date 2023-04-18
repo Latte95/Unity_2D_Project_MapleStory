@@ -51,6 +51,9 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             case BTNType.Create:
                 SetCameraPosition(10);
                 break;
+            case BTNType.Item:
+                SetCameraPosition(10);
+                break;
         }
     }
 

@@ -34,25 +34,6 @@ public class Inventory : MonoBehaviour
             slot[i] = newSlot;
         }
     }
-    //IEnumerator UpdateSlot_co(Item item)
-    //{
-    //    yield return null;
-    //    for (int i = 0; i < slotCnt; i++)
-    //    {
-    //        if (slot[i].icon.sprite == null)
-    //        {
-    //            slot[i].icon.sprite = item.itemIcon;
-    //            slot[i].icon.color = new Color(1, 1, 1, 1);
-    //            break;
-    //            //    newSlot.itemCount_Text.text = items[i].quantity.ToString();
-    //        }
-    //        else if (slot[i].icon.sprite.Equals(item.itemIcon) && !(item is EquipableItem))
-    //        {
-    //            slot[i].itemCount_Text.text = "x" + item.quantity.ToString();
-    //            break;
-    //        }
-    //    }
-    //}
 
     private void UpdateSlot(Item item)
     {
