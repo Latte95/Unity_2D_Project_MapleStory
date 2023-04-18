@@ -9,7 +9,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
     private static GameManager Instance;
 
     public GameObject player;
+    public Player nowPlayer;
     public SoundManager soundManager;
+    public DataManager dataManager;
 
     private void Awake()
     {
@@ -26,11 +28,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
             }
             return;
         }
+        DataManager.instance.LoadGame();
     }
 
     private void Start()
     {
-        DataManager.instance.LoadGame();
     }
 
     private void Update()
@@ -50,7 +52,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
             {
                 StartCoroutine(LoadSceneAndData(Define.Scene.HenesysTown));
             }
-
+        }
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            nowPlayer.inventory.GetItem(02000000);
         }
     }
 
@@ -92,5 +97,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
         soundManager = FindObjectOfType<SoundManager>();
         // 데이터 로드
         DataManager.instance.LoadGame();
+        player.transform.position = Vector3.zero;
     }
 }

@@ -29,6 +29,7 @@ public class Item
     public int _hp;
     public int _mp;
     public int _price;
+    [SerializeField]
     private int _quantity;
     public int quantity
     {

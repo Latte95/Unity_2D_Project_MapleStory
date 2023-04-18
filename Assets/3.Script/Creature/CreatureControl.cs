@@ -128,6 +128,7 @@ public abstract class CreatureControl : MonoBehaviour
                 if (!raycastHit.collider.tag.Equals(lastGroundTag))
                 {
                     Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(raycastHit.collider.gameObject.tag), false);
+
                 }
                 lastGroundTag = raycastHit.collider.gameObject.tag;
             }

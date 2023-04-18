@@ -19,7 +19,7 @@ public class Player : Stat
 
     protected Define.Scene scene;
     public Inventory inventory;
-    private InventoryUI inventoryUI;
+    public InventoryUI inventoryUI;
 
     public int Str { get => strong; set => strong = value; }
     public int Int { get => intelligence; set => intelligence = value; }
@@ -31,8 +31,8 @@ public class Player : Stat
 
     public Define.Scene Scene { get => scene; set => scene = value; }
 
-
     private WaitUntil leverUp_wait;
+
     public Player(int _str, int _int, int _dex, int _luk)
     {
         this.playerPosition = Vector3.zero;
@@ -51,8 +51,7 @@ public class Player : Stat
         intelligence = _int;
         dexterity = _dex;
         luck = _luk;
-
-        inventory = new Inventory();
+        //inventory = new Inventory();
     }
 
     public PlayerData ToPlayerData()
@@ -84,6 +83,19 @@ public class Player : Stat
         levelUpExp = 100 + (level * level + 10);
         leverUp_wait = new WaitUntil(() => exp >= levelUpExp);
         StartCoroutine(nameof(LevelUp_co));
+    }
+
+    private void LateUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            inventory.GetItem(02000000);
+            inventory.GetItem("주황 포션");
+        }
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            inventory.GetItem("검");
+        }
     }
     public void SetData(PlayerData data)
     {
@@ -126,9 +138,6 @@ public class Player : Stat
         intelligence = _int;
         dexterity = _dex;
         luck = _luk;
-
-        inventory = new Inventory();
-        //inventoryUI.SetInventory(inventory);
     }
 
     private IEnumerator LevelUp_co()

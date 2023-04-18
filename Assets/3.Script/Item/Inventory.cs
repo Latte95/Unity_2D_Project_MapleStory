@@ -4,13 +4,73 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-public class Inventory
+public class Inventory : MonoBehaviour
 {
-    public List<Item> items { get; private set; }
+    [SerializeField]
+    public List<Item> items;
+    public DataManager dataManager;
 
-    public Inventory()
+    ///
+    [SerializeField]
+    private InventorySlot[] slot;
+    [SerializeField]
+    private Transform SlotTrans;
+    [SerializeField]
+    private GameObject SlotPrefabs;
+    private int slotCnt = 40;
+
+    private void Awake()
     {
-        items = new List<Item>();
+        slot = new InventorySlot[slotCnt];
+        for (int i = 0; i < slotCnt; i++)
+        {
+            GameObject slotClone = Instantiate(SlotPrefabs);
+            slotClone.transform.SetParent(SlotTrans, false);
+
+            InventorySlot newSlot = slotClone.GetComponent<InventorySlot>();
+            newSlot.icon.color = new Color(1, 1, 1, 0);
+            newSlot.itemCount_Text.text = null;
+
+            slot[i] = newSlot;
+        }
+    }
+    //IEnumerator UpdateSlot_co(Item item)
+    //{
+    //    yield return null;
+    //    for (int i = 0; i < slotCnt; i++)
+    //    {
+    //        if (slot[i].icon.sprite == null)
+    //        {
+    //            slot[i].icon.sprite = item.itemIcon;
+    //            slot[i].icon.color = new Color(1, 1, 1, 1);
+    //            break;
+    //            //    newSlot.itemCount_Text.text = items[i].quantity.ToString();
+    //        }
+    //        else if (slot[i].icon.sprite.Equals(item.itemIcon) && !(item is EquipableItem))
+    //        {
+    //            slot[i].itemCount_Text.text = "x" + item.quantity.ToString();
+    //            break;
+    //        }
+    //    }
+    //}
+
+    private void UpdateSlot(Item item)
+    {
+        for (int i = 0; i < slotCnt; i++)
+        {
+            if (slot[i].icon.sprite == null)
+            {
+                slot[i].icon.sprite = item.itemIcon;
+                slot[i].icon.color = new Color(1, 1, 1, 1);
+                break;
+                //    newSlot.itemCount_Text.text = items[i].quantity.ToString();
+            }
+            else if (slot[i].icon.sprite.Equals(item.itemIcon) && !(item is EquipableItem))
+            {
+                slot[i].itemCount_Text.text = "x" + item.quantity.ToString();
+                break;
+            }
+        }
     }
 
     // 인벤토리에 아이템 추가 (구매, 착용, 드랍 등등)
@@ -25,7 +85,7 @@ public class Inventory
             if (itemIndex >= 0)
             {
                 items[itemIndex].quantity++;
-                return;
+                //return;
             }
             // 아이템이 없으면 인벤토리에 추가
             else
@@ -40,11 +100,13 @@ public class Inventory
             // 그냥 아이템 추가
             items.Add(item);
             item.quantity = 1;
+
         }
         else
         {
-            // 장비나 소비가 아닌 아이템 구현하면 추가. (아티팩트 등)
+            // 기타 아이템
         }
+        UpdateSlot(item);
     }
 
     // 아이템 삭제 (판매, 해제, 버림, 사용 등등)
@@ -77,4 +139,18 @@ public class Inventory
             }
         }
     }
+
+    public void GetItem(int itemID)
+    {
+        int itemIndex = dataManager.itemDataBase.itemList.FindIndex(item => item._itemID == itemID);
+        Item tmpItem = dataManager.itemDataBase.itemList[itemIndex];
+        AddItem(tmpItem);
+    }
+    public void GetItem(string itemName)
+    {
+        int itemIndex = dataManager.itemDataBase.itemList.FindIndex(item => item._itemName == itemName);
+        Item tmpItem = dataManager.itemDataBase.itemList[itemIndex];
+        AddItem(tmpItem);
+    }
+
 }

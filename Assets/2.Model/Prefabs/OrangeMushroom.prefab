@@ -238,6 +238,7 @@ MonoBehaviour:
   lastGroundTag: 
   FootTrans: {fileID: 0}
   invincibleTime: 2
+  sfxClips: []
 --- !u!82 &5180292556998340338
 AudioSource:
   m_ObjectHideFlags: 0
@@ -352,4 +353,6 @@ MonoBehaviour:
   attack: 7
   defense: 3
   speed: 1.8
-  jumpForce: 3
+  jumpForce: 23
+  exp: 0
+  gold: 0
