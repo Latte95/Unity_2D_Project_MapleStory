@@ -9,7 +9,22 @@ public class Inventory
 {
     [SerializeField]
     public List<Item> items;
-    public DataManager dataManager;
+    //public DataManager dataManager;
+    public DataManager dataManager
+    {
+        get
+        {
+            if (DataManager.instance != null)
+            {
+                return DataManager.instance;
+            }
+            else
+            {
+                Debug.LogError("DataManager instance not found.");
+                return null;
+            }
+        }
+    }
 
     public Item newItem;
     public event Action<Item> OnItemAdded;

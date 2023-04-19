@@ -7,7 +7,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour, IDataPersistence
 {
     private static GameManager Instance;
+    public MainUI _ui;
+    public static MainUI UI => Instance._ui;
 
+    public GameObject canvasPrefab;
     public GameObject player;
     public Player nowPlayer;
     public SoundManager soundManager;
@@ -19,6 +22,21 @@ public class GameManager : MonoBehaviour, IDataPersistence
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
+
+            MainUI existingMainUI = FindObjectOfType<MainUI>();
+            if (existingMainUI == null)
+            {
+                // Instantiate the Canvas prefab and assign the MainUI component to the _ui field
+                GameObject canvasInstance = Instantiate(canvasPrefab);
+                _ui = canvasInstance.GetComponent<MainUI>();
+
+                // Set the name of the instantiated object to match the original prefab
+                canvasInstance.name = canvasPrefab.name;
+            }
+            else
+            {
+                _ui = existingMainUI;
+            }
         }
         else
         {
@@ -31,8 +49,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
         DataManager.instance.LoadGame();
     }
 
-    private void Start()
+    private void OnEnable()
     {
+        nowPlayer = player.GetComponent<Player>();
     }
 
     private void Update()
@@ -88,6 +107,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         //UI.Clear();
     }
 
+
     IEnumerator LoadSceneAndData(Define.Scene targetScene)
     {
         // 씬 로드
@@ -98,7 +118,47 @@ public class GameManager : MonoBehaviour, IDataPersistence
         {
             yield return null;
         }
+
+        MainUI existingMainUI = FindObjectOfType<MainUI>();
+
+        if (existingMainUI == null)
+        {
+            // Instantiate the Canvas prefab and assign the MainUI component to the _ui field
+            GameObject canvasInstance = Instantiate(canvasPrefab);
+            _ui = canvasInstance.GetComponent<MainUI>();
+
+            // Set the name of the instantiated object to match the original prefab
+            canvasInstance.name = canvasPrefab.name;
+        }
+        else
+        {
+            _ui = existingMainUI;
+        }
+
+        // CursorManager에 transform_cursor 할당
+        CursorManager cursorManager = GetComponent<CursorManager>();
+        if (cursorManager != null)
+        {
+            cursorManager.Init_Cursor();
+        }
+        else
+        {
+            Debug.LogWarning("CursorManager not found on GameManager.");
+        }
+
+        // InventoryUI에 player 할당
+        InventoryUI inventoryUI = FindObjectOfType<InventoryUI>();
+        if (inventoryUI != null)
+        {
+            inventoryUI.InitializePlayer();
+        }
+        else
+        {
+            Debug.LogWarning("InventoryUI not found in the scene.");
+        }
+
         player = GameObject.Find("Player");
+        nowPlayer = player.GetComponent<Player>();
         soundManager = FindObjectOfType<SoundManager>();
         // 데이터 로드
         DataManager.instance.LoadGame();

@@ -32,7 +32,6 @@ public class MainUI : MonoBehaviour
         {
             activeInventory = !activeInventory;
             inventoryUI.SetActive(activeInventory);
-            //Inventory.ShowTab();
         }
     }
 }

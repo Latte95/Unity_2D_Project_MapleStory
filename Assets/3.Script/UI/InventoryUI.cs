@@ -85,4 +85,14 @@ public class InventoryUI : MonoBehaviour
             }
         }
     }
+
+    public void InitializePlayer()
+    {
+        player = FindObjectOfType<Player>();
+
+        if (player == null)
+        {
+            Debug.LogWarning("Player object not found in the scene.");
+        }
+    }
 }

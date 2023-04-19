@@ -7,8 +7,8 @@
     "speed": 1.7999999523162842,
     "jumpForce": 23.0,
     "playerPosition": {
-        "x": 0.010440798476338387,
-        "y": -0.4418827295303345,
+        "x": 0.010440805926918984,
+        "y": -0.4423576593399048,
         "z": 0.0
     },
     "strong": 4,
@@ -33,9 +33,9 @@
                 "_hp": 50,
                 "_mp": 0,
                 "_price": 10,
-                "_quantity": 4,
+                "_quantity": 5,
                 "itemIcon": {
-                    "instanceID": 20950
+                    "instanceID": 20480
                 },
                 "itemType": 1
             },
@@ -52,15 +52,15 @@
                 "_hp": 100,
                 "_mp": 0,
                 "_price": 18,
-                "_quantity": 2,
+                "_quantity": 3,
                 "itemIcon": {
-                    "instanceID": 24408
+                    "instanceID": 24016
                 },
                 "itemType": 1
             }
         ],
         "dataManager": {
-            "instanceID": 17442
+            "instanceID": 26342
         },
         "newItem": {
             "_itemID": 2000001,
@@ -75,14 +75,14 @@
             "_hp": 100,
             "_mp": 0,
             "_price": 18,
-            "_quantity": 2,
+            "_quantity": 3,
             "itemIcon": {
-                "instanceID": 24408
+                "instanceID": 24016
             },
             "itemType": 1
         }
     },
     "inventoryUI": {
-        "instanceID": 17348
+        "instanceID": 0
     }
 }

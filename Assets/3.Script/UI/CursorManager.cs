@@ -25,15 +25,28 @@ public class CursorManager : MonoBehaviour
         //}
     }
 
-    private void Init_Cursor()
+    public void Init_Cursor()
     {
         //Cursor.visible = false;
-        transform_cursor.pivot = Vector2.up;
 
-        if (transform_cursor.GetComponent<Graphic>())
+        GameObject cursorGameObject = GameManager.UI.transform.Find("Cursor").gameObject;
+
+        if (cursorGameObject != null)
         {
-            transform_cursor.GetComponent<Graphic>().raycastTarget = false;
+            // Assign the RectTransform component of the Cursor game object to transform_cursor
+            transform_cursor = cursorGameObject.GetComponent<RectTransform>();
+            transform_cursor.pivot = Vector2.up;
+
+            if (transform_cursor.GetComponent<Graphic>())
+            {
+                transform_cursor.GetComponent<Graphic>().raycastTarget = false;
+            }
+            transform_cursor.TryGetComponent(out cursorImage);
         }
+        else
+        {
+        }
+
     }
 
     private void Update_MousePosition()

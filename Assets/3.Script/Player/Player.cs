@@ -20,7 +20,6 @@ public class Player : Stat
 
     protected Define.Scene scene;
     public Inventory inventory;
-    public InventoryUI inventoryUI;
 
     public int Str { get => strong; set => strong = value; }
     public int Int { get => intelligence; set => intelligence = value; }
@@ -74,7 +73,6 @@ public class Player : Stat
         data.gold = gold;
         data.scene = scene;
         data.inventory = inventory;
-        data.inventoryUI = inventoryUI;
         return data;
     }
 
@@ -84,10 +82,6 @@ public class Player : Stat
         levelUpExp = 100 + (level * level + 10);
         leverUp_wait = new WaitUntil(() => exp >= levelUpExp);
         StartCoroutine(nameof(LevelUp_co));
-    }
-
-    private void LateUpdate()
-    {
     }
     public void SetData(PlayerData data)
     {
