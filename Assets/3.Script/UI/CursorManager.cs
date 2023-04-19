@@ -10,7 +10,7 @@ public class CursorManager : MonoBehaviour
     public Sprite clickedCursorImage;
     public Image cursorImage;
 
-    private void OnEnable()
+    private void Awake()
     {
         // 씬 전환시 널참조 방지. 발생 이유는 모르겠음...
         if (GameManager.UI == null)
@@ -29,15 +29,15 @@ public class CursorManager : MonoBehaviour
             if (!cursorImage.sprite.name.Equals("Cursor_nomal"))
             {
                 SetCursorImage(Resources.Load<Sprite>("Cursor_nomal"));
-            }            
+            }
             //cursorImage.sprite = cursorImage.sprite.Equals(clickedCursorImage) ? defaultCursorImage : clickedCursorImage;
         }
     }
 
     public void Init_Cursor()
     {
-        //Cursor.visible = false;
-            GameObject cursorGameObject = GameManager.UI.transform.Find("Cursor").gameObject;
+        Cursor.visible = false;
+        GameObject cursorGameObject = GameManager.UI.transform.Find("Cursor").gameObject;
 
         if (cursorGameObject != null)
         {

@@ -12,9 +12,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public GameObject canvasPrefab;
     public GameObject player;
+    public GameObject playerPrefab;
     public Player nowPlayer;
     public SoundManager soundManager;
-    public DataManager dataManager;
+    //public DataManager dataManager;
 
     private void Awake()
     {
@@ -36,6 +37,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
             else
             {
                 _ui = existingMainUI;
+            }
+            player = GameObject.FindGameObjectWithTag("Player");
+            if(player == null)
+            {
+                GameObject playerInstance = Instantiate(playerPrefab);
             }
         }
         else
@@ -169,6 +175,11 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
 
         player = GameObject.Find("Player");
+        if (player == null)
+        {
+            GameObject playerInstance = Instantiate(playerPrefab);
+            player = playerInstance;
+        }
         nowPlayer = player.GetComponent<Player>();
         soundManager = FindObjectOfType<SoundManager>();
         // 데이터 로드

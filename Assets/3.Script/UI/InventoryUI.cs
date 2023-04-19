@@ -34,11 +34,11 @@ public class InventoryUI : MonoBehaviour
 
             slot[i] = newSlot;
         }
-        player = FindObjectOfType<Player>();
     }
 
     private void OnEnable()
     {
+        player = FindObjectOfType<Player>();
         // 씬 전환시 널참조 방지. 발생 이유는 모르겠음...
         if (player == null)
         {
@@ -69,6 +69,10 @@ public class InventoryUI : MonoBehaviour
             {
                 slot[i].itemCount_Text.text = "x" + player.inventory.items[i].quantity.ToString();
             }
+            else
+            {
+                slot[i].itemCount_Text.text = null;
+            }
         }
         // 미보유 아이템 초기화
         // 10번째 슬롯에 아이콘이 있는데, 아이템 목록이 9개이하일 경우 10번째 슬롯에 아이콘이 남아있는 것 방지
@@ -97,6 +101,10 @@ public class InventoryUI : MonoBehaviour
             {
                 slot[itemIndex].itemCount_Text.text = "x" + player.inventory.items[itemIndex].quantity.ToString();
             }
+            else
+            {
+                slot[itemIndex].itemCount_Text.text = null;
+            }
         }
         else
         {
@@ -108,6 +116,10 @@ public class InventoryUI : MonoBehaviour
                     slot[i].icon.sprite = newItem.itemIcon;
                     slot[i].icon.color = new Color(1, 1, 1, 1);
                     slot[i].itemCount_Text.text = null;
+                    if (player.inventory.items[i].quantity > 1)
+                    {
+                        slot[i].itemCount_Text.text = "x" + player.inventory.items[i].quantity.ToString();
+                    }
                     break;
                 }
             }

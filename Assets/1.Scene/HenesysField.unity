@@ -7362,8 +7362,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5aa56e684e16a4ca2c2faa707ef389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmClip: {fileID: 8300000, guid: 845844b5c4ec5c743916ce5c5706947d, type: 3}
-  bgmVolume: 0
+  bgmClip: {fileID: 8300000, guid: cdd73077116dba640a131ffe1d8276a7, type: 3}
+  bgmVolume: 0.2
   sfxClips:
   - {fileID: 8300000, guid: 468b925c9ab093f4e9401c593467cd30, type: 3}
   - {fileID: 8300000, guid: 51c57db54f7731d47ae0761826c228c3, type: 3}
@@ -7406,6 +7406,10 @@ PrefabInstance:
     - target: {fileID: 792105714980504226, guid: 10f18c8094c8f024390311777a7d1398, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 792105714980504226, guid: 10f18c8094c8f024390311777a7d1398, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 792105714980504231, guid: 10f18c8094c8f024390311777a7d1398, type: 3}
       propertyPath: m_RootOrder
@@ -11528,11 +11532,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ui: {fileID: 0}
-  canvasPrefab: {fileID: 4286516778536058324, guid: b5f82114faa96c04181bd3418e238825, type: 3}
+  canvasPrefab: {fileID: 5894082575767310063, guid: 3b488d0ca190bd141a5f67cdc86594c7, type: 3}
   player: {fileID: 0}
+  playerPrefab: {fileID: 792105714980504226, guid: 10f18c8094c8f024390311777a7d1398, type: 3}
   nowPlayer: {fileID: 0}
-  soundManager: {fileID: 0}
-  dataManager: {fileID: 468868745}
+  soundManager: {fileID: 470121398}
 --- !u!4 &1227954160
 Transform:
   m_ObjectHideFlags: 0

@@ -33,7 +33,7 @@ public class Inventory
     // 인벤토리에 아이템 추가 (구매, 착용, 드랍 등등)
     public void AddItem(Item item)
     {
-        if (item is ConsumableItem)
+        if (!item.itemType.Equals(Item.ItemType.Equip))
         {
             // 같은 이름을 가진 아이템이 있는지 찾기
             int itemIndex = items.FindIndex(invenItem => invenItem._itemName == item._itemName);
@@ -46,24 +46,30 @@ public class Inventory
                 //return;
             }
             // 아이템이 없으면 인벤토리에 추가
-            else
+            else if (items.Count < 40)
             {
                 items.Add(item);
                 item.quantity = item.quantity;
                 newItem = item;
             }
+            else
+            {
+                // 인벤 꽉참
+                return;
+            }
         }
         // 장비 아이템을 추가할 땐
-        else if (item is EquipableItem)
+        else if (items.Count < 40)
         {
             // 그냥 아이템 추가
             items.Add(item);
             item.quantity = 1;
             newItem = item;
         }
+        // 인벤 꽉참
         else
         {
-            // 기타 아이템
+            return;
         }
         OnItemAdded?.Invoke(newItem);
         newItem = null;
@@ -79,7 +85,7 @@ public class Inventory
         if (itemIndex >= 0)
         {
             // 소비 아이템
-            if (item is ConsumableItem)
+            if (item.itemType.Equals(Item.ItemType.Consume))
             {
                 // 보유 하고 있으면 1개씩 제거하고
                 if (items[itemIndex].quantity > 0)
@@ -117,12 +123,12 @@ public class Inventory
     {
         int itemIndex = dataManager.itemDataBase.itemList.FindIndex(item => item._itemID == itemID);
         Item tmpItem = (Item)dataManager.itemDataBase.itemList[itemIndex].Clone();
-        if (tmpItem is ConsumableItem)
+        if (tmpItem.itemType.Equals(Item.ItemType.Consume))
         {
             tmpItem.quantity = quantity;
             AddItem(tmpItem);
         }
-        else if (tmpItem is EquipableItem)
+        else if (tmpItem.itemType.Equals(Item.ItemType.Equip))
         {
             for (int i = 0; i < quantity; i++)
             {
@@ -134,12 +140,12 @@ public class Inventory
     {
         int itemIndex = dataManager.itemDataBase.itemList.FindIndex(item => item._itemName == itemName);
         Item tmpItem = (Item)dataManager.itemDataBase.itemList[itemIndex].Clone();
-        if (tmpItem is ConsumableItem)
+        if (tmpItem.itemType.Equals(Item.ItemType.Consume))
         {
             tmpItem.quantity = quantity;
             AddItem(tmpItem);
         }
-        else if (tmpItem is EquipableItem)
+        else if (tmpItem.itemType.Equals(Item.ItemType.Equip))
         {
             for (int i = 0; i < quantity; i++)
             {
