@@ -55,7 +55,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
         if (Input.GetKeyDown(KeyCode.F5))
         {
-            nowPlayer.inventory.GetItem(02000000);
+            nowPlayer.inventory.GetItem(02000000,2);
+            nowPlayer.inventory.GetItem("주황 포션");
+        }
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            nowPlayer.inventory.GetItem("검");
         }
     }
 

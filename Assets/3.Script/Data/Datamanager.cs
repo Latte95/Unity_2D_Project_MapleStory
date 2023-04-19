@@ -25,10 +25,10 @@ public class DataManager : MonoBehaviour
     private const int Iterations = 10000;
 
     // æ∆¿Ã≈€
-    public string[] var_name;
-    public float[] var;
-    public string[] switch_name;
-    public bool[] switches;
+    //public string[] var_name;
+    //public float[] var;
+    //public string[] switch_name;
+    //public bool[] switches;
     //public List<Item> itemList = new List<Item>();
     public ItemDataBase itemDataBase;
 
@@ -125,8 +125,8 @@ public class DataManager : MonoBehaviour
                     using (StreamReader reader = new StreamReader(stream))
                     {
                         string encryptedData = reader.ReadToEnd();
-                        string decryptedData = Decrypt(encryptedData);
-                        loadedData = JsonUtility.FromJson<PlayerData>(decryptedData);
+                        //string decryptedData = Decrypt(encryptedData);
+                        loadedData = JsonUtility.FromJson<PlayerData>(encryptedData);
                         //loadedData = JsonUtility.FromJson<Player>(encryptedData);
                     }
                 }
@@ -153,7 +153,7 @@ public class DataManager : MonoBehaviour
             string encryptedData = Encrypt(dataToStore);
             using (StreamWriter writer = new StreamWriter(fullPath, false))
             {
-                writer.Write(encryptedData);
+                writer.Write(dataToStore);
             }
         }
         catch (Exception e)

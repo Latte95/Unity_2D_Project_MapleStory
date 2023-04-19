@@ -8,6 +8,7 @@ public class Player : Stat
     protected int strong;
     protected int intelligence;
     protected int dexterity;
+    [SerializeField]
     protected int luck;
 
     [SerializeField]
@@ -51,7 +52,7 @@ public class Player : Stat
         intelligence = _int;
         dexterity = _dex;
         luck = _luk;
-        //inventory = new Inventory();
+        inventory = new Inventory();
     }
 
     public PlayerData ToPlayerData()
@@ -68,12 +69,12 @@ public class Player : Stat
         data.strong = strong;
         data.intelligence = intelligence;
         data.dexterity = dexterity;
+        data.luck = luck;
         data.exp = exp;
         data.gold = gold;
         data.scene = scene;
         data.inventory = inventory;
         data.inventoryUI = inventoryUI;
-
         return data;
     }
 
@@ -87,15 +88,6 @@ public class Player : Stat
 
     private void LateUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.F5))
-        {
-            inventory.GetItem(02000000);
-            inventory.GetItem("주황 포션");
-        }
-        if (Input.GetKeyDown(KeyCode.F6))
-        {
-            inventory.GetItem("검");
-        }
     }
     public void SetData(PlayerData data)
     {

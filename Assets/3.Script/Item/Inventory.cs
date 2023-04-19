@@ -1,58 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 [System.Serializable]
-public class Inventory : MonoBehaviour
+public class Inventory
 {
     [SerializeField]
     public List<Item> items;
     public DataManager dataManager;
 
-    ///
-    [SerializeField]
-    private InventorySlot[] slot;
-    [SerializeField]
-    private Transform SlotTrans;
-    [SerializeField]
-    private GameObject SlotPrefabs;
-    private int slotCnt = 40;
+    public Item newItem;
+    public event Action<Item> OnItemAdded;
 
-    private void Awake()
-    {
-        slot = new InventorySlot[slotCnt];
-        for (int i = 0; i < slotCnt; i++)
-        {
-            GameObject slotClone = Instantiate(SlotPrefabs);
-            slotClone.transform.SetParent(SlotTrans, false);
-
-            InventorySlot newSlot = slotClone.GetComponent<InventorySlot>();
-            newSlot.icon.color = new Color(1, 1, 1, 0);
-            newSlot.itemCount_Text.text = null;
-
-            slot[i] = newSlot;
-        }
-    }
-
-    private void UpdateSlot(Item item)
-    {
-        for (int i = 0; i < slotCnt; i++)
-        {
-            if (slot[i].icon.sprite == null)
-            {
-                slot[i].icon.sprite = item.itemIcon;
-                slot[i].icon.color = new Color(1, 1, 1, 1);
-                break;
-                //    newSlot.itemCount_Text.text = items[i].quantity.ToString();
-            }
-            else if (slot[i].icon.sprite.Equals(item.itemIcon) && !(item is EquipableItem))
-            {
-                slot[i].itemCount_Text.text = "x" + item.quantity.ToString();
-                break;
-            }
-        }
-    }
 
     // 인벤토리에 아이템 추가 (구매, 착용, 드랍 등등)
     public void AddItem(Item item)
@@ -65,7 +26,8 @@ public class Inventory : MonoBehaviour
             // 아이템이 있으면 수량증가
             if (itemIndex >= 0)
             {
-                items[itemIndex].quantity++;
+                items[itemIndex].quantity += item.quantity;
+                newItem = items[itemIndex];
                 //return;
             }
             // 아이템이 없으면 인벤토리에 추가
@@ -73,6 +35,7 @@ public class Inventory : MonoBehaviour
             {
                 items.Add(item);
                 item.quantity = 1;
+                newItem = item;
             }
         }
         // 장비 아이템을 추가할 땐
@@ -81,13 +44,13 @@ public class Inventory : MonoBehaviour
             // 그냥 아이템 추가
             items.Add(item);
             item.quantity = 1;
-
+            newItem = item;
         }
         else
         {
             // 기타 아이템
         }
-        UpdateSlot(item);
+        OnItemAdded?.Invoke(newItem);
     }
 
     // 아이템 삭제 (판매, 해제, 버림, 사용 등등)
@@ -132,6 +95,41 @@ public class Inventory : MonoBehaviour
         int itemIndex = dataManager.itemDataBase.itemList.FindIndex(item => item._itemName == itemName);
         Item tmpItem = dataManager.itemDataBase.itemList[itemIndex];
         AddItem(tmpItem);
+    }
+
+    public void GetItem(int itemID, int quantity)
+    {
+        int itemIndex = dataManager.itemDataBase.itemList.FindIndex(item => item._itemID == itemID);
+        Item tmpItem = dataManager.itemDataBase.itemList[itemIndex];
+        if (tmpItem is ConsumableItem)
+        {
+            tmpItem.quantity = quantity;
+            AddItem(tmpItem);
+        }
+        else if (tmpItem is EquipableItem)
+        {
+            for (int i = 0; i < quantity; i++)
+            {
+                AddItem(tmpItem);
+            }
+        }
+    }
+    public void GetItem(string itemName, int quantity)
+    {
+        int itemIndex = dataManager.itemDataBase.itemList.FindIndex(item => item._itemName == itemName);
+        Item tmpItem = dataManager.itemDataBase.itemList[itemIndex];
+        if (tmpItem is ConsumableItem)
+        {
+            tmpItem.quantity = quantity;
+            AddItem(tmpItem);
+        }
+        else if (tmpItem is EquipableItem)
+        {
+            for (int i = 0; i < quantity; i++)
+            {
+                AddItem(tmpItem);
+            }
+        }
     }
 
 }

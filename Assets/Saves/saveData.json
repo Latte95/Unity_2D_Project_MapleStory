@@ -1,1 +1,76 @@
-4G28zelNyzNYiBZxw7e/o035JFEVYAlF8teefgsnosdoLzSrlFQOY3OcR+INhX9tYI8HJLq3uzOaSMEniJOOmExaihMh7KuQ6qC8BQ+xFYnR0b7FQFXHRZ/x9+Ulz8e85hrlYgtDI30DqhYqvpsTxKBIzwj0c8L3reS82EiS+wtEB+7xo9JSl8fBbINuEXiTxVJZqmpI2/kI/S3/eHP3+pQYVZUgWlciavCAgOrdItQeOWKfZX3JPL/XJnXXbmI0VL91X3wP0V7OEQdnsw1NaUJeWC45q0aEYbvJYPEVmMpApoT51BPqtetl/3dvq0D6MHvl3GhvGN8x0BjShQt/BFEre99HS+Lu5Rqhls2LbjJFHGDJc7NZz19pmDuNjdbC5yO92tOCYwIWcGsW/ymhzXDmNN9fdqcolJA4peNJol1OyACw6LsioEGXdiSJNV6iNRYvG4j9B3HNAuk0MEOJDTsN2O2/w27pR84K+snGn0hG9bqS8ozWryrQA7GW0+i1bYk/UZ3RN8JK7+/QvK4Ttd2dem6pGzrISU7GJ51yVaTauv0r/GAJ1hsTLzqwYydl7tipBoyfwW4IZKVzDWu5u/1vwQFjviV7TNSVxaDz+E2kaJBzyvtzf8xWWuCZ31XlaAOlaqyRuWbBUx+uXZ0K6g==
+{
+    "level": 1,
+    "hp": 100,
+    "maxHp": 100,
+    "attack": 10,
+    "defense": 5,
+    "speed": 1.7999999523162842,
+    "jumpForce": 23.0,
+    "playerPosition": {
+        "x": 0.010440798476338387,
+        "y": -0.44206011295318606,
+        "z": 0.0
+    },
+    "strong": 4,
+    "intelligence": 4,
+    "dexterity": 4,
+    "luck": 4,
+    "exp": 0,
+    "gold": 1000,
+    "scene": 2,
+    "inventory": {
+        "items": [
+            {
+                "_itemID": 2000000,
+                "_itemName": "빨간 포션",
+                "_itemDescription": "HP를 50 증가시킨다",
+                "_atk": 0,
+                "_def": 0,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 50,
+                "_mp": 0,
+                "_price": 10,
+                "_quantity": 2,
+                "itemIcon": {
+                    "instanceID": 20950
+                },
+                "itemType": 1
+            },
+            {
+                "_itemID": 2000001,
+                "_itemName": "주황 포션",
+                "_itemDescription": "HP를 100 증가시킨다",
+                "_atk": 0,
+                "_def": 0,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 100,
+                "_mp": 0,
+                "_price": 18,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 24408
+                },
+                "itemType": 1
+            }
+        ],
+        "dataManager": {
+            "instanceID": 17442
+        },
+        "slot": [],
+        "SlotTrans": {
+            "instanceID": 17556
+        },
+        "SlotPrefabs": {
+            "instanceID": 17834
+        }
+    },
+    "inventoryUI": {
+        "instanceID": 17348
+    }
+}
