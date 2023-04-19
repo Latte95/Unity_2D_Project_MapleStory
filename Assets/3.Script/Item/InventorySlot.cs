@@ -14,27 +14,27 @@ public class InventorySlot : MonoBehaviour
         cursorManager = FindObjectOfType<CursorManager>(); // Find the CursorManager in the scene
     }
 
-    public void AddItem(Item _item)
-    {
-        icon.sprite = _item.itemIcon;
-        if(!Item.ItemType.Equip.Equals(_item.itemType))
-        {
-            if(_item.quantity > 0)
-            {
-                itemCount_Text.text = "x " + itemCount_Text.ToString();
-            }
-            else
-            {
-                itemCount_Text.text = "";
-            }
-        }
-    }
+    //public void AddItem(Item _item)
+    //{
+    //    icon.sprite = _item.itemIcon;
+    //    if(!Item.ItemType.Equip.Equals(_item.itemType))
+    //    {
+    //        if(_item.quantity > 0)
+    //        {
+    //            itemCount_Text.text = "x " + itemCount_Text.ToString();
+    //        }
+    //        else
+    //        {
+    //            itemCount_Text.text = "";
+    //        }
+    //    }
+    //}
 
-    public void RemoveItem()
-    {
-        icon.sprite = null;
-        itemCount_Text.text = "";
-    }
+    //public void RemoveItem()
+    //{
+    //    icon.sprite = null;
+    //    itemCount_Text.text = "";
+    //}
 
     public void OnSlotClicked()
     {

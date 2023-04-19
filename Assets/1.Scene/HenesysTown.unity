@@ -4543,7 +4543,6 @@ GameObject:
   - component: {fileID: 679622580}
   - component: {fileID: 679622579}
   - component: {fileID: 679622581}
-  - component: {fileID: 679622582}
   m_Layer: 5
   m_Name: InventoryUI
   m_TagString: Untagged
@@ -4619,32 +4618,32 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 679622577}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 668d4272af1ddbf4fbe7c77a71859094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
+  inventory:
+    items: []
+    dataManager: {fileID: 951648874}
+    newItem:
+      _itemID: 0
+      _itemName: 
+      _itemDescription: 
+      _atk: 0
+      _def: 0
+      _str: 0
+      _dex: 0
+      _int: 0
+      _luk: 0
+      _hp: 0
+      _mp: 0
+      _price: 0
+      _quantity: 0
+      itemIcon: {fileID: 0}
+      itemType: 0
   slot: []
   player: {fileID: 507957802}
-  SlotTrans: {fileID: 1350724848}
-  SlotPrefabs: {fileID: 2475913684315680523, guid: 9870e445ed1b31447b0bed81f9c147a0, type: 3}
-  slotCnt: 0
---- !u!114 &679622582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 679622577}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44730bbdefe7777409615e846fbac112, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items: []
-  dataManager: {fileID: 951648874}
-  slot: []
   SlotTrans: {fileID: 1350724848}
   SlotPrefabs: {fileID: 2475913684315680523, guid: 9870e445ed1b31447b0bed81f9c147a0, type: 3}
 --- !u!1 &700274411
@@ -6856,10 +6855,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nowPlayer: {fileID: 507957802}
-  var_name: []
-  var: []
-  switch_name: []
-  switches: 
 --- !u!1 &962804377
 GameObject:
   m_ObjectHideFlags: 0
@@ -16398,11 +16393,19 @@ PrefabInstance:
     - target: {fileID: 792105714980504229, guid: 10f18c8094c8f024390311777a7d1398, type: 3}
       propertyPath: inventory
       value: 
-      objectReference: {fileID: 679622582}
+      objectReference: {fileID: 0}
     - target: {fileID: 792105714980504229, guid: 10f18c8094c8f024390311777a7d1398, type: 3}
       propertyPath: inventoryUI
       value: 
       objectReference: {fileID: 679622581}
+    - target: {fileID: 792105714980504229, guid: 10f18c8094c8f024390311777a7d1398, type: 3}
+      propertyPath: inventory.SlotTrans
+      value: 
+      objectReference: {fileID: 1350724848}
+    - target: {fileID: 792105714980504229, guid: 10f18c8094c8f024390311777a7d1398, type: 3}
+      propertyPath: inventory.SlotPrefabs
+      value: 
+      objectReference: {fileID: 2475913684315680523, guid: 9870e445ed1b31447b0bed81f9c147a0, type: 3}
     - target: {fileID: 792105714980504229, guid: 10f18c8094c8f024390311777a7d1398, type: 3}
       propertyPath: inventory.dataManager
       value: 

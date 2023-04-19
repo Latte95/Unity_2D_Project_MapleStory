@@ -8,7 +8,7 @@
     "jumpForce": 23.0,
     "playerPosition": {
         "x": 0.010440798476338387,
-        "y": -0.44206011295318606,
+        "y": -0.4418827295303345,
         "z": 0.0
     },
     "strong": 4,
@@ -33,7 +33,7 @@
                 "_hp": 50,
                 "_mp": 0,
                 "_price": 10,
-                "_quantity": 2,
+                "_quantity": 4,
                 "itemIcon": {
                     "instanceID": 20950
                 },
@@ -52,7 +52,7 @@
                 "_hp": 100,
                 "_mp": 0,
                 "_price": 18,
-                "_quantity": 1,
+                "_quantity": 2,
                 "itemIcon": {
                     "instanceID": 24408
                 },
@@ -62,12 +62,24 @@
         "dataManager": {
             "instanceID": 17442
         },
-        "slot": [],
-        "SlotTrans": {
-            "instanceID": 17556
-        },
-        "SlotPrefabs": {
-            "instanceID": 17834
+        "newItem": {
+            "_itemID": 2000001,
+            "_itemName": "주황 포션",
+            "_itemDescription": "HP를 100 증가시킨다",
+            "_atk": 0,
+            "_def": 0,
+            "_str": 0,
+            "_dex": 0,
+            "_int": 0,
+            "_luk": 0,
+            "_hp": 100,
+            "_mp": 0,
+            "_price": 18,
+            "_quantity": 2,
+            "itemIcon": {
+                "instanceID": 24408
+            },
+            "itemType": 1
         }
     },
     "inventoryUI": {
