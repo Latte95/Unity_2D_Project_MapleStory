@@ -13,13 +13,10 @@ public class CameraControl : MonoBehaviour
 
     private void Start()
     {
+        InitializePlayer();
         if (player != null)
         {
             transform.position = (Vector2)player.transform.position;
-        }
-        else
-        {
-            transform.position = Vector2.zero;
         }
     }
 
@@ -29,6 +26,16 @@ public class CameraControl : MonoBehaviour
         if (player != null)
         {
             transform.position = (Vector3)Vector2.Lerp(transform.position, player.transform.position, 0.01f) + delta;
+        }
+    }
+
+    public void InitializePlayer()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player == null)
+        {
+            Debug.LogWarning("Player object not found in the scene.");
         }
     }
 }

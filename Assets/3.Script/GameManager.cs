@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
             if(player == null)
             {
                 GameObject playerInstance = Instantiate(playerPrefab);
+                player = playerInstance;
             }
         }
         else
@@ -57,6 +58,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private void OnEnable()
     {
+        nowPlayer = player.GetComponent<Player>();
+        soundManager = FindObjectOfType<SoundManager>();
         nowPlayer = player.GetComponent<Player>();
     }
 
@@ -152,6 +155,16 @@ public class GameManager : MonoBehaviour, IDataPersistence
             _ui = existingMainUI;
         }
 
+        // player 할당
+        player = GameObject.Find("Player");
+        if (player == null)
+        {
+            GameObject playerInstance = Instantiate(playerPrefab);
+            player = playerInstance;
+        }
+        nowPlayer = player.GetComponent<Player>();
+        soundManager = FindObjectOfType<SoundManager>();
+
         // CursorManager에 transform_cursor 할당
         CursorManager cursorManager = GetComponent<CursorManager>();
         if (cursorManager != null)
@@ -174,14 +187,13 @@ public class GameManager : MonoBehaviour, IDataPersistence
             Debug.LogWarning("InventoryUI not found in the scene.");
         }
 
-        player = GameObject.Find("Player");
-        if (player == null)
+        CameraControl cameraControl = FindObjectOfType<CameraControl>();
+        if(cameraControl != null)
         {
-            GameObject playerInstance = Instantiate(playerPrefab);
-            player = playerInstance;
+            cameraControl.InitializePlayer();
         }
-        nowPlayer = player.GetComponent<Player>();
-        soundManager = FindObjectOfType<SoundManager>();
+
+
         // 데이터 로드
         DataManager.instance.LoadGame();
         player.transform.position = Vector3.zero;

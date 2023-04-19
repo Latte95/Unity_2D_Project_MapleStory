@@ -67,7 +67,7 @@ public class Item : ICloneable
         this._price = _price;
         this.itemType = _itemType;
         this._quantity = _quantity;
-        itemIcon = Resources.Load("ItemIcon/" + _itemID.ToString(), typeof(Sprite)) as Sprite;
+        itemIcon = Resources.Load<Sprite>("ItemIcon/" + _itemID.ToString());
     }
 
     public object Clone()

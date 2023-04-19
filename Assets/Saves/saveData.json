@@ -1,14 +1,14 @@
 {
     "level": 2,
-    "hp": 550,
+    "hp": 96,
     "maxHp": 100,
     "attack": 10,
     "defense": 5,
     "speed": 1.7999999523162842,
     "jumpForce": 23.0,
     "playerPosition": {
-        "x": 0.010440776124596596,
-        "y": -0.4382821321487427,
+        "x": -2.0649290084838869,
+        "y": -0.6230900287628174,
         "z": 0.0
     },
     "strong": 4,
@@ -33,9 +33,9 @@
                 "_hp": 50,
                 "_mp": 0,
                 "_price": 10,
-                "_quantity": 9,
+                "_quantity": 6,
                 "itemIcon": {
-                    "instanceID": 6808
+                    "instanceID": 20852
                 },
                 "itemType": 1
             },
@@ -52,11 +52,239 @@
                 "_hp": 100,
                 "_mp": 0,
                 "_price": 18,
-                "_quantity": 1,
+                "_quantity": 3,
                 "itemIcon": {
-                    "instanceID": 6844
+                    "instanceID": 24420
                 },
                 "itemType": 1
+            },
+            {
+                "_itemID": 1302000,
+                "_itemName": "검",
+                "_itemDescription": "한손검",
+                "_atk": 5,
+                "_def": 0,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 24642
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1040002,
+                "_itemName": "하얀 반팔 면티",
+                "_itemDescription": "하얀 반팔 면티",
+                "_atk": 0,
+                "_def": 5,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 23172
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1040002,
+                "_itemName": "하얀 반팔 면티",
+                "_itemDescription": "하얀 반팔 면티",
+                "_atk": 0,
+                "_def": 5,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 23172
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1060002,
+                "_itemName": "파란 청 바지",
+                "_itemDescription": "파란 청 바지",
+                "_atk": 0,
+                "_def": 3,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 20,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 21764
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1302000,
+                "_itemName": "검",
+                "_itemDescription": "한손검",
+                "_atk": 5,
+                "_def": 0,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 24642
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1040002,
+                "_itemName": "하얀 반팔 면티",
+                "_itemDescription": "하얀 반팔 면티",
+                "_atk": 0,
+                "_def": 5,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 23172
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1040002,
+                "_itemName": "하얀 반팔 면티",
+                "_itemDescription": "하얀 반팔 면티",
+                "_atk": 0,
+                "_def": 5,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 23172
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1060002,
+                "_itemName": "파란 청 바지",
+                "_itemDescription": "파란 청 바지",
+                "_atk": 0,
+                "_def": 3,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 20,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 21764
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1302000,
+                "_itemName": "검",
+                "_itemDescription": "한손검",
+                "_atk": 5,
+                "_def": 0,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 24642
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1040002,
+                "_itemName": "하얀 반팔 면티",
+                "_itemDescription": "하얀 반팔 면티",
+                "_atk": 0,
+                "_def": 5,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 23172
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1040002,
+                "_itemName": "하얀 반팔 면티",
+                "_itemDescription": "하얀 반팔 면티",
+                "_atk": 0,
+                "_def": 5,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 23172
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1060002,
+                "_itemName": "파란 청 바지",
+                "_itemDescription": "파란 청 바지",
+                "_atk": 0,
+                "_def": 3,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 20,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 21764
+                },
+                "itemType": 0
             }
         ],
         "newItem": {

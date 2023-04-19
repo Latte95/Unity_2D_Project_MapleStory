@@ -7,7 +7,6 @@ using UnityEngine.UI;
 [System.Serializable]
 public class Inventory
 {
-    [SerializeField]
     public List<Item> items;
     //public DataManager dataManager;
     public DataManager dataManager
@@ -103,6 +102,7 @@ public class Inventory
             {
                 items.RemoveAt(itemIndex);
             }
+            OnItemAdded?.Invoke(newItem);
         }
     }
 

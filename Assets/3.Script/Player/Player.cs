@@ -84,7 +84,10 @@ public class Player : Stat
         playerPosition = data.playerPosition;
 
         inventory = data.inventory;
-        //inventoryUI.SetInventory(inventory);
+        foreach (Item item in inventory.items)
+        {
+            item.itemIcon = Resources.Load<Sprite>("ItemIcon/" + item._itemID.ToString());
+        }
     }
 
     public void Init(int _str, int _int, int _dex, int _luk)
