@@ -12,8 +12,7 @@ public class QuickSlot : MonoBehaviour
     {
         cursorManager = FindObjectOfType<CursorManager>();
         icon = transform.Find("Icon").GetComponent<Image>();
-    }
-
+    }    
 
     public void OnSlotClicked()
     {

@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
             nowPlayer.inventory.GetItem("°Ë");
             nowPlayer.inventory.GetItem(01040002,2);
             nowPlayer.inventory.GetItem(1060002);
-        }
+        }        
     }
 
     public void LoadData(Player data)
