@@ -33,26 +33,6 @@ public class Player : Stat
 
     private WaitUntil leverUp_wait;
 
-    public Player(int _str, int _int, int _dex, int _luk)
-    {
-        this.playerPosition = Vector3.zero;
-        level = 1;
-        maxHp = 100;
-        hp = maxHp;
-        attack = 10;
-        defense = 5;
-        speed = 1.8f;
-        jumpForce = 23f;
-        exp = 0;
-        gold = 1000;
-        scene = Define.Scene.HenesysField;
-
-        strong = _str;
-        intelligence = _int;
-        dexterity = _dex;
-        luck = _luk;
-        inventory = new Inventory();
-    }
 
     public PlayerData ToPlayerData()
     {
@@ -109,7 +89,7 @@ public class Player : Stat
 
     public void Init(int _str, int _int, int _dex, int _luk)
     {
-        level = 1;
+        level = 2;
         maxHp = 100;
         hp = maxHp;
         attack = 10;
@@ -124,6 +104,7 @@ public class Player : Stat
         intelligence = _int;
         dexterity = _dex;
         luck = _luk;
+        inventory.items.Clear();
     }
 
     private IEnumerator LevelUp_co()

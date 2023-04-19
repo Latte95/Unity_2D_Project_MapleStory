@@ -13,7 +13,7 @@ public class ItemDataBase
         itemList.Add(new ConsumableItem(02000004, "엘릭서", "HP, MP를 50 증가시킨다", 0, 0, 0, 0, 0, 0, 50, 50, 25, Item.ItemType.Consume));
         itemList.Add(new EquipableItem(01302000, "검", "한손검", 5, 0, 0, 0, 0, 0, 0, 0, 100, Item.ItemType.Equip, EquipableItem.EQUIPTYPE.WEAPON));
         itemList.Add(new EquipableItem(01040002, "하얀 반팔 면티", "하얀 반팔 면티", 0, 5, 0, 0, 0, 0, 0, 0, 100, Item.ItemType.Equip, EquipableItem.EQUIPTYPE.BODY));
-        itemList.Add(new EquipableItem(01302000, "파란 청 바지", "파란 청 바지", 0, 3, 0, 0, 0, 0, 0, 20, 100, Item.ItemType.Equip, EquipableItem.EQUIPTYPE.FOOT));
+        itemList.Add(new EquipableItem(1060002, "파란 청 바지", "파란 청 바지", 0, 3, 0, 0, 0, 0, 0, 20, 100, Item.ItemType.Equip, EquipableItem.EQUIPTYPE.FOOT));
         itemList.Add(new Item(04000000, "파란 달팽이의 껍질", "파란 달팽이의 껍질을 벗긴 것이다.", 0, 0, 0, 0, 0, 0, 0, 0, 50, Item.ItemType.Etc));
         itemList.Add(new Item(04000001, "주황버섯의 갓", "주황버섯의 갓을 자른 것이다.", 0, 0, 0, 0, 0, 0, 0, 0, 500, Item.ItemType.Etc));
         itemList.Add(new Item(04000003, "나뭇가지", "나무의 가지를 꺾어온 것이다.", 0, 0, 0, 0, 0, 0, 0, 0, 100, Item.ItemType.Etc));

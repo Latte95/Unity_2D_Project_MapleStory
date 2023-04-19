@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 [System.Serializable]
-public class Item
+public class Item : ICloneable
 {
     public enum ItemType
     {
@@ -67,5 +68,10 @@ public class Item
         this.itemType = _itemType;
         this._quantity = _quantity;
         itemIcon = Resources.Load("ItemIcon/" + _itemID.ToString(), typeof(Sprite)) as Sprite;
+    }
+
+    public object Clone()
+    {
+        return this.MemberwiseClone();
     }
 }

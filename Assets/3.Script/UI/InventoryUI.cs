@@ -34,10 +34,16 @@ public class InventoryUI : MonoBehaviour
 
             slot[i] = newSlot;
         }
+        player = FindObjectOfType<Player>();
     }
 
     private void OnEnable()
     {
+        // 씬 전환시 널참조 방지. 발생 이유는 모르겠음...
+        if (player == null)
+        {
+            return;
+        }
         inventory = player.inventory;
         itemCnt = player.inventory.items.Count;
 
@@ -54,12 +60,23 @@ public class InventoryUI : MonoBehaviour
     private void InitializeSlot()
     {
         itemCnt = player.inventory.items.Count;
+        // 보유 아이템 슬롯 할당
         for (int i = 0; i < itemCnt; i++)
         {
             slot[i].icon.sprite = player.inventory.items[i].itemIcon;
             slot[i].icon.color = new Color(1, 1, 1, 1);
-            slot[i].itemCount_Text.text = player.inventory.items[i].quantity.ToString();
-            
+            if (player.inventory.items[i].quantity > 1)
+            {
+                slot[i].itemCount_Text.text = "x" + player.inventory.items[i].quantity.ToString();
+            }
+        }
+        // 미보유 아이템 초기화
+        // 10번째 슬롯에 아이콘이 있는데, 아이템 목록이 9개이하일 경우 10번째 슬롯에 아이콘이 남아있는 것 방지
+        for(int i = itemCnt; i < slotCnt; i++)
+        {
+            slot[i].icon.sprite = null;
+            slot[i].icon.color = new Color(1, 1, 1, 0);
+            slot[i].itemCount_Text.text = null;
         }
     }
 
@@ -76,7 +93,10 @@ public class InventoryUI : MonoBehaviour
             // Update the existing slot
             slot[itemIndex].icon.sprite = newItem.itemIcon;
             slot[itemIndex].icon.color = new Color(1, 1, 1, 1);
-            slot[itemIndex].itemCount_Text.text = newItem.quantity.ToString();
+            if (player.inventory.items[itemIndex].quantity > 1)
+            {
+                slot[itemIndex].itemCount_Text.text = "x" + player.inventory.items[itemIndex].quantity.ToString();
+            }
         }
         else
         {
@@ -87,7 +107,7 @@ public class InventoryUI : MonoBehaviour
                 {
                     slot[i].icon.sprite = newItem.itemIcon;
                     slot[i].icon.color = new Color(1, 1, 1, 1);
-                    slot[i].itemCount_Text.text = newItem.quantity.ToString();
+                    slot[i].itemCount_Text.text = null;
                     break;
                 }
             }

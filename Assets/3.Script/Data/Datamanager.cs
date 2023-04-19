@@ -60,13 +60,6 @@ public class DataManager : MonoBehaviour
         nowPlayer = FindObjectOfType<Player>();
     }
 
-    // Reset player data
-    public void NewChar(int _str, int _int, int _dex, int _luk)
-    {
-        nowPlayer = new Player(_str, _int, _dex, _luk);
-    }
-
-    // Load data from save file and update all data persistence object
     public void LoadGame()
     {
         if(nowPlayer == null)
@@ -83,11 +76,7 @@ public class DataManager : MonoBehaviour
 
         // Load player data from JSON
         PlayerData playerData = Load();
-        if (playerData == null)
-        {
-            NewChar(4, 4, 4, 4);
-        }
-        else
+        if (playerData != null)
         {
             nowPlayer.SetData(playerData);
         }

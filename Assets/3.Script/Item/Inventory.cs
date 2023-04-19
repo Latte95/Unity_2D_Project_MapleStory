@@ -49,7 +49,7 @@ public class Inventory
             else
             {
                 items.Add(item);
-                item.quantity = 1;
+                item.quantity = item.quantity;
                 newItem = item;
             }
         }
@@ -103,20 +103,20 @@ public class Inventory
     public void GetItem(int itemID)
     {
         int itemIndex = dataManager.itemDataBase.itemList.FindIndex(item => item._itemID == itemID);
-        Item tmpItem = dataManager.itemDataBase.itemList[itemIndex];
+        Item tmpItem = (Item)dataManager.itemDataBase.itemList[itemIndex].Clone();
         AddItem(tmpItem);
     }
     public void GetItem(string itemName)
     {
         int itemIndex = dataManager.itemDataBase.itemList.FindIndex(item => item._itemName == itemName);
-        Item tmpItem = dataManager.itemDataBase.itemList[itemIndex];
+        Item tmpItem = (Item)dataManager.itemDataBase.itemList[itemIndex].Clone();
         AddItem(tmpItem);
     }
 
     public void GetItem(int itemID, int quantity)
     {
         int itemIndex = dataManager.itemDataBase.itemList.FindIndex(item => item._itemID == itemID);
-        Item tmpItem = dataManager.itemDataBase.itemList[itemIndex];
+        Item tmpItem = (Item)dataManager.itemDataBase.itemList[itemIndex].Clone();
         if (tmpItem is ConsumableItem)
         {
             tmpItem.quantity = quantity;
@@ -133,7 +133,7 @@ public class Inventory
     public void GetItem(string itemName, int quantity)
     {
         int itemIndex = dataManager.itemDataBase.itemList.FindIndex(item => item._itemName == itemName);
-        Item tmpItem = dataManager.itemDataBase.itemList[itemIndex];
+        Item tmpItem = (Item)dataManager.itemDataBase.itemList[itemIndex].Clone();
         if (tmpItem is ConsumableItem)
         {
             tmpItem.quantity = quantity;

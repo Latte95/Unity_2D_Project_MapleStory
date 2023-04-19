@@ -56,10 +56,17 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private void Update()
     {
+        // 세이브
         if (Input.GetKeyDown(KeyCode.F11))
         {
             OnSaveGameClicked();
         }
+        // 데이터 초기화
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            nowPlayer.Init(4,4,4,4);
+        }
+        // 맵이동
         if (Input.GetKeyDown(KeyCode.F7))
         {
             Scene scene = SceneManager.GetActiveScene();
@@ -72,6 +79,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
                 StartCoroutine(LoadSceneAndData(Define.Scene.HenesysTown));
             }
         }
+
+        // 아이템 획득
         if (Input.GetKeyDown(KeyCode.F5))
         {
             nowPlayer.inventory.GetItem(02000000,2);
@@ -80,6 +89,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
         if (Input.GetKeyDown(KeyCode.F6))
         {
             nowPlayer.inventory.GetItem("검");
+            nowPlayer.inventory.GetItem(01040002,2);
+            nowPlayer.inventory.GetItem(1060002);
         }
     }
 
@@ -119,7 +130,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
         {
             yield return null;
         }
-        //dataManager.LoadGame();
         MainUI existingMainUI = FindObjectOfType<MainUI>();
 
         if (existingMainUI == null)

@@ -10,8 +10,13 @@ public class CursorManager : MonoBehaviour
     public Sprite clickedCursorImage;
     public Image cursorImage;
 
-    private void Awake()
+    private void OnEnable()
     {
+        // 씬 전환시 널참조 방지. 발생 이유는 모르겠음...
+        if (GameManager.UI == null)
+        {
+            return;
+        }
         Init_Cursor();
         transform_cursor.TryGetComponent(out cursorImage);
     }
@@ -19,17 +24,20 @@ public class CursorManager : MonoBehaviour
     private void Update()
     {
         Update_MousePosition();
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    cursorImage.sprite = cursorImage.sprite.Equals(clickedCursorImage) ? defaultCursorImage : clickedCursorImage;
-        //}
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (!cursorImage.sprite.name.Equals("Cursor_nomal"))
+            {
+                SetCursorImage(Resources.Load<Sprite>("Cursor_nomal"));
+            }            
+            //cursorImage.sprite = cursorImage.sprite.Equals(clickedCursorImage) ? defaultCursorImage : clickedCursorImage;
+        }
     }
 
     public void Init_Cursor()
     {
         //Cursor.visible = false;
-
-        GameObject cursorGameObject = GameManager.UI.transform.Find("Cursor").gameObject;
+            GameObject cursorGameObject = GameManager.UI.transform.Find("Cursor").gameObject;
 
         if (cursorGameObject != null)
         {
@@ -52,10 +60,21 @@ public class CursorManager : MonoBehaviour
     private void Update_MousePosition()
     {
         Vector2 mousePos = Input.mousePosition;
-        transform_cursor.position = mousePos;
+        if (transform_cursor != null)
+        {
+            transform_cursor.position = mousePos;
+        }
     }
     public void SetCursorImage(Sprite newImage)
     {
+        //cursorImage.sprite = newImage;
+        StopCoroutine(SetCursorImage_co(newImage));
+        StartCoroutine(SetCursorImage_co(newImage));
+    }
+
+    IEnumerator SetCursorImage_co(Sprite newImage)
+    {
+        yield return new WaitForSeconds(0.1f);
         cursorImage.sprite = newImage;
     }
 }
