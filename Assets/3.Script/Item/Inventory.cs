@@ -66,6 +66,7 @@ public class Inventory
             // 기타 아이템
         }
         OnItemAdded?.Invoke(newItem);
+        newItem = null;
     }
 
     // 아이템 삭제 (판매, 해제, 버림, 사용 등등)

@@ -110,6 +110,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     IEnumerator LoadSceneAndData(Define.Scene targetScene)
     {
+        OnSaveGameClicked();
         // ¾À ·Îµå
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetScene.ToString());
 
@@ -118,7 +119,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         {
             yield return null;
         }
-
+        //dataManager.LoadGame();
         MainUI existingMainUI = FindObjectOfType<MainUI>();
 
         if (existingMainUI == null)

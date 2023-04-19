@@ -18,7 +18,7 @@ public class InventoryUI : MonoBehaviour
     private GameObject SlotPrefabs;
 
     private int slotCnt = 40;
-    private int itemCnt;    
+    private int itemCnt;
 
     private void Awake()
     {
@@ -39,15 +39,11 @@ public class InventoryUI : MonoBehaviour
     private void OnEnable()
     {
         inventory = player.inventory;
-
         itemCnt = player.inventory.items.Count;
 
-        // Initialize the slots based on the current inventory items
-        for (int i = 0; i < itemCnt; i++)
-        {
-            UpdateUI(inventory.items[i]);
-        }
-
+        // 인벤토리 정렬, 인벤토리 꺼진 상태로 추가된 아이템을 갱신하기 위함
+        InitializeSlot();
+        // 인벤토리 켜진 상태로 아이템 추가시 슬롯에 바로바로 채워짐
         inventory.OnItemAdded += UpdateUI;
     }
     private void OnDisable()
@@ -55,10 +51,22 @@ public class InventoryUI : MonoBehaviour
         inventory.OnItemAdded -= UpdateUI;
     }
 
+    private void InitializeSlot()
+    {
+        itemCnt = player.inventory.items.Count;
+        for (int i = 0; i < itemCnt; i++)
+        {
+            slot[i].icon.sprite = player.inventory.items[i].itemIcon;
+            slot[i].icon.color = new Color(1, 1, 1, 1);
+            slot[i].itemCount_Text.text = player.inventory.items[i].quantity.ToString();
+            
+        }
+    }
+
     private void UpdateUI(Item newItem)
     {
         int itemIndex = Array.FindIndex(slot, s => s.icon.sprite == newItem.itemIcon);
-        if(newItem is EquipableItem)
+        if (newItem is EquipableItem)
         {
             itemIndex = -1;
         }
