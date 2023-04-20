@@ -10,6 +10,9 @@ public class PlayerControl : CreatureControl
     public Define.MoveDirection currentMoveDirection = Define.MoveDirection.None;
 
     // 아래점프시 바닥 충돌 무시할 시간
+    protected WaitUntil inputZ_wait;
+    protected WaitUntil itemRootEnd_wait;
+    protected WaitForSeconds itemRootDelay_wait;
     protected WaitForSeconds ignorePlatTime_wait;
     protected WaitForSeconds offHit_wait;
     protected WaitForSeconds recover_wait;
@@ -20,10 +23,6 @@ public class PlayerControl : CreatureControl
     public Transform atkPos;
     public Vector2 atkBoxSize;
 
-
-    //
-
-
     private new void OnEnable()
     {
         base.OnEnable();
@@ -32,31 +31,13 @@ public class PlayerControl : CreatureControl
         ignorePlatTime_wait = new WaitForSeconds(0.2f);
 
         dieHp = new WaitUntil(() => Stat.Hp <= 0);
+        inputZ_wait = new WaitUntil(() => Input.GetKey(KeyCode.Z));
+        itemRootDelay_wait = new WaitForSeconds(0.1f);
         offHit_wait = new WaitForSeconds(offHitTime - invincibleTime);
         recover_wait = new WaitForSeconds(recoverTime);
         anim.SetBool("isNomal", true);
-    }
 
-    private void LateUpdate()
-    {
-        if (Input.GetKey(KeyCode.Z))
-        {
-            int layerMask = LayerMask.GetMask("ItemRoot"); // "ItemRoot" 레이어의 마스크를 가져옵니다.
-            Collider2D col = Physics2D.OverlapCircle(transform.position, 1.0f, layerMask); // 레이어 마스크를 사용하여 해당 레이어의 물체만 감지합니다.
-
-            if (col != null)
-            {
-                if (col.gameObject.GetComponent<SpriteRenderer>().sprite.name[0].Equals('9'))
-                {
-                    Stat.Gold += col.gameObject.GetComponentInParent<FieldItem>().money;
-                }
-                else
-                {
-                    Stat.inventory.GetItem(int.Parse(col.gameObject.GetComponent<SpriteRenderer>().sprite.name));
-                }
-                    Destroy(col.gameObject.transform.parent.gameObject);
-            }
-        }
+        StartCoroutine(nameof(RootItem_co));
     }
 
     // 공격
@@ -158,7 +139,7 @@ public class PlayerControl : CreatureControl
     }
 
 
-    IEnumerator Attack_co()
+    private IEnumerator Attack_co()
     {
         // 공격 가능한 상태일 때만 공격 실행
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
@@ -194,8 +175,7 @@ public class PlayerControl : CreatureControl
             anim.SetBool("isAttack", false);
         }
     }
-
-    IEnumerator DownJump_co()
+    private IEnumerator DownJump_co()
     {
         // 일정 시간동안 충돌 무시함
         // 가장 밑 바닥일 경우 Platform Effector의 UseCollider Mask 체크하여 아래점프 방지
@@ -203,6 +183,53 @@ public class PlayerControl : CreatureControl
         Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(lastGroundTag), true);
         yield return ignorePlatTime_wait;
         Physics2D.IgnoreLayerCollision(myLayer, groundLayer, false);
+    }
+    private IEnumerator RootItem_co()
+    {
+        while (true)
+        {
+            // 루팅 쿨타임
+            yield return itemRootDelay_wait;
+            // z눌르고 있으면 실행
+            yield return inputZ_wait;
+
+            // Item 레이어만 감지
+            int layerMask = LayerMask.GetMask("Item");
+            Collider2D col = Physics2D.OverlapCircle(transform.position, 1.0f, layerMask);
+
+            // Item를 감지했으면 아이템 루팅
+            if (col != null)
+            {
+                SoundManager.instance.PlaySfx(Define.Sfx.PickUpItem);
+                // 이미 루팅중이지만 아직 이동중인 아이템을 다시 획득하지 못하도록 방지하기 위한 레이어 변경
+                col.gameObject.layer = LayerMask.NameToLayer("ItemRoot");
+                // 이중 코루틴을 쓴 이유는 루팅중인 아이템이 있어도 다른 아이템도 루팅할 수 있도록 하기 위해서
+                StartCoroutine(MoveItem_co(col));
+            }
+        }
+    }
+    private IEnumerator MoveItem_co(Collider2D col)
+    {
+        // 아이템 이동 속도
+        float moveSpeed = 2.0f;
+        // 아이템이 플레이어와 가까워질때까지 이동
+        while (Mathf.Abs(col.gameObject.transform.position.x - transform.position.x) > 0.3f)
+        {
+            col.gameObject.transform.position = Vector2.Lerp(col.gameObject.transform.position, transform.position, moveSpeed * Time.deltaTime);
+            yield return null;
+        }
+        
+        // 돈이면 돈증가
+        if (col.gameObject.GetComponentInChildren<SpriteRenderer>().sprite.name[0].Equals('9'))
+        {
+            Stat.Gold += col.gameObject.GetComponent<FieldItem>().money;
+        }
+        // 돈 아니면 아이템 획득
+        else
+        {
+            Stat.inventory.GetItem(int.Parse(col.gameObject.GetComponentInChildren<SpriteRenderer>().sprite.name));
+        }
+        Destroy(col.gameObject);
     }
 
     protected override IEnumerator OffDamaged_co()

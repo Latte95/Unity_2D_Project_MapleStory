@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour, IDataPersistence
 {
+    [SerializeField]
+    private StageData stageData;
+
     public static GameManager Instance;
     public MainUI _ui;
     public static MainUI UI => Instance._ui;
@@ -114,12 +117,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public void GameExit()
     {
         Application.Quit();
-    }
-    public static void Clear()
-    {
-        //Sound.Clear();
-        //Scene.Clear();
-        //UI.Clear();
     }
 
 

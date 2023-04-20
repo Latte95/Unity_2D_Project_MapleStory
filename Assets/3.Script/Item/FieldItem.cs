@@ -25,7 +25,7 @@ public class FieldItem : MonoBehaviour
     {
         float newY = moveDistance + Mathf.Sin(Time.time * moveSpeed) * moveDistance;
 
-        childRectTransform.localPosition = newY*Vector3.up;
+        childRectTransform.localPosition = new Vector3(childRectTransform.localPosition.x, newY, 0);
     }
 
     public void Jump()

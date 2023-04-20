@@ -8,6 +8,8 @@ public class Movement : MonoBehaviour
     private Rigidbody2D rigid;
     private Animator anim;
     private Stat Stat;
+    [SerializeField]
+    private StageData stageData;
 
     private Vector2 moveDirection = Vector2.zero;
 
@@ -21,6 +23,11 @@ public class Movement : MonoBehaviour
         TryGetComponent(out Stat);
 
         deltaTime = Time.deltaTime;
+    }
+
+    private void Start()
+    {
+        StartCoroutine(nameof(WaitGameManager_co));
     }
 
     private void FixedUpdate()
@@ -43,6 +50,18 @@ public class Movement : MonoBehaviour
                 transform.localScale = new Vector3(-1 * transform.localScale.x, transform.localScale.y, 0); ;
             }
         }
+
+        if (stageData != null)
+        {
+            rigid.position = new Vector3(
+                Mathf.Clamp(transform.position.x, stageData.LimitMin.x, stageData.LimitMax.x),
+                rigid.position.y,
+                0f);
+            if (rigid.position.y < stageData.LimitMin.y)
+            {
+                rigid.position = Vector2.zero;
+            }
+        }
     }
 
 
@@ -56,5 +75,12 @@ public class Movement : MonoBehaviour
     {
         rigid.velocity = Vector3.zero;
         rigid.AddForce(Stat.JumpForce * Vector3.up, ForceMode2D.Impulse);
+    }
+
+    IEnumerator WaitGameManager_co()
+    {
+        yield return new WaitUntil(() => GameManager.Instance.player != null);
+        string sceneName = GameManager.Instance.player.scene.name;
+        stageData = Resources.Load<StageData>("StageData/" + sceneName);
     }
 }

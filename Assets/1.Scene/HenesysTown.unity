@@ -3627,11 +3627,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5180292556998340351, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.38
+      value: -7.89
       objectReference: {fileID: 0}
     - target: {fileID: 5180292556998340351, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.16
+      value: -0.37
       objectReference: {fileID: 0}
     - target: {fileID: 5180292556998340351, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6368,6 +6368,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c782cb95e503b5479d5bbaa964561f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageData: {fileID: 0}
   _ui: {fileID: 0}
   canvasPrefab: {fileID: 5894082575767310063, guid: 3b488d0ca190bd141a5f67cdc86594c7, type: 3}
   player: {fileID: 0}
@@ -11863,8 +11864,8 @@ Tilemap:
   - first: {x: 43, y: -2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 3
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -12186,9 +12187,9 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 23
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 34db6d6072ac93a4eac98196f0f63dc4, type: 2}
+  - m_RefCount: 22
     m_Data: {fileID: 11400000, guid: ac1b9926a6fe69c45b3d515fa921415a, type: 2}
   - m_RefCount: 19
     m_Data: {fileID: 11400000, guid: ae5a59ff92f9fe242a9328f2864cec38, type: 2}
@@ -12205,9 +12206,9 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 23
+  - m_RefCount: 1
+    m_Data: {fileID: -1128858183168659238, guid: eb3fa4194ce33cc43b1777b0aa37fcb2, type: 3}
+  - m_RefCount: 22
     m_Data: {fileID: 4896554586330500274, guid: eb3fa4194ce33cc43b1777b0aa37fcb2, type: 3}
   - m_RefCount: 19
     m_Data: {fileID: 877059936835236455, guid: eb3fa4194ce33cc43b1777b0aa37fcb2, type: 3}
@@ -13001,7 +13002,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2155090993528461052, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2155090994109015415, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
       propertyPath: m_LocalPosition.y
