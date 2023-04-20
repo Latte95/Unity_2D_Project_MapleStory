@@ -54,7 +54,7 @@ public class DataManager : MonoBehaviour
         dataPersistenceObjects = FindAllDataPersistenceObjects();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         itemDataBase = new ItemDataBase();
         nowPlayer = FindObjectOfType<Player>();

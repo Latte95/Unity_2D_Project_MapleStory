@@ -9,8 +9,6 @@ public class InventorySlot : MonoBehaviour
     public Text itemCount_Text;
     public CursorManager cursorManager;
 
-
-
     private void Start()
     {
         cursorManager = FindObjectOfType<CursorManager>(); // Find the CursorManager in the scene

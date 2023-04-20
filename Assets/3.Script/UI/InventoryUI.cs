@@ -11,14 +11,14 @@ public class InventoryUI : MonoBehaviour
     [SerializeField]
     private InventorySlot[] slot;
     [SerializeField]
-    private Player player;
-    [SerializeField]
     private Transform SlotTrans;
     [SerializeField]
     private GameObject SlotPrefabs;
 
     private int slotCnt = 40;
     private int itemCnt;
+
+    private Text moneyText;
 
     private void Awake()
     {
@@ -38,17 +38,6 @@ public class InventoryUI : MonoBehaviour
 
     private void OnEnable()
     {
-        player = FindObjectOfType<Player>();
-        // 씬 전환시 널참조 방지. 발생 이유는 모르겠음...
-        if (player == null)
-        {
-            return;
-        }
-        inventory = player.inventory;
-        itemCnt = player.inventory.items.Count;
-
-        // 인벤토리 정렬, 인벤토리 꺼진 상태로 추가된 아이템을 갱신하기 위함
-        InitializeSlot();
         // 인벤토리 켜진 상태로 아이템 추가시 슬롯에 바로바로 채워짐
         inventory.OnItemAdded += UpdateUI;
     }
@@ -57,17 +46,26 @@ public class InventoryUI : MonoBehaviour
         inventory.OnItemAdded -= UpdateUI;
     }
 
+    private void Start()
+    {
+        inventory = GameManager.Instance.nowPlayer.inventory;
+        itemCnt = GameManager.Instance.nowPlayer.inventory.items.Count;
+        // 인벤토리 정렬, 인벤토리 꺼진 상태로 추가된 아이템을 갱신하기 위함
+        InitializeSlot();
+    }
+
+
     private void InitializeSlot()
     {
-        itemCnt = player.inventory.items.Count;
+        itemCnt = GameManager.Instance.nowPlayer.inventory.items.Count;
         // 보유 아이템 슬롯 할당
         for (int i = 0; i < itemCnt; i++)
         {
-            slot[i].icon.sprite = player.inventory.items[i].itemIcon;
+            slot[i].icon.sprite = GameManager.Instance.nowPlayer.inventory.items[i].itemIcon;
             slot[i].icon.color = new Color(1, 1, 1, 1);
-            if (player.inventory.items[i].quantity > 1)
+            if (GameManager.Instance.nowPlayer.inventory.items[i].quantity > 1)
             {
-                slot[i].itemCount_Text.text = "x" + player.inventory.items[i].quantity.ToString();
+                slot[i].itemCount_Text.text = "x" + GameManager.Instance.nowPlayer.inventory.items[i].quantity.ToString();
             }
             else
             {
@@ -81,6 +79,14 @@ public class InventoryUI : MonoBehaviour
             slot[i].icon.sprite = null;
             slot[i].icon.color = new Color(1, 1, 1, 0);
             slot[i].itemCount_Text.text = null;
+        }
+        if (moneyText == null)
+        {
+            transform.Find("Gold").TryGetComponent(out moneyText);
+        }
+        else
+        {
+            moneyText.text = GameManager.Instance.nowPlayer.Gold.ToString();
         }
     }
 
@@ -107,11 +113,11 @@ public class InventoryUI : MonoBehaviour
             // Update the existing slot
             slot[itemIndex].icon.sprite = newItem.itemIcon;
             slot[itemIndex].icon.color = new Color(1, 1, 1, 1);
-            if (player.inventory.items[itemIndex].quantity > 1)
+            if (GameManager.Instance.nowPlayer.inventory.items[itemIndex].quantity > 1)
             {
-                slot[itemIndex].itemCount_Text.text = "x" + player.inventory.items[itemIndex].quantity.ToString();
+                slot[itemIndex].itemCount_Text.text = "x" + GameManager.Instance.nowPlayer.inventory.items[itemIndex].quantity.ToString();
             }
-            else if (player.inventory.items[itemIndex].quantity.Equals(1))
+            else if (GameManager.Instance.nowPlayer.inventory.items[itemIndex].quantity.Equals(1))
             {
                 slot[itemIndex].itemCount_Text.text = null;
             }
@@ -132,23 +138,13 @@ public class InventoryUI : MonoBehaviour
                     slot[i].icon.sprite = newItem.itemIcon;
                     slot[i].icon.color = new Color(1, 1, 1, 1);
                     slot[i].itemCount_Text.text = null;
-                    if (player.inventory.items[i].quantity > 1)
+                    if (GameManager.Instance.nowPlayer.inventory.items[i].quantity > 1)
                     {
-                        slot[i].itemCount_Text.text = "x" + player.inventory.items[i].quantity.ToString();
+                        slot[i].itemCount_Text.text = "x" + GameManager.Instance.nowPlayer.inventory.items[i].quantity.ToString();
                     }
                     break;
                 }
             }
-        }
-    }
-
-    public void InitializePlayer()
-    {
-        player = FindObjectOfType<Player>();
-
-        if (player == null)
-        {
-            Debug.LogWarning("Player object not found in the scene.");
         }
     }
 }

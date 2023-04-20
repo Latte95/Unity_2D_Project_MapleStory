@@ -54,13 +54,8 @@ public class GameManager : MonoBehaviour, IDataPersistence
             return;
         }
         DataManager.instance.LoadGame();
-        player.TryGetComponent(out nowPlayer);
-    }
-
-    private void OnEnable()
-    {
-        //nowPlayer = player.GetComponent<Player>();
         soundManager = FindObjectOfType<SoundManager>();
+        player.TryGetComponent(out nowPlayer);
     }
 
     private void Update()
@@ -178,14 +173,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
         // InventoryUI¿¡ player ÇÒ´ç
         InventoryUI inventoryUI = FindObjectOfType<InventoryUI>();
-        if (inventoryUI != null)
-        {
-            inventoryUI.InitializePlayer();
-        }
-        else
-        {
-            Debug.LogWarning("InventoryUI not found in the scene.");
-        }
 
         CameraControl cameraControl = FindObjectOfType<CameraControl>();
         if(cameraControl != null)
