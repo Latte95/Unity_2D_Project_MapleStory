@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -136,6 +137,7 @@ public class Player : Stat
         inventory.items.Clear();
     }
 
+    public event Action LevelUp;
     private IEnumerator LevelUp_co()
     {
         while (true)
@@ -145,6 +147,7 @@ public class Player : Stat
             level++;
             exp += -levelUpExp;
             levelUpExp = 100 + (level * level + 10);
+            LevelUp?.Invoke();
         }
     }
 }

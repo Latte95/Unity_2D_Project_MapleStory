@@ -54,13 +54,13 @@ public class GameManager : MonoBehaviour, IDataPersistence
             return;
         }
         DataManager.instance.LoadGame();
+        player.TryGetComponent(out nowPlayer);
     }
 
     private void OnEnable()
     {
         //nowPlayer = player.GetComponent<Player>();
         soundManager = FindObjectOfType<SoundManager>();
-        player.TryGetComponent(out nowPlayer);
     }
 
     private void Update()
