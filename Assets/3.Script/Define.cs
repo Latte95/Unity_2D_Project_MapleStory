@@ -21,7 +21,8 @@ public class Define
 
     public enum Sfx
     {
-        AttackS, AttackL, Buff, Dead, Jump, LevelUp, PickUpItem, Portal, QuestAlert, QuestClear, Transform, UseItem
+        AttackS, AttackL, Buff, Dead, Jump, LevelUp, PickUpItem, Portal, 
+        QuestAlert, QuestClear, Transform, UseItem,
     }
 
     public enum Ui

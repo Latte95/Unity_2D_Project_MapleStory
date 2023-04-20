@@ -8,34 +8,12 @@ public class CameraControl : MonoBehaviour
     // 플레이어와의 위치 차이
     Vector3 delta;
 
-    [SerializeField]
-    GameObject player;
-
-    private void Start()
-    {
-        InitializePlayer();
-        if (player != null)
-        {
-            transform.position = (Vector2)player.transform.position;
-        }
-    }
-
     // 플레이어 이동 후 카메라 따라감
     private void LateUpdate()
     {
-        if (player != null)
+        if (GameManager.Instance.nowPlayer != null)
         {
-            transform.position = (Vector3)Vector2.Lerp(transform.position, player.transform.position, 0.01f) + delta;
-        }
-    }
-
-    public void InitializePlayer()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-
-        if (player == null)
-        {
-            Debug.LogWarning("Player object not found in the scene.");
+            transform.position = (Vector3)Vector2.Lerp(transform.position, GameManager.Instance.nowPlayer.transform.position, 0.01f) + delta;
         }
     }
 }

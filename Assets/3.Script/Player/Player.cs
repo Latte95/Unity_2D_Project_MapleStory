@@ -25,7 +25,8 @@ public class Player : Stat
     [SerializeField]
     protected int gold;
 
-    protected Define.Scene scene;
+    protected Define.Scene _scene;
+    public Define.Scene scene { get => _scene; set => _scene = value; }
     public Inventory inventory;
     public int Mp
     {
@@ -37,6 +38,10 @@ public class Player : Stat
             {
                 mp = 0;
             }
+            else if (mp > maxMp)
+            {
+                mp = maxMp;
+            }
         }
     }
     public int MaxMp { get => maxMp; set => maxMp = value; }
@@ -46,7 +51,18 @@ public class Player : Stat
     public int Dex { get => dexterity; set => dexterity = value; }
     public int Luk { get => luck; set => luck = value; }
 
-    public int Exp { get => exp; set => exp = value; }
+    public int Exp
+    { 
+        get => exp;
+        set
+        {
+            exp = value;
+            if(exp < 0)
+            {
+                exp = 0;
+            }
+        }
+    }
     public int LevelUpExp { get => levelUpExp;}
     public int Gold { get => gold; set => gold = value; }
 
@@ -117,7 +133,7 @@ public class Player : Stat
 
     public void Init(int _str, int _int, int _dex, int _luk)
     {
-        level = 2;
+        level = 1;
         maxHp = 100;
         hp = maxHp;
         maxMp = 100;
@@ -143,7 +159,7 @@ public class Player : Stat
         while (true)
         {
             yield return leverUp_wait;
-            SoundManager.instance.PlaySfx(Define.Sfx.LevelUp);
+            SoundManager.Instance.PlaySfx(Define.Sfx.LevelUp);
             level++;
             exp += -levelUpExp;
             levelUpExp = 100 + (level * level + 10);

@@ -88,7 +88,7 @@ public class PlayerControl : CreatureControl
             Prone();
             if (Input.GetButtonDown("Jump"))
             {
-                SoundManager.instance.PlaySfx(Define.Sfx.Jump);
+                SoundManager.Instance.PlaySfx(Define.Sfx.Jump);
                 //GameManager.Sound.PlaySfx(Define.Sfx.Jump);
                 // 서있을 때 점프
                 if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
@@ -138,7 +138,6 @@ public class PlayerControl : CreatureControl
         }
     }
 
-
     private IEnumerator Attack_co()
     {
         // 공격 가능한 상태일 때만 공격 실행
@@ -148,7 +147,7 @@ public class PlayerControl : CreatureControl
             anim.GetCurrentAnimatorStateInfo(0).IsName("Down") ||
             anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
         {
-            SoundManager.instance.PlaySfx(Define.Sfx.AttackS);
+            SoundManager.Instance.PlaySfx(Define.Sfx.AttackS);
             //GameManager.Sound.PlaySfx(Define.Sfx.AttackS);
 
             Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(atkPos.position, atkBoxSize, 0, LayerMask.GetMask("Enemy"));
@@ -200,7 +199,7 @@ public class PlayerControl : CreatureControl
             // Item를 감지했으면 아이템 루팅
             if (col != null)
             {
-                SoundManager.instance.PlaySfx(Define.Sfx.PickUpItem);
+                SoundManager.Instance.PlaySfx(Define.Sfx.PickUpItem);
                 // 이미 루팅중이지만 아직 이동중인 아이템을 다시 획득하지 못하도록 방지하기 위한 레이어 변경
                 col.gameObject.layer = LayerMask.NameToLayer("ItemRoot");
                 // 이중 코루틴을 쓴 이유는 루팅중인 아이템이 있어도 다른 아이템도 루팅할 수 있도록 하기 위해서
@@ -211,11 +210,12 @@ public class PlayerControl : CreatureControl
     private IEnumerator MoveItem_co(Collider2D col)
     {
         // 아이템 이동 속도
-        float moveSpeed = 2.0f;
+        float moveSpeed = 3.5f;
         // 아이템이 플레이어와 가까워질때까지 이동
         while (Mathf.Abs(col.gameObject.transform.position.x - transform.position.x) > 0.3f)
         {
-            col.gameObject.transform.position = Vector2.Lerp(col.gameObject.transform.position, transform.position, moveSpeed * Time.deltaTime);
+            Transform trans = col.gameObject.transform;
+            trans.position = Vector2.Lerp(trans.position, 2*transform.position- trans.position, moveSpeed * Time.deltaTime);
             yield return null;
         }
         

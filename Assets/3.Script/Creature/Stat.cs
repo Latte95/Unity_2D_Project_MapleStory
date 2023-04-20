@@ -31,6 +31,10 @@ public class Stat : MonoBehaviour
             {
                 hp = 0;
             }
+            else if(hp > maxHp)
+            {
+                hp = maxHp;
+            }
         }
     }
     public int MaxHp { get => maxHp; set => maxHp = value; }

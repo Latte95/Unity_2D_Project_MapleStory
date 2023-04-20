@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour, IDataPersistence
@@ -10,15 +11,18 @@ public class GameManager : MonoBehaviour, IDataPersistence
     private StageData stageData;
 
     public static GameManager Instance;
-    public MainUI _ui;
+    private MainUI _ui;
     public static MainUI UI => Instance._ui;
 
     public GameObject canvasPrefab;
     public GameObject player;
     public GameObject playerPrefab;
     public Player nowPlayer;
-    public SoundManager soundManager;
-    //public DataManager dataManager;
+    private SoundManager soundManager;
+    private Portal portal;
+    private Image fadeImage;
+
+    private WaitUntil inputUpArrow_wait;
 
     private void Awake()
     {
@@ -26,27 +30,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
-
-            MainUI existingMainUI = FindObjectOfType<MainUI>();
-            if (existingMainUI == null)
-            {
-                // Instantiate the Canvas prefab and assign the MainUI component to the _ui field
-                GameObject canvasInstance = Instantiate(canvasPrefab);
-                _ui = canvasInstance.GetComponent<MainUI>();
-
-                // Set the name of the instantiated object to match the original prefab
-                canvasInstance.name = canvasPrefab.name;
-            }
-            else
-            {
-                _ui = existingMainUI;
-            }
-            player = GameObject.FindGameObjectWithTag("Player");
-            if(player == null)
-            {
-                GameObject playerInstance = Instantiate(playerPrefab);
-                player = playerInstance;
-            }
         }
         else
         {
@@ -56,9 +39,25 @@ public class GameManager : MonoBehaviour, IDataPersistence
             }
             return;
         }
+    }
+
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            GameObject playerInstance = Instantiate(playerPrefab);
+            player = playerInstance;
+        }
         DataManager.instance.LoadGame();
-        soundManager = FindObjectOfType<SoundManager>();
-        player.TryGetComponent(out nowPlayer);
+
+        if (nowPlayer == null)
+        {
+            nowPlayer = player.GetComponent<Player>();
+        }
+        FadeOutAndLoadScene(nowPlayer.Scene);
+        inputUpArrow_wait = new WaitUntil(() => Input.GetKeyDown(KeyCode.UpArrow));
+        StartCoroutine(nameof(InputUpArrow_co));
     }
 
     private void Update()
@@ -66,73 +65,69 @@ public class GameManager : MonoBehaviour, IDataPersistence
         // 세이브
         if (Input.GetKeyDown(KeyCode.F11))
         {
-            OnSaveGameClicked();
+            DataManager.instance.SaveGame();
         }
         // 데이터 초기화
         if (Input.GetKeyDown(KeyCode.F12))
         {
-            nowPlayer.Init(4,4,4,4);
-        }
-        // 맵이동
-        if (Input.GetKeyDown(KeyCode.F7))
-        {
-            Scene scene = SceneManager.GetActiveScene();
-            if (scene.name.Equals(nameof(Define.Scene.HenesysTown)))
-            {
-                StartCoroutine(LoadSceneAndData(Define.Scene.HenesysField));
-            }
-            else if (scene.name.Equals(nameof(Define.Scene.HenesysField)))
-            {
-                StartCoroutine(LoadSceneAndData(Define.Scene.HenesysTown));
-            }
+            nowPlayer.Init(4, 4, 4, 4);
+            DataManager.instance.SaveGame();
         }
 
-        // 아이템 획득
-        if (Input.GetKeyDown(KeyCode.F5))
-        {
-            nowPlayer.inventory.GetItem(02000000,2);
-            nowPlayer.inventory.GetItem("주황 포션");
-        }
+        // 장비 획득
         if (Input.GetKeyDown(KeyCode.F6))
         {
             nowPlayer.inventory.GetItem("검");
-            nowPlayer.inventory.GetItem(01040002,2);
+            nowPlayer.inventory.GetItem(01040002, 2);
             nowPlayer.inventory.GetItem(1060002);
-        }        
+        }
     }
 
+    // 플레이어 위치 저장 및 로드
     public void LoadData(Player data)
     {
         player.transform.position = data.playerPosition;
+        string currentSceneName = SceneManager.GetActiveScene().name;
     }
     public void SaveData(ref Player data)
     {
         data.playerPosition = player.transform.position;
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        data.Scene = (Define.Scene)Enum.Parse(typeof(Define.Scene), currentSceneName);
     }
 
+    // 클릭 이벤트
     public void OnSaveGameClicked()
     {
         DataManager.instance.SaveGame();
     }
     public void GameExit()
     {
+        DataManager.instance.SaveGame();
         Application.Quit();
     }
 
-
-    IEnumerator LoadSceneAndData(Define.Scene targetScene)
+    public void LoadSceneAndData(Define.Scene targetScene)
     {
-        OnSaveGameClicked();
-        // 씬 로드
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetScene.ToString());
+        SoundManager.Instance.PlaySfx(Define.Sfx.Portal);
 
-        // 씬 로드가 완료될 때까지 대기
-        while (!asyncLoad.isDone)
+        if (portal != null)
         {
-            yield return null;
+            player.transform.position = portal.position;
         }
-        MainUI existingMainUI = FindObjectOfType<MainUI>();
+        // 플레이어 데이터 저장
+        DataManager.instance.SaveGame();
 
+        // 씬 로드가 완료되면 실행될 메서드를 지정
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+        // 씬 로드
+        SceneManager.LoadScene(targetScene.ToString());
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Canvas 할당
+        MainUI existingMainUI = FindObjectOfType<MainUI>();
         if (existingMainUI == null)
         {
             // Instantiate the Canvas prefab and assign the MainUI component to the _ui field
@@ -141,21 +136,34 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
             // Set the name of the instantiated object to match the original prefab
             canvasInstance.name = canvasPrefab.name;
+            fadeImage = canvasInstance.transform.Find("Fade").GetComponent<Image>();
         }
         else
         {
             _ui = existingMainUI;
         }
+        // soundManager 할당
+        if (soundManager == null)
+        {
+            soundManager = FindObjectOfType<SoundManager>();
+        }
 
-        // player 할당
-        player = GameObject.Find("Player");
+        // StageData 할당
+        if (stageData == null)
+        {
+            stageData = Resources.Load<StageData>("StageData/" + nowPlayer.Scene.ToString());
+        }
+
+        // Player 컴포넌트 할당
         if (player == null)
         {
             GameObject playerInstance = Instantiate(playerPrefab);
             player = playerInstance;
         }
-        nowPlayer = player.GetComponent<Player>();
-        soundManager = FindObjectOfType<SoundManager>();
+        if (nowPlayer == null)
+        {
+            player.TryGetComponent(out nowPlayer);
+        }
 
         // CursorManager에 transform_cursor 할당
         CursorManager cursorManager = GetComponent<CursorManager>();
@@ -163,23 +171,62 @@ public class GameManager : MonoBehaviour, IDataPersistence
         {
             cursorManager.Init_Cursor();
         }
-        else
-        {
-            Debug.LogWarning("CursorManager not found on GameManager.");
-        }
 
-        // InventoryUI에 player 할당
-        InventoryUI inventoryUI = FindObjectOfType<InventoryUI>();
-
+        // Main Camera 설정
         CameraControl cameraControl = FindObjectOfType<CameraControl>();
-        if(cameraControl != null)
-        {
-            cameraControl.InitializePlayer();
-        }
 
-
-        // 데이터 로드
+        // 플레이어 데이터 로드
         DataManager.instance.LoadGame();
-        player.transform.position = Vector3.zero;
+
+        DataManager.instance.SaveGame();
+        // 이벤트 구독 해제
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        StartCoroutine(nameof(FadeIn));
+    }
+
+    public void FadeOutAndLoadScene(Define.Scene targetScene)
+    {
+        // Instantiate the Canvas prefab and assign the MainUI component to the _ui field
+        GameObject canvasInstance = Instantiate(canvasPrefab);
+        _ui = canvasInstance.GetComponent<MainUI>();
+
+        // Set the name of the instantiated object to match the original prefab
+        canvasInstance.name = canvasPrefab.name;
+        fadeImage = canvasInstance.transform.Find("Fade").GetComponent<Image>();
+        // Fade out
+        Color newColor = fadeImage.color;
+        newColor.a = 1;
+        fadeImage.color = newColor;
+
+        // Load scene
+        LoadSceneAndData(targetScene);
+    }
+    private IEnumerator FadeIn()
+    {
+        // Fade in
+        for (float alpha = 1f; alpha >= 0f; alpha -= Time.deltaTime)
+        {
+            Color newColor = fadeImage.color;
+            newColor.a = alpha;
+            fadeImage.color = newColor;
+            yield return null;
+        }
+    }
+    IEnumerator InputUpArrow_co()
+    {
+        while (true)
+        {
+            yield return inputUpArrow_wait;
+
+            int layerMask = LayerMask.GetMask("Portal");
+            Collider2D col = Physics2D.OverlapCircle(player.transform.position, 0.5f, layerMask);
+
+            // Portal 감지하면 씬로드
+            if (col != null)
+            {
+                col.TryGetComponent(out portal);
+                FadeOutAndLoadScene(portal.scene);
+            }
+        }
     }
 }

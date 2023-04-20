@@ -5,8 +5,15 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager instance;
-    public static SoundManager Instance => instance;
+    private static SoundManager instance;
+    public static SoundManager Instance
+    {
+        get
+        {
+            Init();
+            return instance;
+        }
+    }
 
     [Header("#BGM")]
     public AudioClip bgmClip;
@@ -24,7 +31,7 @@ public class SoundManager : MonoBehaviour
         instance.PlayBgm();
     }
 
-    public void Init()
+    static void Init()
     {
         if (instance == null)
         {
@@ -41,18 +48,18 @@ public class SoundManager : MonoBehaviour
         }
 
         GameObject bgmObject = new GameObject("BgmPlayer");
-        bgmObject.transform.parent = transform;
-        bgmPlayer = bgmObject.AddComponent<AudioSource>();
-        bgmPlayer.playOnAwake = false;
-        bgmPlayer.loop = true;
-        bgmPlayer.volume = bgmVolume;
-        bgmPlayer.clip = bgmClip;
+        bgmObject.transform.parent = instance.transform;
+        instance.bgmPlayer = bgmObject.AddComponent<AudioSource>();
+        instance.bgmPlayer.playOnAwake = false;
+        instance.bgmPlayer.loop = true;
+        instance.bgmPlayer.volume = instance.bgmVolume;
+        instance.bgmPlayer.clip = instance.bgmClip;
 
         GameObject sfxObject = new GameObject("SfxPlayer");
-        sfxObject.transform.parent = transform;
-        sfxPlayer = sfxObject.AddComponent<AudioSource>();
-        sfxPlayer.playOnAwake = false;
-        sfxPlayer.volume = sfxVolume;
+        sfxObject.transform.parent = instance.transform;
+        instance.sfxPlayer = sfxObject.AddComponent<AudioSource>();
+        instance.sfxPlayer.playOnAwake = false;
+        instance.sfxPlayer.volume = instance.sfxVolume;
     }
 
     public void PlayBgm()
@@ -62,7 +69,7 @@ public class SoundManager : MonoBehaviour
             bgmPlayer.Stop();
         }
 
-        bgmPlayer.Play();        
+        bgmPlayer.Play();
     }
 
     public void PlaySfx<T>(T sfx) where T : Enum

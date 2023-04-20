@@ -227,7 +227,7 @@ public class DataManager : MonoBehaviour
     // Sava data file initialize
     public void ClearData()
     {
-        //nowPlayer = new Player();
+        nowPlayer.Init(4,4,4,4);
         Save(nowPlayer.ToPlayerData());
     }
 
