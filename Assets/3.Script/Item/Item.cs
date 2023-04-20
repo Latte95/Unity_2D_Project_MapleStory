@@ -12,6 +12,7 @@ public class Item : ICloneable
         Equip,
         Consume,
         Etc,
+        Money,
     }
 
     // 소비 아이템 최대 보유 가능 개수

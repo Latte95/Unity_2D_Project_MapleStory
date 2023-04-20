@@ -21,6 +21,9 @@ public class PlayerControl : CreatureControl
     public Vector2 atkBoxSize;
 
 
+    //
+
+
     private new void OnEnable()
     {
         base.OnEnable();
@@ -34,10 +37,32 @@ public class PlayerControl : CreatureControl
         anim.SetBool("isNomal", true);
     }
 
+    private void LateUpdate()
+    {
+        if (Input.GetKey(KeyCode.Z))
+        {
+            int layerMask = LayerMask.GetMask("ItemRoot"); // "ItemRoot" 레이어의 마스크를 가져옵니다.
+            Collider2D col = Physics2D.OverlapCircle(transform.position, 1.0f, layerMask); // 레이어 마스크를 사용하여 해당 레이어의 물체만 감지합니다.
+
+            if (col != null)
+            {
+                if (col.gameObject.GetComponent<SpriteRenderer>().sprite.name[0].Equals('9'))
+                {
+                    Stat.Gold += col.gameObject.GetComponentInParent<FieldItem>().money;
+                }
+                else
+                {
+                    Stat.inventory.GetItem(int.Parse(col.gameObject.GetComponent<SpriteRenderer>().sprite.name));
+                }
+                    Destroy(col.gameObject.transform.parent.gameObject);
+            }
+        }
+    }
+
     // 공격
     protected override void Attack()
     {
-        // 기본 공격
+        //기본 공격
         if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             StopCoroutine(nameof(Attack_co));
@@ -158,7 +183,7 @@ public class PlayerControl : CreatureControl
                     damage = 1;
                 }
                 monsterData.Hp -= damage;
-                if(monsterData.Hp <= 0)
+                if (monsterData.Hp <= 0)
                 {
                     Stat.Exp += monsterData.Exp;
                 }

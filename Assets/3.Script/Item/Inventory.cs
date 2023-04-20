@@ -83,6 +83,7 @@ public class Inventory
         // 인벤토리에 삭제할 아이템이 있다면
         if (itemIndex >= 0)
         {
+            newItem = items[itemIndex];
             // 소비 아이템
             if (item.itemType.Equals(Item.ItemType.Consume))
             {
@@ -94,15 +95,18 @@ public class Inventory
                 // 수량이 0이 되면 완전히 제거
                 if (items[itemIndex].quantity <= 0)
                 {
+                    items[itemIndex].quantity = 0;
                     items.RemoveAt(itemIndex);
                 }
             }
             // 장비 아이템은 그냥 완전히 제거
             else
             {
+                items[itemIndex].quantity = 0;
                 items.RemoveAt(itemIndex);
             }
             OnItemAdded?.Invoke(newItem);
+            newItem = null;
         }
     }
 

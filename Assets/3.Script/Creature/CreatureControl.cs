@@ -82,7 +82,6 @@ public abstract class CreatureControl : MonoBehaviour
     {
         myLayer = gameObject.layer;
         FootTrans = gameObject.transform.GetChild(1);
-        StartCoroutine(nameof(OnDie_co));
     }
 
     protected void Update()

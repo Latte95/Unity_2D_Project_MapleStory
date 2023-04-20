@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5180292556270263678}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.318, z: 0}
+  m_LocalPosition: {x: 0, y: -0.295, z: 0}
   m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children: []
   m_Father: {fileID: 5180292556998340351}
@@ -238,7 +238,15 @@ MonoBehaviour:
   lastGroundTag: 
   FootTrans: {fileID: 0}
   invincibleTime: 2
-  sfxClips: []
+  sfxClips:
+  - {fileID: 8300000, guid: 7368babf9a02ec543a35689d12d18d6b, type: 3}
+  - {fileID: 8300000, guid: 0ce80182bb984c640b9f5e27a2114ed4, type: 3}
+  - {fileID: 8300000, guid: 57f15f2719c20ee4499e778372f6cf71, type: 3}
+  itemPrefab: {fileID: 3237959173466570023, guid: 364028372d82cf8469239591a3d67d30, type: 3}
+  itemImage: 80841e0081841e00
+  moneyImage: 40548900415489004254890043548900
+  minMoney: 500
+  maxMoney: 2000
 --- !u!82 &5180292556998340338
 AudioSource:
   m_ObjectHideFlags: 0
@@ -352,7 +360,7 @@ MonoBehaviour:
   maxHp: 10
   attack: 7
   defense: 3
-  speed: 1.8
+  speed: 1.5
   jumpForce: 23
-  exp: 0
+  exp: 50
   gold: 0

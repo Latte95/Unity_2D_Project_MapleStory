@@ -20,7 +20,7 @@ public class Stat : MonoBehaviour
     [SerializeField]
     protected float jumpForce;
 
-    public int Level { get; set; }
+    public int Level { get => level; set => level = value; }
     public int Hp
     {
         get => hp;

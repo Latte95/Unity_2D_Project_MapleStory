@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Middle
   - Front
+  - ItemRoot
   layers:
   - Default
   - TransparentFX
@@ -30,8 +31,8 @@ TagManager:
   - Other
   - Front
   - 
-  - 
-  - 
+  - Item
+  - ItemRoot
   - 
   - 
   - 

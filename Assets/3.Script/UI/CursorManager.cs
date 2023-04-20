@@ -10,7 +10,7 @@ public class CursorManager : MonoBehaviour
     public Sprite clickedCursorImage;
     public Image cursorImage;
 
-    private void Awake()
+    private void Start()
     {
         // 씬 전환시 널참조 방지. 발생 이유는 모르겠음...
         if (GameManager.UI == null)

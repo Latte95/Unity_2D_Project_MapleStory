@@ -5,6 +5,12 @@ using UnityEngine;
 public class Player : Stat
 {
     public Vector3 playerPosition;
+
+    [SerializeField]
+    protected int mp;
+    [SerializeField]
+    protected int maxMp;
+
     protected int strong;
     protected int intelligence;
     protected int dexterity;
@@ -20,6 +26,19 @@ public class Player : Stat
 
     protected Define.Scene scene;
     public Inventory inventory;
+    public int Mp
+    {
+        get => mp;
+        set
+        {
+            mp = value;
+            if (mp < 0)
+            {
+                mp = 0;
+            }
+        }
+    }
+    public int MaxMp { get => maxMp; set => maxMp = value; }
 
     public int Str { get => strong; set => strong = value; }
     public int Int { get => intelligence; set => intelligence = value; }
@@ -27,6 +46,7 @@ public class Player : Stat
     public int Luk { get => luck; set => luck = value; }
 
     public int Exp { get => exp; set => exp = value; }
+    public int LevelUpExp { get => levelUpExp;}
     public int Gold { get => gold; set => gold = value; }
 
     public Define.Scene Scene { get => scene; set => scene = value; }
@@ -40,6 +60,8 @@ public class Player : Stat
         data.level = level;
         data.hp = hp;
         data.maxHp = maxHp;
+        data.mp = mp;
+        data.maxMp = maxMp;
         data.attack = attack;
         data.defense = defense;
         data.speed = speed;
@@ -68,6 +90,8 @@ public class Player : Stat
         level = data.level;
         maxHp = data.maxHp;
         hp = data.hp;
+        maxMp = data.maxMp;
+        mp = data.mp;
         attack = data.attack;
         defense = data.defense;
         speed = data.speed;
@@ -95,10 +119,12 @@ public class Player : Stat
         level = 2;
         maxHp = 100;
         hp = maxHp;
+        maxMp = 100;
+        mp = maxMp;
         attack = 10;
         defense = 5;
         speed = 1.8f;
-        jumpForce = 23f;
+        jumpForce = 25f;
         exp = 0;
         gold = 1000;
         scene = Define.Scene.HenesysField;

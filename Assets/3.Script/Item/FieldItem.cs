@@ -4,22 +4,36 @@ using UnityEngine;
 
 public class FieldItem : MonoBehaviour
 {
-    public Item item;
-    public SpriteRenderer icon;
+    Rigidbody2D rigid;
+    float jumpForce = 5f;
 
-    public void SetItem(Item _item)
+    RectTransform childRectTransform;
+    float moveSpeed = 3f;
+    float moveDistance = 0.05f;
+
+    public int money;
+
+    private void OnEnable()
     {
-        item._itemName = _item._itemName;
-        item.itemIcon = _item.itemIcon;
-        item.itemType = _item.itemType;
-
-        icon.sprite = item.itemIcon;
+        TryGetComponent(out rigid);
+        Jump();
+        childRectTransform = transform.GetChild(0).GetComponent<RectTransform>();
+        childRectTransform.localPosition = moveDistance * Vector3.up;
     }
 
-    public Item GetItem()
+    private void Update()
     {
-        return item;
+        float newY = moveDistance + Mathf.Sin(Time.time * moveSpeed) * moveDistance;
+
+        childRectTransform.localPosition = newY*Vector3.up;
     }
+
+    public void Jump()
+    {
+        rigid.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);
+    }
+
+
     public void DestroyItem()
     {
         Destroy(gameObject);

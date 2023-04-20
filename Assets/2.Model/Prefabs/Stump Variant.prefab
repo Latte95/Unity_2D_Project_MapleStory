@@ -12,6 +12,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2155090993528461043, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
+      propertyPath: exp
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2155090993528461043, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
       propertyPath: maxHp
       value: 15
       objectReference: {fileID: 0}
@@ -29,6 +33,34 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2155090993528461043, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
       propertyPath: jumpForce
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2155090993528461045, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
+      propertyPath: maxMoney
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 2155090993528461045, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
+      propertyPath: minMoney
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 2155090993528461045, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
+      propertyPath: sfxClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 4ae3875bbd2a97947a2ff523c31adbad, type: 3}
+    - target: {fileID: 2155090993528461045, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
+      propertyPath: sfxClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 34d7446174ceeef428058c2f044ca1f0, type: 3}
+    - target: {fileID: 2155090993528461047, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
+      propertyPath: m_Size.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2155090993528461047, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 2155090993528461047, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
+      propertyPath: m_Offset.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2155090993528461049, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
@@ -89,7 +121,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: f6f013a0e0af5ec4485ec5c9713bd847, type: 2}
     - target: {fileID: 2155090993528461052, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
       propertyPath: m_Name
-      value: Stump
+      value: Stump Variant
       objectReference: {fileID: 0}
     - target: {fileID: 2155090993528461052, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
       propertyPath: m_IsActive

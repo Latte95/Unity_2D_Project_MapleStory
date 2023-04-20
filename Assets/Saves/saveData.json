@@ -1,14 +1,16 @@
 {
     "level": 2,
-    "hp": 96,
+    "hp": 88,
     "maxHp": 100,
+    "mp": 50,
+    "maxMp": 100,
     "attack": 10,
     "defense": 5,
     "speed": 1.7999999523162842,
-    "jumpForce": 23.0,
+    "jumpForce": 25.0,
     "playerPosition": {
-        "x": -2.0649290084838869,
-        "y": -0.6230900287628174,
+        "x": -5.878963947296143,
+        "y": -0.6220074892044067,
         "z": 0.0
     },
     "strong": 4,
@@ -35,7 +37,7 @@
                 "_price": 10,
                 "_quantity": 6,
                 "itemIcon": {
-                    "instanceID": 20852
+                    "instanceID": 18382
                 },
                 "itemType": 1
             },
@@ -54,7 +56,7 @@
                 "_price": 18,
                 "_quantity": 3,
                 "itemIcon": {
-                    "instanceID": 24420
+                    "instanceID": 24522
                 },
                 "itemType": 1
             },
@@ -73,7 +75,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 24642
+                    "instanceID": 24740
                 },
                 "itemType": 0
             },
@@ -92,7 +94,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 23172
+                    "instanceID": 23262
                 },
                 "itemType": 0
             },
@@ -111,7 +113,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 23172
+                    "instanceID": 23262
                 },
                 "itemType": 0
             },
@@ -130,7 +132,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 21764
+                    "instanceID": 21914
                 },
                 "itemType": 0
             },
@@ -149,7 +151,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 24642
+                    "instanceID": 24740
                 },
                 "itemType": 0
             },
@@ -168,7 +170,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 23172
+                    "instanceID": 23262
                 },
                 "itemType": 0
             },
@@ -187,7 +189,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 23172
+                    "instanceID": 23262
                 },
                 "itemType": 0
             },
@@ -206,7 +208,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 21764
+                    "instanceID": 21914
                 },
                 "itemType": 0
             },
@@ -225,7 +227,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 24642
+                    "instanceID": 24740
                 },
                 "itemType": 0
             },
@@ -244,7 +246,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 23172
+                    "instanceID": 23262
                 },
                 "itemType": 0
             },
@@ -263,7 +265,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 23172
+                    "instanceID": 23262
                 },
                 "itemType": 0
             },
@@ -282,7 +284,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 21764
+                    "instanceID": 21914
                 },
                 "itemType": 0
             }

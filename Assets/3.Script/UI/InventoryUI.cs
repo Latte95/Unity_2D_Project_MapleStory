@@ -86,14 +86,24 @@ public class InventoryUI : MonoBehaviour
 
     private void UpdateUI(Item newItem)
     {
+        if(newItem == null)
+        {
+            return;
+        }
         int itemIndex = Array.FindIndex(slot, s => s.icon.sprite == newItem.itemIcon);
         if (newItem is EquipableItem)
         {
             itemIndex = -1;
         }
 
+
         if (itemIndex >= 0)
         {
+            if (slot[itemIndex].icon.sprite.name.Equals(newItem.itemIcon.name))
+            {
+                InitializeSlot();
+                return;
+            }
             // Update the existing slot
             slot[itemIndex].icon.sprite = newItem.itemIcon;
             slot[itemIndex].icon.color = new Color(1, 1, 1, 1);
@@ -101,8 +111,14 @@ public class InventoryUI : MonoBehaviour
             {
                 slot[itemIndex].itemCount_Text.text = "x" + player.inventory.items[itemIndex].quantity.ToString();
             }
+            else if (player.inventory.items[itemIndex].quantity.Equals(1))
+            {
+                slot[itemIndex].itemCount_Text.text = null;
+            }
             else
             {
+                slot[itemIndex].icon.sprite = null;
+                slot[itemIndex].icon.color = new Color(1, 1, 1, 0);
                 slot[itemIndex].itemCount_Text.text = null;
             }
         }

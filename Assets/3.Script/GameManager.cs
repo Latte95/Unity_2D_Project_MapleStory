@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour, IDataPersistence
 {
-    private static GameManager Instance;
+    public static GameManager Instance;
     public MainUI _ui;
     public static MainUI UI => Instance._ui;
 
@@ -58,9 +58,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     private void OnEnable()
     {
-        nowPlayer = player.GetComponent<Player>();
+        //nowPlayer = player.GetComponent<Player>();
         soundManager = FindObjectOfType<SoundManager>();
-        nowPlayer = player.GetComponent<Player>();
+        player.TryGetComponent(out nowPlayer);
     }
 
     private void Update()

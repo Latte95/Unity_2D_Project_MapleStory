@@ -77,7 +77,8 @@ public class QuickSlotManager : MonoBehaviour
         }
         //if (Input.GetKeyDown(KeyCode.LeftControl))
         //{
-        //gameObject.name.Equals("Ctrl");
+
+
         //}
         if (Input.GetKeyDown(KeyCode.Delete))
         {
