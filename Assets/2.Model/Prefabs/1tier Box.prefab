@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5046335580551971750}
   m_Layer: 8
   m_Name: 1tier Box
-  m_TagString: Middle
+  m_TagString: Other
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

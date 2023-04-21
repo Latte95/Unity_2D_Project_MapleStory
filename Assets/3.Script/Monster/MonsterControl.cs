@@ -9,7 +9,10 @@ public class MonsterControl : CreatureControl
     AudioSource sfxPlayer;
 
     private MonsterStat Stat;
-    int dir = 0;
+    public int dir = 0;
+
+    [SerializeField]
+    private bool isEndPlat = false;
 
 
     public GameObject itemPrefab;
@@ -47,6 +50,20 @@ public class MonsterControl : CreatureControl
         IsOnGround();
         base.Update();
     }
+    private void LateUpdate()
+    {
+        // 캐릭터 바로앞의 충돌을 감지할 박스캐스트
+        RaycastHit2D raycast = Physics2D.Raycast(transform.position + 0.5f * (-transform.localScale.x * 0.6f) * Vector3.right, Vector2.down, 1f, LayerMask.GetMask(platLayer));
+        // 바닥 없으면 멈춤 
+        if (raycast.collider != null)
+        {
+            isEndPlat = false;
+        }
+        else
+        {
+            isEndPlat = true;
+        }
+    }
 
     // 지금은 몬스터 공격이 없지만, 공격패턴을 갖는 몬스터를 만들때를 대비
     protected override void Attack() { }
@@ -65,6 +82,10 @@ public class MonsterControl : CreatureControl
         else if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
         {
             movement.MoveTo(new Vector2(rigid.velocity.x / Stat.Speed, 0));
+        }
+        if (isEndPlat && dir * transform.localScale.x < 0 && !anim.GetCurrentAnimatorStateInfo(0).IsName("Jump") && !lastGroundTag.Equals("Other"))
+        {
+            movement.MoveTo(Vector2.zero);
         }
     }
 
@@ -155,7 +176,7 @@ public class MonsterControl : CreatureControl
     {
         // 무적시간 경과 후 원래 상태로 돌아옴
         yield return invincibleTime_wait;
-            isImmobile = false;
+        isImmobile = false;
     }
     protected override IEnumerator OnDie_co()
     {
@@ -167,9 +188,9 @@ public class MonsterControl : CreatureControl
 
         // 아이템 드랍 로직
         GameObject itemInstance = Instantiate(itemPrefab);
-        itemInstance.transform.position = transform.position+0.2f*Vector3.left;
+        itemInstance.transform.position = transform.position + 0.2f * Vector3.left;
         int rand = Random.Range(1, 10);
-        if(rand < 8)
+        if (rand < 8)
         {
             rand = 0;
         }
@@ -183,7 +204,7 @@ public class MonsterControl : CreatureControl
         moneyInstance.transform.position = transform.position + 0.2f * Vector3.right;
         moneyInstance.GetComponent<FieldItem>().money = Random.Range(minMoney, maxMoney + 1);
         int moneyIndex = moneyInstance.GetComponent<FieldItem>().money;
-        if(moneyIndex < 50)
+        if (moneyIndex < 50)
         {
             moneyIndex = 0;
         }
@@ -221,12 +242,18 @@ public class MonsterControl : CreatureControl
     {
         while (true)
         {
-            int wait = Random.Range(50, 90);
+            int wait = Random.Range(10, 20);
             yield return new WaitForSeconds(wait * 0.1f);
             if (isGrounded && anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni))
             {
                 movement.JumpTo();
             }
         }
+    }
+
+    protected override void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(transform.position + 0.5f * (-transform.localScale.x * 0.6f) * Vector3.right, Vector2.down);
     }
 }
