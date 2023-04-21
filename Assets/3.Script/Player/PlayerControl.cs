@@ -24,6 +24,8 @@ public class PlayerControl : CreatureControl
     // 공격 관련 변수
     public Transform atkPos;
     public Vector2 atkBoxSize;
+    //public GameObject attackEffect;
+    public SpriteRenderer attackEffect;
 
     private new void OnEnable()
     {
@@ -42,6 +44,7 @@ public class PlayerControl : CreatureControl
 
         StartCoroutine(nameof(RootItem_co));
         StartCoroutine(nameof(InputUpOrDownArrow_co));
+        dieHp = new WaitUntil(() => Stat.Hp <= 0);
     }
 
     protected override void Update()
@@ -72,6 +75,9 @@ public class PlayerControl : CreatureControl
         bool downArrowPressed = Input.GetKey(KeyCode.DownArrow);
         Vector2 dir = Vector2.zero;
         Vector2 dirVer = Vector2.zero;
+
+        int flip = transform.localScale.x > 0 ? 1 : -1;
+        Stat.levelUpEffect.transform.localScale = new Vector3(flip, 1, 1);
 
         if (leftArrowPressed && !rightArrowPressed)
         {
@@ -244,6 +250,8 @@ public class PlayerControl : CreatureControl
         {
             SoundManager.Instance.PlaySfx(Define.Sfx.AttackS);
             //GameManager.Sound.PlaySfx(Define.Sfx.AttackS);
+            attackEffect.color = new Color(1,1,1,1);
+            StartCoroutine(nameof(EffectOff_co));
 
             Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(atkPos.position, atkBoxSize, 0, LayerMask.GetMask("Enemy"));
             foreach (Collider2D collider in collider2Ds)
@@ -267,6 +275,16 @@ public class PlayerControl : CreatureControl
 
             yield return null;
             anim.SetBool("isAttack", false);
+        }
+    }
+    private IEnumerator EffectOff_co()
+    {
+        for (float alpha = 1f; alpha >= 0f; alpha -= Time.deltaTime)
+        {
+            Color newColor = attackEffect.color;
+            newColor.a = alpha;
+            attackEffect.color = newColor;
+            yield return null;
         }
     }
     private IEnumerator DownJump_co()

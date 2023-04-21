@@ -52,23 +52,26 @@ public class Player : Stat
     public int Luk { get => luck; set => luck = value; }
 
     public int Exp
-    { 
+    {
         get => exp;
         set
         {
             exp = value;
-            if(exp < 0)
+            if (exp < 0)
             {
                 exp = 0;
             }
         }
     }
-    public int LevelUpExp { get => levelUpExp;}
+    public int LevelUpExp { get => levelUpExp; }
     public int Gold { get => gold; set => gold = value; }
 
     public Define.Scene Scene { get => scene; set => scene = value; }
 
     private WaitUntil leverUp_wait;
+
+
+    public GameObject levelUpEffect;
 
 
     public PlayerData ToPlayerData()
@@ -163,7 +166,15 @@ public class Player : Stat
             level++;
             exp += -levelUpExp;
             levelUpExp = 100 + (level * level + 10);
+            levelUpEffect.SetActive(true);
+            StartCoroutine(nameof(EffectOff_co));
+
             LevelUp?.Invoke();
         }
+    }
+    private IEnumerator EffectOff_co()
+    {
+        yield return new WaitForSeconds(1.8f);
+        levelUpEffect.SetActive(false);
     }
 }

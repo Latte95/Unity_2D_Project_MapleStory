@@ -21,7 +21,7 @@ public class CursorManager : MonoBehaviour
         }
         Init_Cursor();
         transform_cursor.TryGetComponent(out cursorImage);
-        waitShort_wait = new WaitForSeconds(0.01f);
+        waitShort_wait = new WaitForSeconds(0.1f);
     }
 
     private void Update()
@@ -71,7 +71,7 @@ public class CursorManager : MonoBehaviour
 
     IEnumerator SetCursorImage_co(Sprite newImage)
     {
-        yield return waitShort_wait;
+        yield return new WaitForSeconds(0.1f);
         cursorImage.sprite = newImage;
     }
 }

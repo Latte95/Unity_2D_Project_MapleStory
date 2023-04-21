@@ -30,13 +30,11 @@ public class MonsterControl : CreatureControl
         TryGetComponent(out sfxPlayer);
         sfxPlayer.playOnAwake = false;
 
-        dieHp = new WaitUntil(() => Stat.Hp <= 0);
         StartCoroutine(nameof(Direct_co));
         // 점프
         StartCoroutine(nameof(Jump_co));
 
-        // OnEnable에 있으면 시작할 때 죽음
-        StartCoroutine(nameof(OnDie_co));
+        dieHp = new WaitUntil(() => Stat.Hp <= 0);
     }
     private new void Start()
     {
