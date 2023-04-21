@@ -33,5 +33,10 @@ public class MainUI : MonoBehaviour
             activeInventory = !activeInventory;
             inventoryUI.SetActive(activeInventory);
         }
+        if(Input.GetKeyDown(KeyCode.Escape) && activeInventory)
+        {
+            activeInventory = !activeInventory;
+            inventoryUI.SetActive(activeInventory);
+        }
     }
 }
