@@ -331,6 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 912fcbe13b837bf4c83eab101b9c9e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageData: {fileID: 0}
 --- !u!114 &792105714980504229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,6 +352,8 @@ MonoBehaviour:
   speed: 0
   jumpForce: 0
   playerPosition: {x: 0, y: 0, z: 0}
+  mp: 0
+  maxMp: 0
   luck: 0
   exp: 0
   levelUpExp: 0

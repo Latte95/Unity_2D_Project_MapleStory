@@ -212,7 +212,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
             yield return null;
         }
     }
-    IEnumerator InputUpArrow_co()
+    private IEnumerator InputUpArrow_co()
     {
         while (true)
         {

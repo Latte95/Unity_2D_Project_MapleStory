@@ -110,7 +110,7 @@ public abstract class CreatureControl : MonoBehaviour
     }
 
     // 땅 밟은지 체크
-    protected void IsOnGround()
+    protected virtual void IsOnGround()
     {
         // 발밑에서 박스캐스트 생성
         // ground나 slope만 체크

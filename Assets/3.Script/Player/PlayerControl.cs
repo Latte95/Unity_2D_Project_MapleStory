@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class PlayerControl : CreatureControl
 
     // 아래점프시 바닥 충돌 무시할 시간
     protected WaitUntil inputZ_wait;
+    protected WaitUntil inputUpOrDownArrow_wait;
     protected WaitUntil itemRootEnd_wait;
     protected WaitForSeconds itemRootDelay_wait;
     protected WaitForSeconds ignorePlatTime_wait;
@@ -32,13 +34,16 @@ public class PlayerControl : CreatureControl
 
         dieHp = new WaitUntil(() => Stat.Hp <= 0);
         inputZ_wait = new WaitUntil(() => Input.GetKey(KeyCode.Z));
+        inputUpOrDownArrow_wait = new WaitUntil(() => Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow));
         itemRootDelay_wait = new WaitForSeconds(0.1f);
         offHit_wait = new WaitForSeconds(offHitTime - invincibleTime);
         recover_wait = new WaitForSeconds(recoverTime);
         anim.SetBool("isNomal", true);
 
         StartCoroutine(nameof(RootItem_co));
+        StartCoroutine(nameof(InputUpOrDownArrow_co));
     }
+
 
     // 공격
     protected override void Attack()
@@ -56,23 +61,29 @@ public class PlayerControl : CreatureControl
         bool isIdleOrWalking = (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni) || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"));
         bool leftArrowPressed = Input.GetKey(KeyCode.LeftArrow);
         bool rightArrowPressed = Input.GetKey(KeyCode.RightArrow);
+        Vector2 dir = Vector2.zero;
 
+        if (leftArrowPressed && !rightArrowPressed)
+        {
+            dir = Vector2.left;
+        }
+        else if (!leftArrowPressed && rightArrowPressed)
+        {
+            dir = Vector2.right;
+        }
+        if (Input.GetButtonDown("Jump") &&
+            (anim.GetCurrentAnimatorStateInfo(0).IsName("RopeIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("LadderIdle")))
+        {
+            rigid.AddForce(5 * dir);
+            RopeOff();
+            SoundManager.Instance.PlaySfx(Define.Sfx.Jump);
+            // 서있을 때 점프
+        }
         // 이동
         // 가만히 있거나 걷는 중에만 이동 가능
         if (isIdleOrWalking && !isImmobile)
         {
-            if (leftArrowPressed && !rightArrowPressed)
-            {
-                movement.MoveTo(Vector2.left);
-            }
-            else if (!leftArrowPressed && rightArrowPressed)
-            {
-                movement.MoveTo(Vector2.right);
-            }
-            else
-            {
-                movement.MoveTo(Vector2.zero);
-            }
+            movement.MoveTo(dir);
         }
         else
         {
@@ -84,12 +95,16 @@ public class PlayerControl : CreatureControl
     {
         if (isGrounded)
         {
+            if (rigid.velocity.y > 0 || rigid.velocity.y < 0)
+            {
+                RopeOff();
+            }
             // 엎드리는지 확인
             Prone();
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump") &&
+                !(anim.GetCurrentAnimatorStateInfo(0).IsName("RopeIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("LadderIdle")))
             {
                 SoundManager.Instance.PlaySfx(Define.Sfx.Jump);
-                //GameManager.Sound.PlaySfx(Define.Sfx.Jump);
                 // 서있을 때 점프
                 if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
                 {
@@ -123,7 +138,6 @@ public class PlayerControl : CreatureControl
             StartCoroutine(nameof(OffDamaged_co));
         }
     }
-
 
     private void Prone()
     {
@@ -215,7 +229,7 @@ public class PlayerControl : CreatureControl
         while (Mathf.Abs(col.gameObject.transform.position.x - transform.position.x) > 0.3f)
         {
             Transform trans = col.gameObject.transform;
-            trans.position = Vector2.Lerp(trans.position, 2*transform.position- trans.position, moveSpeed * Time.deltaTime);
+            trans.position = Vector2.Lerp(trans.position, 2 * transform.position - trans.position, moveSpeed * Time.deltaTime);
             yield return null;
         }
         // 돈이면 돈증가
@@ -230,7 +244,39 @@ public class PlayerControl : CreatureControl
         }
         Destroy(col.gameObject);
     }
+    private IEnumerator InputUpOrDownArrow_co()
+    {
+        while (true)
+        {
+            yield return inputUpOrDownArrow_wait;
 
+            int layerMask = LayerMask.GetMask("Rope", "Ladder");
+            Collider2D col = Physics2D.OverlapBox(transform.position, new Vector2(0.25f, 1.13f), 0f, layerMask);
+
+            if (col != null)
+            {
+                switch (LayerMask.LayerToName(col.gameObject.layer))
+                {
+                    case "Rope":
+                        anim.SetBool("isRope", true);
+                        transform.position = new Vector2(col.gameObject.transform.position.x - 0.24f, transform.position.y);
+                        break;
+                    case "Ladder":
+                        anim.SetBool("isLadder", true);
+                        transform.position = new Vector2(col.gameObject.transform.position.x, transform.position.y);
+                        break;
+                }
+                rigid.bodyType = RigidbodyType2D.Kinematic;
+                rigid.velocity = Vector3.zero;
+            }
+        }
+    }
+    private void RopeOff()
+    {
+        anim.SetBool("isRope", false);
+        anim.SetBool("isLadder", false);
+        rigid.bodyType = RigidbodyType2D.Dynamic;
+    }
     protected override IEnumerator OffDamaged_co()
     {
         // 무적시간 경과 후 원래 상태로 돌아옴
