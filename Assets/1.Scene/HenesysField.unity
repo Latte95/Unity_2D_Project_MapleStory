@@ -4009,7 +4009,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefabs:
   - {fileID: 4236158770113695298, guid: 6ec396a69ceccdb4bbfcda4d265266f7, type: 3}
-  count: 02000000
+  - {fileID: 1304116597308682942, guid: a076f191a2784a1408d77e935755a1f8, type: 3}
+  count: 0200000002000000
   totalCount: 0
   timeBetSpawnMin: 3
   timeBetSpawnMax: 7
@@ -9324,7 +9325,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefabs:
   - {fileID: 4236158770113695298, guid: 6ec396a69ceccdb4bbfcda4d265266f7, type: 3}
-  count: 02000000
+  - {fileID: 1304116597308682942, guid: a076f191a2784a1408d77e935755a1f8, type: 3}
+  count: 0200000001000000
   totalCount: 0
   timeBetSpawnMin: 3
   timeBetSpawnMax: 7
