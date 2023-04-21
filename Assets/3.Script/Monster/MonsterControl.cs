@@ -35,6 +35,7 @@ public class MonsterControl : CreatureControl
         StartCoroutine(nameof(Jump_co));
 
         dieHp = new WaitUntil(() => Stat.Hp <= 0);
+        StartCoroutine(nameof(OnDie_co));
     }
     private new void Start()
     {
@@ -199,10 +200,11 @@ public class MonsterControl : CreatureControl
             moneyIndex = 3;
         }
         moneyInstance.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("MoneyIcon/" + moneyImage[moneyIndex].ToString());
-        
+
 
 
         // 죽는 애니메이션 끝나면 비활성화
+        transform.position = -25 * Vector2.one;
         yield return dieAni;
         gameObject.SetActive(false);
     }

@@ -74,7 +74,7 @@ public abstract class CreatureControl : MonoBehaviour
         TryGetComponent(out rigid);
         TryGetComponent(out anim);
         TryGetComponent(out audioSource);
-        dieAni = new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f &&
+        dieAni = new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f &&
                                               anim.GetCurrentAnimatorStateInfo(0).IsName("Die"));
     }
 
@@ -82,7 +82,6 @@ public abstract class CreatureControl : MonoBehaviour
     {
         myLayer = gameObject.layer;
         FootTrans = gameObject.transform.GetChild(1);
-        StartCoroutine(nameof(OnDie_co));
     }
 
     protected virtual void Update()

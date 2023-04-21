@@ -45,6 +45,7 @@ public class PlayerControl : CreatureControl
         StartCoroutine(nameof(RootItem_co));
         StartCoroutine(nameof(InputUpOrDownArrow_co));
         dieHp = new WaitUntil(() => Stat.Hp <= 0);
+        StartCoroutine(nameof(OnDie_co));
     }
 
     protected override void Update()
@@ -101,7 +102,7 @@ public class PlayerControl : CreatureControl
             if (Input.GetButtonDown("Jump"))
             {
                 rigid.velocity = dir;
-                rigid.AddForce(10*Vector2.up,ForceMode2D.Impulse);
+                rigid.AddForce(10 * Vector2.up, ForceMode2D.Impulse);
                 RopeOff();
                 SoundManager.Instance.PlaySfx(Define.Sfx.Jump);
             }
@@ -250,11 +251,10 @@ public class PlayerControl : CreatureControl
         {
             SoundManager.Instance.PlaySfx(Define.Sfx.AttackS);
             //GameManager.Sound.PlaySfx(Define.Sfx.AttackS);
-            attackEffect.color = new Color(1,1,1,1);
             StartCoroutine(nameof(EffectOff_co));
 
-            Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(atkPos.position, atkBoxSize, 0, LayerMask.GetMask("Enemy"));
-            foreach (Collider2D collider in collider2Ds)
+            Collider2D collider = Physics2D.OverlapBox(atkPos.position, atkBoxSize, 0, LayerMask.GetMask("Enemy"));
+            if (collider != null)
             {
                 collider.TryGetComponent(out MonsterControl monster);
                 monster.OnDamaged(transform.position);
@@ -279,7 +279,9 @@ public class PlayerControl : CreatureControl
     }
     private IEnumerator EffectOff_co()
     {
-        for (float alpha = 1f; alpha >= 0f; alpha -= Time.deltaTime)
+        yield return new WaitForSeconds(0.3f);
+        attackEffect.color = new Color(1, 1, 1, 1);
+        for (float alpha = 1f; alpha >= 0f; alpha -= 1.5f * Time.deltaTime)
         {
             Color newColor = attackEffect.color;
             newColor.a = alpha;
@@ -405,12 +407,15 @@ public class PlayerControl : CreatureControl
     }
     protected override IEnumerator OnDie_co()
     {
-        yield return dieHp;
-        yield return null;
-        anim.SetTrigger("isDie");
-        rigid.velocity = Vector2.zero;
-        yield return recover_wait;
-        Recovery();
+        while (true)
+        {
+            yield return dieHp;
+            yield return null;
+            anim.SetTrigger("isDie");
+            rigid.velocity = Vector2.zero;
+            yield return recover_wait;
+            Recovery();
+        }
     }
 
     private void Recovery()
