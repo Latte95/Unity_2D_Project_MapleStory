@@ -50,7 +50,7 @@ public class MonsterControl : CreatureControl
         IsOnGround();
         base.Update();
     }
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         // 캐릭터 바로앞의 충돌을 감지할 박스캐스트
         RaycastHit2D raycast = Physics2D.Raycast(transform.position + 0.5f * (-transform.localScale.x * 0.6f) * Vector3.right, Vector2.down, 1f, LayerMask.GetMask(platLayer));
@@ -72,6 +72,10 @@ public class MonsterControl : CreatureControl
     {
         // 이동
         // 가만히 있거나 걷는 중에만 이동 가능
+        if (isEndPlat && dir * transform.localScale.x < 0 && !anim.GetCurrentAnimatorStateInfo(0).IsName("Jump") && !lastGroundTag.Equals("Other"))
+        {
+            dir *= -1;
+        }
         if ((anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni)) &&
             !isImmobile)
         {
@@ -82,10 +86,6 @@ public class MonsterControl : CreatureControl
         else if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
         {
             movement.MoveTo(new Vector2(rigid.velocity.x / Stat.Speed, 0));
-        }
-        if (isEndPlat && dir * transform.localScale.x < 0 && !anim.GetCurrentAnimatorStateInfo(0).IsName("Jump") && !lastGroundTag.Equals("Other"))
-        {
-            movement.MoveTo(Vector2.zero);
         }
     }
 
@@ -242,7 +242,7 @@ public class MonsterControl : CreatureControl
     {
         while (true)
         {
-            int wait = Random.Range(10, 20);
+            int wait = Random.Range(50, 90);
             yield return new WaitForSeconds(wait * 0.1f);
             if (isGrounded && anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni))
             {
