@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 
 public class DataManager : MonoBehaviour
 {
+    //
     // Singleton
     public static DataManager instance;
 
