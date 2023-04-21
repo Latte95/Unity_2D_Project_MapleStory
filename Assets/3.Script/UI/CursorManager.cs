@@ -74,7 +74,7 @@ public class CursorManager : MonoBehaviour
 
     IEnumerator SetCursorImage_co(Sprite newImage)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return null;
         cursorImage.sprite = newImage;
     }
 }

@@ -34,7 +34,7 @@ public class PlayerControl : CreatureControl
 
         dieHp = new WaitUntil(() => Stat.Hp <= 0);
         inputZ_wait = new WaitUntil(() => Input.GetKey(KeyCode.Z));
-        inputUpOrDownArrow_wait = new WaitUntil(() => Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow));
+        inputUpOrDownArrow_wait = new WaitUntil(() => Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow));
         itemRootDelay_wait = new WaitForSeconds(0.1f);
         offHit_wait = new WaitForSeconds(offHitTime - invincibleTime);
         recover_wait = new WaitForSeconds(recoverTime);
@@ -59,9 +59,13 @@ public class PlayerControl : CreatureControl
     protected override void Move()
     {
         bool isIdleOrWalking = (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni) || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"));
+        bool isRopeOrLadder = (anim.GetCurrentAnimatorStateInfo(0).IsName("RopeIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("LadderIdle"));
         bool leftArrowPressed = Input.GetKey(KeyCode.LeftArrow);
         bool rightArrowPressed = Input.GetKey(KeyCode.RightArrow);
+        bool upPressed = Input.GetKey(KeyCode.UpArrow);
+        bool downArrowPressed = Input.GetKey(KeyCode.DownArrow);
         Vector2 dir = Vector2.zero;
+        Vector2 dirVer = Vector2.zero;
 
         if (leftArrowPressed && !rightArrowPressed)
         {
@@ -71,14 +75,29 @@ public class PlayerControl : CreatureControl
         {
             dir = Vector2.right;
         }
-        if (Input.GetButtonDown("Jump") &&
-            (anim.GetCurrentAnimatorStateInfo(0).IsName("RopeIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("LadderIdle")))
+        if (upPressed && !downArrowPressed)
         {
-            rigid.AddForce(5 * dir);
-            RopeOff();
-            SoundManager.Instance.PlaySfx(Define.Sfx.Jump);
-            // 서있을 때 점프
+            dirVer = Vector2.up;
         }
+        else if (!upPressed && downArrowPressed)
+        {
+            dirVer = Vector2.down;
+        }
+
+        if(isRopeOrLadder)
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+                rigid.AddForce(5 * dir);
+                RopeOff();
+                SoundManager.Instance.PlaySfx(Define.Sfx.Jump);
+            }
+            else
+            {
+                rigid.velocity = (Vector3)dirVer;
+            }
+        }
+
         // 이동
         // 가만히 있거나 걷는 중에만 이동 가능
         if (isIdleOrWalking && !isImmobile)
@@ -230,7 +249,7 @@ public class PlayerControl : CreatureControl
         {
             Transform trans = col.gameObject.transform;
             trans.position = Vector2.Lerp(trans.position, 2 * transform.position - trans.position, moveSpeed * Time.deltaTime);
-            yield return null;
+            yield return new WaitForSeconds(0.1f);
         }
         // 돈이면 돈증가
         if (col.gameObject.GetComponentInChildren<SpriteRenderer>().sprite.name[0].Equals('9'))
@@ -262,20 +281,24 @@ public class PlayerControl : CreatureControl
                         transform.position = new Vector2(col.gameObject.transform.position.x - 0.24f, transform.position.y);
                         break;
                     case "Ladder":
+                        Debug.Log("사다리타");
                         anim.SetBool("isLadder", true);
                         transform.position = new Vector2(col.gameObject.transform.position.x, transform.position.y);
                         break;
                 }
                 rigid.bodyType = RigidbodyType2D.Kinematic;
-                rigid.velocity = Vector3.zero;
+                rigid.gravityScale = 0;
+                //rigid.velocity = Vector3.zero;
             }
         }
     }
     private void RopeOff()
     {
+        Debug.Log("내려");
         anim.SetBool("isRope", false);
         anim.SetBool("isLadder", false);
         rigid.bodyType = RigidbodyType2D.Dynamic;
+        rigid.gravityScale = 1;
     }
     protected override IEnumerator OffDamaged_co()
     {
