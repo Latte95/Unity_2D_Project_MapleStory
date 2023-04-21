@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class CursorManager : MonoBehaviour
 {
-    public RectTransform transform_cursor;
+    private RectTransform transform_cursor;
     public Sprite defaultCursorImage; // 기본 커서 이미지
     public Sprite clickedCursorImage;
     public Image cursorImage;
+
+    private WaitForSeconds waitShort_wait;
 
     private void Start()
     {
@@ -19,6 +21,7 @@ public class CursorManager : MonoBehaviour
         }
         Init_Cursor();
         transform_cursor.TryGetComponent(out cursorImage);
+        waitShort_wait = new WaitForSeconds(0.01f);
     }
 
     private void Update()
@@ -30,7 +33,6 @@ public class CursorManager : MonoBehaviour
             {
                 SetCursorImage(Resources.Load<Sprite>("Cursor_nomal"));
             }
-            //cursorImage.sprite = cursorImage.sprite.Equals(clickedCursorImage) ? defaultCursorImage : clickedCursorImage;
         }
     }
 
@@ -51,10 +53,6 @@ public class CursorManager : MonoBehaviour
             }
             transform_cursor.TryGetComponent(out cursorImage);
         }
-        else
-        {
-        }
-
     }
 
     private void Update_MousePosition()
@@ -67,14 +65,13 @@ public class CursorManager : MonoBehaviour
     }
     public void SetCursorImage(Sprite newImage)
     {
-        //cursorImage.sprite = newImage;
         StopCoroutine(SetCursorImage_co(newImage));
         StartCoroutine(SetCursorImage_co(newImage));
     }
 
     IEnumerator SetCursorImage_co(Sprite newImage)
     {
-        yield return null;
+        yield return waitShort_wait;
         cursorImage.sprite = newImage;
     }
 }

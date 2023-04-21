@@ -58,7 +58,6 @@ public class PlayerControl : CreatureControl
 
     protected override void Move()
     {
-        Debug.Log(rigid.velocity.x);
         bool isIdleOrWalking = (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni) || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"));
         bool isRopeOrLadder = (anim.GetCurrentAnimatorStateInfo(0).IsName("RopeIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("LadderIdle"));
         bool leftArrowPressed = Input.GetKey(KeyCode.LeftArrow);

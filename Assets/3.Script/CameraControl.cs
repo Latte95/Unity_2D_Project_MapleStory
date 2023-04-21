@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    [SerializeField]
     // 플레이어와의 위치 차이
     Vector3 delta;
+
+    private void Awake()
+    {
+        delta = 10 * Vector3.back + 0.01f * Vector3.up;
+    }
 
     // 플레이어 이동 후 카메라 따라감
     private void LateUpdate()
