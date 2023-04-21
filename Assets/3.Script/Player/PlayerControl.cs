@@ -58,6 +58,7 @@ public class PlayerControl : CreatureControl
 
     protected override void Move()
     {
+        Debug.Log(rigid.velocity.x);
         bool isIdleOrWalking = (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni) || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"));
         bool isRopeOrLadder = (anim.GetCurrentAnimatorStateInfo(0).IsName("RopeIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("LadderIdle"));
         bool leftArrowPressed = Input.GetKey(KeyCode.LeftArrow);
@@ -84,11 +85,12 @@ public class PlayerControl : CreatureControl
             dirVer = Vector2.down;
         }
 
-        if(isRopeOrLadder)
+        if (isRopeOrLadder)
         {
             if (Input.GetButtonDown("Jump"))
             {
-                rigid.AddForce(5 * dir);
+                rigid.velocity = dir;
+                rigid.AddForce(10*Vector2.up,ForceMode2D.Impulse);
                 RopeOff();
                 SoundManager.Instance.PlaySfx(Define.Sfx.Jump);
             }
@@ -114,14 +116,14 @@ public class PlayerControl : CreatureControl
     {
         if (isGrounded)
         {
-            if (rigid.velocity.y > 0 || rigid.velocity.y < 0)
+            bool isRopeOrLadder = (anim.GetCurrentAnimatorStateInfo(0).IsName("RopeIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("LadderIdle"));
+            if (isRopeOrLadder)
             {
                 RopeOff();
             }
             // 엎드리는지 확인
             Prone();
-            if (Input.GetButtonDown("Jump") &&
-                !(anim.GetCurrentAnimatorStateInfo(0).IsName("RopeIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("LadderIdle")))
+            if (Input.GetButtonDown("Jump") && !isRopeOrLadder)
             {
                 SoundManager.Instance.PlaySfx(Define.Sfx.Jump);
                 // 서있을 때 점프
@@ -249,7 +251,7 @@ public class PlayerControl : CreatureControl
         {
             Transform trans = col.gameObject.transform;
             trans.position = Vector2.Lerp(trans.position, 2 * transform.position - trans.position, moveSpeed * Time.deltaTime);
-            yield return new WaitForSeconds(0.1f);
+            yield return null;
         }
         // 돈이면 돈증가
         if (col.gameObject.GetComponentInChildren<SpriteRenderer>().sprite.name[0].Equals('9'))
@@ -268,12 +270,25 @@ public class PlayerControl : CreatureControl
         while (true)
         {
             yield return inputUpOrDownArrow_wait;
-
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("RopeIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("LadderIdle"))
+            {
+                continue;
+            }
+            bool upPressed = Input.GetKey(KeyCode.UpArrow);
+            Vector3 dirVer = upPressed ? Vector3.up : Vector3.down;
             int layerMask = LayerMask.GetMask("Rope", "Ladder");
-            Collider2D col = Physics2D.OverlapBox(transform.position, new Vector2(0.25f, 1.13f), 0f, layerMask);
+            Collider2D col = Physics2D.OverlapBox(transform.position + 0.7f * dirVer, 0.25f * Vector2.one, 0f, layerMask);
 
             if (col != null)
             {
+                if (upPressed)
+                {
+                    transform.position += 0.1f * Vector3.up;
+                }
+                else
+                {
+                    transform.position -= 0.3f * Vector3.up;
+                }
                 switch (LayerMask.LayerToName(col.gameObject.layer))
                 {
                     case "Rope":
@@ -281,23 +296,18 @@ public class PlayerControl : CreatureControl
                         transform.position = new Vector2(col.gameObject.transform.position.x - 0.24f, transform.position.y);
                         break;
                     case "Ladder":
-                        Debug.Log("사다리타");
                         anim.SetBool("isLadder", true);
                         transform.position = new Vector2(col.gameObject.transform.position.x, transform.position.y);
                         break;
                 }
-                rigid.bodyType = RigidbodyType2D.Kinematic;
                 rigid.gravityScale = 0;
-                //rigid.velocity = Vector3.zero;
             }
         }
     }
     private void RopeOff()
     {
-        Debug.Log("내려");
         anim.SetBool("isRope", false);
         anim.SetBool("isLadder", false);
-        rigid.bodyType = RigidbodyType2D.Dynamic;
         rigid.gravityScale = 1;
     }
     protected override IEnumerator OffDamaged_co()

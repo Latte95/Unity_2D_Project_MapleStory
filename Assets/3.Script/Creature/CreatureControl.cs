@@ -119,7 +119,9 @@ public abstract class CreatureControl : MonoBehaviour
         // 바닥과 충돌
         if (raycastHit.collider != null)
         {
-            if (rigid.velocity.y < 0.01f)
+            bool isRopeOrLadder = (anim.GetCurrentAnimatorStateInfo(0).IsName("RopeIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("LadderIdle"));
+
+            if (rigid.velocity.y < 0.01f || isRopeOrLadder)
             {
                 anim.SetBool("isGrounded", true);
                 isGrounded = true;
@@ -130,7 +132,12 @@ public abstract class CreatureControl : MonoBehaviour
 
                 }
                 lastGroundTag = raycastHit.collider.gameObject.tag;
+                if(rigid.velocity.y >= 0.01f)
+                {
+                    rigid.position += 0.4f * Vector2.up;
+                }
             }
+
             // 경사면 체크
             if (raycastHit.collider.gameObject.layer.Equals(slopeLayer))
             {
