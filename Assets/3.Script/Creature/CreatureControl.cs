@@ -84,11 +84,8 @@ public abstract class CreatureControl : MonoBehaviour
         FootTrans = gameObject.transform.GetChild(1);
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
-        // 땅 밟고 있는지 체크
-        IsOnGround();
-
         // 비탈길 밟고 있을 시 미끄러짐 방지
         if (isSlope && anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
         {
@@ -107,54 +104,6 @@ public abstract class CreatureControl : MonoBehaviour
 
         // 땅에서 할 행동들. 공통 : 점프 / 플레이어 : 엎드리기
         GroundAct();
-    }
-
-    // 땅 밟은지 체크
-    protected virtual void IsOnGround()
-    {
-        // 발밑에서 박스캐스트 생성
-        // ground나 slope만 체크
-        RaycastHit2D raycastHit = Physics2D.BoxCast(FootTrans.position, boxCastSize, 0f, Vector2.down,
-                                                    boxCastMaxDistance, LayerMask.GetMask(platLayer));
-        // 바닥과 충돌
-        if (raycastHit.collider != null)
-        {
-            bool isRopeOrLadder = (anim.GetCurrentAnimatorStateInfo(0).IsName("RopeIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("LadderIdle"));
-
-            if (rigid.velocity.y < 0.01f || isRopeOrLadder)
-            {
-                anim.SetBool("isGrounded", true);
-                isGrounded = true;
-                isImmobile = false;
-                if (!raycastHit.collider.tag.Equals(lastGroundTag))
-                {
-                    Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(raycastHit.collider.gameObject.tag), false);
-
-                }
-                lastGroundTag = raycastHit.collider.gameObject.tag;
-                if(rigid.velocity.y >= 0.01f)
-                {
-                    rigid.position += 0.4f * Vector2.up;
-                }
-            }
-
-            // 경사면 체크
-            if (raycastHit.collider.gameObject.layer.Equals(slopeLayer))
-            {
-                isSlope = true;
-            }
-            else
-            {
-                isSlope = false;
-            }
-        }
-        // 공중이면
-        else
-        {
-            anim.SetBool("isGrounded", false);
-            isGrounded = false;
-            isSlope = false;
-        }
     }
 
     public virtual void OnDamaged(Vector2 targetPos)

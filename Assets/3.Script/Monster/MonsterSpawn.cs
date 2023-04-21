@@ -25,6 +25,8 @@ public class MonsterSpawn : MonoBehaviour
     // 스폰시킬 몬스터 인덱스
     private int currentIndex = 0;
 
+    [SerializeField]
+    private Transform SpawnTrans;
 
     void Awake()
     {
@@ -52,6 +54,7 @@ public class MonsterSpawn : MonoBehaviour
             for (int j = 0; j < count[i]; j++)
             {
                 enemies[previouslyCnt + j] = Instantiate(enemyPrefabs[i], poolPosition, Quaternion.identity);
+                enemies[previouslyCnt + j].transform.SetParent(SpawnTrans, false);
                 enemies[previouslyCnt + j].SetActive(false);
             }
         }

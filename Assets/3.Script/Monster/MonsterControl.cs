@@ -43,6 +43,11 @@ public class MonsterControl : CreatureControl
         base.Start();
         // 이동 방향 결정
     }
+    protected override void Update()
+    {
+        IsOnGround();
+        base.Update();
+    }
 
     // 지금은 몬스터 공격이 없지만, 공격패턴을 갖는 몬스터를 만들때를 대비
     protected override void Attack() { }
@@ -83,6 +88,46 @@ public class MonsterControl : CreatureControl
         }
     }
 
+    // 땅 밟은지 체크
+    protected void IsOnGround()
+    {
+        // 발밑에서 박스캐스트 생성
+        // ground나 slope만 체크
+        RaycastHit2D raycastHit = Physics2D.BoxCast(FootTrans.position, boxCastSize, 0f, Vector2.down,
+                                                    boxCastMaxDistance, LayerMask.GetMask(platLayer));
+        // 바닥과 충돌
+        if (raycastHit.collider != null)
+        {
+            if (rigid.velocity.y < 0.01f)
+            {
+                anim.SetBool("isGrounded", true);
+                isGrounded = true;
+                isImmobile = false;
+                if (!raycastHit.collider.tag.Equals(lastGroundTag))
+                {
+                    Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(raycastHit.collider.gameObject.tag), false);
+                }
+                lastGroundTag = raycastHit.collider.gameObject.tag;
+            }
+
+            // 경사면 체크
+            if (raycastHit.collider.gameObject.layer.Equals(slopeLayer))
+            {
+                isSlope = true;
+            }
+            else
+            {
+                isSlope = false;
+            }
+        }
+        // 공중이면
+        else
+        {
+            anim.SetBool("isGrounded", false);
+            isGrounded = false;
+            isSlope = false;
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // 플레이어랑 부딪히면 플레이어에게 데미지 입힘

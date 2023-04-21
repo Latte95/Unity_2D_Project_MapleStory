@@ -44,6 +44,12 @@ public class PlayerControl : CreatureControl
         StartCoroutine(nameof(InputUpOrDownArrow_co));
     }
 
+    protected override void Update()
+    {
+        IsOnGround();
+        base.Update();
+    }
+
 
     // 공격
     protected override void Attack()
@@ -59,7 +65,7 @@ public class PlayerControl : CreatureControl
     protected override void Move()
     {
         bool isIdleOrWalking = (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni) || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"));
-        bool isRopeOrLadder = (anim.GetCurrentAnimatorStateInfo(0).IsName("RopeIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("LadderIdle"));
+        bool isRopeOrLadder = (anim.GetBool("isRope") || anim.GetBool("isLadder"));
         bool leftArrowPressed = Input.GetKey(KeyCode.LeftArrow);
         bool rightArrowPressed = Input.GetKey(KeyCode.RightArrow);
         bool upPressed = Input.GetKey(KeyCode.UpArrow);
@@ -97,6 +103,14 @@ public class PlayerControl : CreatureControl
             {
                 rigid.velocity = (Vector3)dirVer;
             }
+            if (dirVer.Equals(Vector2.zero))
+            {
+                anim.SetBool("isRopeMove", false);
+            }
+            else
+            {
+                anim.SetBool("isRopeMove", true);
+            }
         }
 
         // 이동
@@ -115,7 +129,7 @@ public class PlayerControl : CreatureControl
     {
         if (isGrounded)
         {
-            bool isRopeOrLadder = (anim.GetCurrentAnimatorStateInfo(0).IsName("RopeIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("LadderIdle"));
+            bool isRopeOrLadder = (anim.GetBool("isRope") || anim.GetBool("isLadder"));
             if (isRopeOrLadder)
             {
                 RopeOff();
@@ -139,6 +153,53 @@ public class PlayerControl : CreatureControl
         }
     }
 
+    // 땅 밟은지 체크
+    protected void IsOnGround()
+    {
+        // 발밑에서 박스캐스트 생성
+        // ground나 slope만 체크
+        RaycastHit2D raycastHit = Physics2D.BoxCast(FootTrans.position, boxCastSize, 0f, Vector2.down,
+                                                    boxCastMaxDistance, LayerMask.GetMask(platLayer));
+        // 바닥과 충돌
+        if (raycastHit.collider != null)
+        {
+            bool isRopeOrLadder = (anim.GetBool("isRope") || anim.GetBool("isLadder"));
+
+            if (rigid.velocity.y < 0.01f || isRopeOrLadder)
+            {
+                anim.SetBool("isGrounded", true);
+                isGrounded = true;
+                isImmobile = false;
+                if (!raycastHit.collider.tag.Equals(lastGroundTag))
+                {
+                    Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(raycastHit.collider.gameObject.tag), false);
+
+                }
+                lastGroundTag = raycastHit.collider.gameObject.tag;
+                if (rigid.velocity.y >= 0.01f)
+                {
+                    rigid.position += 0.4f * Vector2.up;
+                }
+            }
+
+            // 경사면 체크
+            if (raycastHit.collider.gameObject.layer.Equals(slopeLayer))
+            {
+                isSlope = true;
+            }
+            else
+            {
+                isSlope = false;
+            }
+        }
+        // 공중이면
+        else
+        {
+            anim.SetBool("isGrounded", false);
+            isGrounded = false;
+            isSlope = false;
+        }
+    }
     public override void OnDamaged(Vector2 targetPos)
     {
         if (!isImmobile)
@@ -269,12 +330,12 @@ public class PlayerControl : CreatureControl
         while (true)
         {
             yield return inputUpOrDownArrow_wait;
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("RopeIdle") || anim.GetCurrentAnimatorStateInfo(0).IsName("LadderIdle"))
+            if (anim.GetBool("isRope") || anim.GetBool("isLadder"))
             {
                 continue;
             }
             bool upPressed = Input.GetKey(KeyCode.UpArrow);
-            Vector3 dirVer = upPressed ? Vector3.up : Vector3.down;
+            Vector3 dirVer = upPressed ? 0.5f * Vector3.up : Vector3.down;
             int layerMask = LayerMask.GetMask("Rope", "Ladder");
             Collider2D col = Physics2D.OverlapBox(transform.position + 0.7f * dirVer, 0.25f * Vector2.one, 0f, layerMask);
 
@@ -307,6 +368,7 @@ public class PlayerControl : CreatureControl
     {
         anim.SetBool("isRope", false);
         anim.SetBool("isLadder", false);
+        anim.SetBool("isRopeMove", false);
         rigid.gravityScale = 1;
     }
     protected override IEnumerator OffDamaged_co()

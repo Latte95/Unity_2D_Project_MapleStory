@@ -184,6 +184,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 958e12b38707365419b1a3d0fb407d48, type: 3}
+--- !u!1 &180033521
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 180033522}
+  m_Layer: 0
+  m_Name: Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &180033522
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180033521}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9.924028, y: 1.9624383, z: -0.6264888}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &294346186
 GameObject:
   m_ObjectHideFlags: 0
@@ -2391,6 +2421,7 @@ MonoBehaviour:
   timeBetSpawnMin: 3
   timeBetSpawnMax: 7
   timeBetSpawn: 0
+  SpawnTrans: {fileID: 180033522}
 --- !u!1 &384985574
 GameObject:
   m_ObjectHideFlags: 0
@@ -2442,6 +2473,7 @@ MonoBehaviour:
   timeBetSpawnMin: 3
   timeBetSpawnMax: 7
   timeBetSpawn: 0
+  SpawnTrans: {fileID: 180033522}
 --- !u!1001 &427111524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2710,6 +2742,7 @@ MonoBehaviour:
   timeBetSpawnMin: 3
   timeBetSpawnMax: 7
   timeBetSpawn: 0
+  SpawnTrans: {fileID: 180033522}
 --- !u!4 &588617139 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8557365055957668143, guid: d22fbe7ff3dbd48488018433a4143b45, type: 3}
@@ -2766,6 +2799,7 @@ MonoBehaviour:
   timeBetSpawnMin: 3
   timeBetSpawnMax: 7
   timeBetSpawn: 0
+  SpawnTrans: {fileID: 180033522}
 --- !u!4 &782226100 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5046335580551971753, guid: 46cb88af5173910408bfa73c79da2699, type: 3}
@@ -2879,6 +2913,7 @@ MonoBehaviour:
   timeBetSpawnMin: 3
   timeBetSpawnMax: 7
   timeBetSpawn: 0
+  SpawnTrans: {fileID: 180033522}
 --- !u!1001 &838889662
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5839,6 +5874,7 @@ MonoBehaviour:
   timeBetSpawnMin: 3
   timeBetSpawnMax: 7
   timeBetSpawn: 0
+  SpawnTrans: {fileID: 180033522}
 --- !u!1001 &1112318936
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5997,7 +6033,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e385965cf8e6b4b864e6e00345add3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transform_cursor: {fileID: 0}
   defaultCursorImage: {fileID: 21300000, guid: 26df7966b1e56ee43b499792d7b4144a, type: 3}
   clickedCursorImage: {fileID: 21300000, guid: e478d922cedc0d94a996a66cc90d3888, type: 3}
   cursorImage: {fileID: 0}
@@ -6562,7 +6597,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17bc68074f2a5ed44bf70c7d2f2686d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delta: {x: 0, y: 0.015, z: -10}
 --- !u!82 &1511664388
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11309,6 +11343,7 @@ MonoBehaviour:
   timeBetSpawnMin: 3
   timeBetSpawnMax: 7
   timeBetSpawn: 0
+  SpawnTrans: {fileID: 180033522}
 --- !u!1 &1978308581
 GameObject:
   m_ObjectHideFlags: 0
@@ -11524,6 +11559,7 @@ MonoBehaviour:
   timeBetSpawnMin: 3
   timeBetSpawnMax: 7
   timeBetSpawn: 0
+  SpawnTrans: {fileID: 180033522}
 --- !u!1 &2066768557
 GameObject:
   m_ObjectHideFlags: 0

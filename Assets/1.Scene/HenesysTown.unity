@@ -6044,7 +6044,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 484319678671757287, guid: a9c734b4ef11fa94e9e2d02300c184b3, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 484319678671757287, guid: a9c734b4ef11fa94e9e2d02300c184b3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6352,7 +6352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17bc68074f2a5ed44bf70c7d2f2686d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delta: {x: 0, y: 0, z: 0}
 --- !u!1 &1263489608
 GameObject:
   m_ObjectHideFlags: 0
@@ -6465,7 +6464,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1345687389
 MonoBehaviour:
@@ -6496,7 +6495,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e385965cf8e6b4b864e6e00345add3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transform_cursor: {fileID: 0}
   defaultCursorImage: {fileID: 21300000, guid: 26df7966b1e56ee43b499792d7b4144a, type: 3}
   clickedCursorImage: {fileID: 21300000, guid: e478d922cedc0d94a996a66cc90d3888, type: 3}
   cursorImage: {fileID: 0}
