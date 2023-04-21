@@ -218,7 +218,6 @@ public class PlayerControl : CreatureControl
             trans.position = Vector2.Lerp(trans.position, 2*transform.position- trans.position, moveSpeed * Time.deltaTime);
             yield return null;
         }
-        
         // µ∑¿Ã∏È µ∑¡ı∞°
         if (col.gameObject.GetComponentInChildren<SpriteRenderer>().sprite.name[0].Equals('9'))
         {
