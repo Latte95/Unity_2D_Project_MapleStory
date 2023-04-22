@@ -28,6 +28,7 @@ public class Player : Stat
     public Define.Scene scene { get => _scene; set => _scene = value; }
     public Inventory inventory;
     public int[] quickSlot = new int[8];
+    public int[] equipSlot = new int[5];
     public int Mp
     {
         get => mp;
@@ -108,6 +109,7 @@ public class Player : Stat
         abilityPoint = 0;
         inventory.items.Clear();
         quickSlot = new int[8];
+        equipSlot = new int[5];
     }
 
     public PlayerData ToPlayerData()
@@ -133,6 +135,7 @@ public class Player : Stat
         data.scene = scene;
         data.inventory = inventory;
         data.quickSlot = quickSlot;
+        data.equipSlot = equipSlot;
         return data;
     }
     public void SetData(PlayerData data)
@@ -160,6 +163,7 @@ public class Player : Stat
 
         inventory = data.inventory;
         quickSlot = data.quickSlot;
+        equipSlot = data.equipSlot;
         foreach (Item item in inventory.items)
         {
             item.itemIcon = Resources.Load<Sprite>("ItemIcon/" + item._itemID.ToString());

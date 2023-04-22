@@ -27,4 +27,5 @@ public class PlayerData
     public Define.Scene scene;
     public Inventory inventory;
     public int[] quickSlot;
+    public int[] equipSlot;
 }
