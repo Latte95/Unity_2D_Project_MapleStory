@@ -41,10 +41,16 @@ public class InventoryUI : MonoBehaviour
         InitializeSlot();
         // 인벤토리 켜진 상태로 아이템 추가시 슬롯에 바로바로 채워짐
         inventory.OnItemAdded += UpdateUI;
+        // 메소 획득 갱신
+        if (GameManager.Instance.player != null)
+        {
+            GameManager.Instance.player.GetComponent<PlayerControl>().OnMoneyAdded += InitializeSlot;
+        }
     }
     private void OnDisable()
     {
         inventory.OnItemAdded -= UpdateUI;
+        GameManager.Instance.player.GetComponent<PlayerControl>().OnMoneyAdded -= InitializeSlot;
     }
 
     private void Start()
@@ -76,7 +82,7 @@ public class InventoryUI : MonoBehaviour
         }
         // 미보유 아이템 초기화
         // 10번째 슬롯에 아이콘이 있는데, 아이템 목록이 9개이하일 경우 10번째 슬롯에 아이콘이 남아있는 것 방지
-        for(int i = itemCnt; i < slotCnt; i++)
+        for (int i = itemCnt; i < slotCnt; i++)
         {
             slot[i].icon.sprite = null;
             slot[i].icon.color = new Color(1, 1, 1, 0);
@@ -94,7 +100,7 @@ public class InventoryUI : MonoBehaviour
 
     private void UpdateUI(Item newItem)
     {
-        if(newItem == null)
+        if (newItem == null)
         {
             return;
         }
@@ -107,12 +113,13 @@ public class InventoryUI : MonoBehaviour
 
         if (itemIndex >= 0)
         {
-            if (slot[itemIndex].icon.sprite.name.Equals(newItem.itemIcon.name))
+            // 새 아이템 획득시 슬롯 재정렬
+            if (!slot[itemIndex].icon.sprite.name.Equals(newItem.itemIcon.name))
             {
                 InitializeSlot();
                 return;
             }
-            // Update the existing slot
+            // 이미 있는 아이템이면 갯수만 증가
             slot[itemIndex].icon.sprite = newItem.itemIcon;
             slot[itemIndex].icon.color = new Color(1, 1, 1, 1);
             if (GameManager.Instance.nowPlayer.inventory.items[itemIndex].quantity > 1)
@@ -130,6 +137,7 @@ public class InventoryUI : MonoBehaviour
                 slot[itemIndex].itemCount_Text.text = null;
             }
         }
+        // 장비아이템이면 
         else
         {
             int length = slot.Length;
@@ -140,10 +148,6 @@ public class InventoryUI : MonoBehaviour
                     slot[i].icon.sprite = newItem.itemIcon;
                     slot[i].icon.color = new Color(1, 1, 1, 1);
                     slot[i].itemCount_Text.text = null;
-                    if (GameManager.Instance.nowPlayer.inventory.items[i].quantity > 1)
-                    {
-                        slot[i].itemCount_Text.text = "x" + GameManager.Instance.nowPlayer.inventory.items[i].quantity.ToString();
-                    }
                     break;
                 }
             }

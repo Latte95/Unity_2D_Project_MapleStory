@@ -322,6 +322,9 @@ public class PlayerControl : CreatureControl
             }
         }
     }
+
+
+    public event Action OnMoneyAdded;
     private IEnumerator MoveItem_co(Collider2D col)
     {
         // 아이템 이동 속도
@@ -337,6 +340,7 @@ public class PlayerControl : CreatureControl
         if (col.gameObject.GetComponentInChildren<SpriteRenderer>().sprite.name[0].Equals('9'))
         {
             Stat.Gold += col.gameObject.GetComponent<FieldItem>().money;
+            OnMoneyAdded?.Invoke();
         }
         // 돈 아니면 아이템 획득
         else

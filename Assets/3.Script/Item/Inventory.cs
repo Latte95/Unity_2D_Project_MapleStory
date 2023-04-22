@@ -112,21 +112,21 @@ public class Inventory
 
     public void GetItem(int itemID)
     {
-        int itemIndex = dataManager.itemDataBase.itemList.FindIndex(item => item._itemID == itemID);
-        Item tmpItem = (Item)dataManager.itemDataBase.itemList[itemIndex].Clone();
+        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID == itemID);
+        Item tmpItem = (Item)DataManager.instance.itemDataBase.itemList[itemIndex].Clone();
         AddItem(tmpItem);
     }
     public void GetItem(string itemName)
     {
-        int itemIndex = dataManager.itemDataBase.itemList.FindIndex(item => item._itemName == itemName);
-        Item tmpItem = (Item)dataManager.itemDataBase.itemList[itemIndex].Clone();
+        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemName == itemName);
+        Item tmpItem = (Item)DataManager.instance.itemDataBase.itemList[itemIndex].Clone();
         AddItem(tmpItem);
     }
 
     public void GetItem(int itemID, int quantity)
     {
-        int itemIndex = dataManager.itemDataBase.itemList.FindIndex(item => item._itemID == itemID);
-        Item tmpItem = (Item)dataManager.itemDataBase.itemList[itemIndex].Clone();
+        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID == itemID);
+        Item tmpItem = (Item)DataManager.instance.itemDataBase.itemList[itemIndex].Clone();
         if (tmpItem.itemType.Equals(Item.ItemType.Consume))
         {
             tmpItem.quantity = quantity;
@@ -142,8 +142,8 @@ public class Inventory
     }
     public void GetItem(string itemName, int quantity)
     {
-        int itemIndex = dataManager.itemDataBase.itemList.FindIndex(item => item._itemName == itemName);
-        Item tmpItem = (Item)dataManager.itemDataBase.itemList[itemIndex].Clone();
+        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemName == itemName);
+        Item tmpItem = (Item)DataManager.instance.itemDataBase.itemList[itemIndex].Clone();
         if (tmpItem.itemType.Equals(Item.ItemType.Consume))
         {
             tmpItem.quantity = quantity;

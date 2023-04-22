@@ -140,15 +140,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4723107735738678597, guid: 94ec816341be2224e9ad0b0f9a02af5a, type: 3}
+  m_Sprite: {fileID: 4723107735738678597, guid: 205985aef1b69c24f9e6f7e437c64682, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.9137255}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.59, y: 0.5}
+  m_Size: {x: 0.56, y: 0.52}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &1304116597308682937
@@ -184,7 +184,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.03}
-  m_Size: {x: 0.58, y: 0.5}
+  m_Size: {x: 0.5, y: 0.5}
   m_Direction: 1
 --- !u!50 &1304116597308682938
 Rigidbody2D:
@@ -360,7 +360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   hp: 10
-  maxHp: 10
+  maxHp: 20
   attack: 12
   defense: 5
   speed: 1

@@ -25,5 +25,4 @@ public class PlayerData
     public int gold;
     public Define.Scene scene;
     public Inventory inventory;
-    public InventoryUI inventoryUI;
 }
