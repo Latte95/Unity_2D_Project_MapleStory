@@ -9,18 +9,18 @@
     "speed": 1.7999999523162842,
     "jumpForce": 25.0,
     "playerPosition": {
-        "x": -2.140000104904175,
-        "y": 0.75,
+        "x": -9.571069717407227,
+        "y": -0.6226942539215088,
         "z": 0.0
     },
-    "strong": 4,
-    "intelligence": 4,
+    "strong": 6,
+    "intelligence": 6,
     "dexterity": 4,
     "luck": 4,
-    "abilityPoint": 4,
+    "abilityPoint": 0,
     "exp": 6,
     "gold": 1271,
-    "scene": 1,
+    "scene": 2,
     "inventory": {
         "items": [
             {
@@ -38,7 +38,7 @@
                 "_price": 20,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 33472
+                    "instanceID": 25294
                 },
                 "itemType": 1
             },
@@ -57,7 +57,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 25842
+                    "instanceID": 25892
                 },
                 "itemType": 0
             },
@@ -76,7 +76,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 24384
+                    "instanceID": 24294
                 },
                 "itemType": 0
             },
@@ -95,7 +95,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 24384
+                    "instanceID": 24294
                 },
                 "itemType": 0
             },
@@ -114,7 +114,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 22908
+                    "instanceID": 22806
                 },
                 "itemType": 0
             },
@@ -133,7 +133,7 @@
                 "_price": 10,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 21956
+                    "instanceID": 18738
                 },
                 "itemType": 1
             },
@@ -152,7 +152,7 @@
                 "_price": 150,
                 "_quantity": 2,
                 "itemIcon": {
-                    "instanceID": 21596
+                    "instanceID": 21480
                 },
                 "itemType": 2
             }

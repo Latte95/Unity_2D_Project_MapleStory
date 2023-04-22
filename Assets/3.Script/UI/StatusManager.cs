@@ -30,11 +30,33 @@ public class StatusManager : MonoBehaviour
 
     private void OnEnable()
     {
+        InitializeStat();
+        GameManager.Instance.nowPlayer.LevelUp += InitializeStat;
+    }
+    private void OnDisable()
+    {
+        GameManager.Instance.nowPlayer.LevelUp -= InitializeStat;
+    }
+
+    private void InitializeStat()
+    {
         Player player = GameManager.Instance.nowPlayer;
         Level.text = player.Level.ToString();
         Hp.text = player.MaxHp.ToString();
         Mp.text = player.MaxMp.ToString();
         Exp.text = player.Exp.ToString() + "/" + player.LevelUpExp.ToString();
+        Str.text = player.Str.ToString();
+        Dex.text = player.Dex.ToString();
+        Int.text = player.Int.ToString();
+        Luk.text = player.Luk.ToString();
+        AbilityPoint.text = player.AbilityPoint.ToString();
+    }
+
+    public void ShowStat()
+    {
+        Player player = GameManager.Instance.nowPlayer;
+        Hp.text = player.MaxHp.ToString();
+        Mp.text = player.MaxMp.ToString();
         Str.text = player.Str.ToString();
         Dex.text = player.Dex.ToString();
         Int.text = player.Int.ToString();

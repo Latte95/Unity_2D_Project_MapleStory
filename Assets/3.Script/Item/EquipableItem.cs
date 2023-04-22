@@ -9,10 +9,11 @@ class EquipableItem : Item
     // 장비 슬롯 부위
     public enum EQUIPTYPE
     {
-        HEAD,
-        BODY,
-        WEAPON,
-        FOOT,
+        Cap,
+        Clothes,
+        Pants,
+        Weapon,
+        Shoes,
     }
 
     public EQUIPTYPE equipType { get; set; }

@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5aa56e684e16a4ca2c2faa707ef389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmClip: {fileID: 8300000, guid: 845844b5c4ec5c743916ce5c5706947d, type: 3}
+  bgmClip: {fileID: 0}
   bgmVolume: 0.2
   sfxClips:
   - {fileID: 8300000, guid: 4f6b01e299190224982a4d423f2ba90e, type: 3}

@@ -21,13 +21,16 @@ public class MainUI : MonoBehaviour
 {
     public GameObject inventoryUI;
     public GameObject StatusUI;
+    public GameObject EquipUI;
     bool activeInventory = false;
     bool activeStatus = false;
+    bool activeEquip = false;
 
     private void Start()
     {
         inventoryUI.SetActive(activeInventory);
         StatusUI.SetActive(activeStatus);
+        EquipUI.SetActive(activeEquip);
     }
 
     private void Update()
@@ -42,10 +45,16 @@ public class MainUI : MonoBehaviour
             activeStatus = !activeStatus;
             StatusUI.SetActive(activeStatus);
         }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            activeEquip = !activeEquip;
+            EquipUI.SetActive(activeEquip);
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             inventoryUI.SetActive(false);
             StatusUI.SetActive(false);
+            EquipUI.SetActive(false);
         }
     }
 }

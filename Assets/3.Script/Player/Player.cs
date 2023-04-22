@@ -44,7 +44,7 @@ public class Player : Stat
             }
         }
     }
-    public int MaxMp { get => maxMp + Int*10; set => maxMp = value; }
+    public int MaxMp { get => maxMp + Int * 10; set => maxMp = value - Int * 10; }
 
     public int Str { get => strong; set => strong = value; }
     public int Int { get => intelligence; set => intelligence = value; }
@@ -52,8 +52,8 @@ public class Player : Stat
     public int Luk { get => luck; set => luck = value; }
     public int AbilityPoint { get => abilityPoint; set => abilityPoint = value; }
 
-    public int AD { get => Atk + (int)(Str * Random.Range(2f,3f)); }
-    public int AP { get => Atk + (int)(Int * Random.Range(2f,3f)); }
+    public int AD { get => Atk + (int)(Str * Random.Range(2f, 3f)); }
+    public int AP { get => Atk + (int)(Int * Random.Range(2f, 3f)); }
 
 
     public int Exp
