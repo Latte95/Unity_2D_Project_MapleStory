@@ -74,7 +74,7 @@ public abstract class CreatureControl : MonoBehaviour
         TryGetComponent(out rigid);
         TryGetComponent(out anim);
         TryGetComponent(out audioSource);
-        dieAni = new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f &&
+        dieAni = new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.99f &&
                                               anim.GetCurrentAnimatorStateInfo(0).IsName("Die"));
     }
 
@@ -95,8 +95,6 @@ public abstract class CreatureControl : MonoBehaviour
         {
             rigid.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
-
-        Attack();
 
         // 벽통과 여부 결정
         StartCoroutine(nameof(CheckWall_co));
@@ -143,7 +141,7 @@ public abstract class CreatureControl : MonoBehaviour
     }
 
 
-    protected abstract void Attack();
+    public abstract void Attack();
     protected abstract void Move();
     protected abstract void GroundAct();
 

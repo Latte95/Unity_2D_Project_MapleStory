@@ -219,6 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 912fcbe13b837bf4c83eab101b9c9e3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageData: {fileID: 0}
 --- !u!114 &5180292556998340339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,8 +243,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7368babf9a02ec543a35689d12d18d6b, type: 3}
   - {fileID: 8300000, guid: 0ce80182bb984c640b9f5e27a2114ed4, type: 3}
   - {fileID: 8300000, guid: 57f15f2719c20ee4499e778372f6cf71, type: 3}
+  dir: 0
+  isEndPlat: 0
   itemPrefab: {fileID: 3237959173466570023, guid: 364028372d82cf8469239591a3d67d30, type: 3}
-  itemImage: 80841e0081841e00
+  itemImage: 80841e0083841e0001093d00
+  itemProbability: 500000001400000050000000
   moneyImage: 40548900415489004254890043548900
   minMoney: 500
   maxMoney: 2000

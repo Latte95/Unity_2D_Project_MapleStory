@@ -2,11 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerControl : CreatureControl
 {
     protected AudioClip audioJump;
     private Player Stat;
+    private GameObject DamagePrefab;
+    private GameObject SkillHitPrefab;
+    Animator attackEffectAnimator;
 
     public Define.MoveDirection currentMoveDirection = Define.MoveDirection.None;
 
@@ -23,15 +27,15 @@ public class PlayerControl : CreatureControl
 
     // 공격 관련 변수
     public Transform atkPos;
-    public Vector2 atkBoxSize;
-    //public GameObject attackEffect;
-    public SpriteRenderer attackEffect;
+    private Vector2 atkBoxSize;
+    private Vector2 magicBoxSize;
 
     private new void OnEnable()
     {
         base.OnEnable();
         TryGetComponent(out audioJump);
         TryGetComponent(out Stat);
+        attackEffectAnimator = transform.Find("AttackEffect").gameObject.GetComponent<Animator>();
         ignorePlatTime_wait = new WaitForSeconds(0.2f);
 
         dieHp = new WaitUntil(() => Stat.Hp <= 0);
@@ -46,6 +50,11 @@ public class PlayerControl : CreatureControl
         StartCoroutine(nameof(InputUpOrDownArrow_co));
         dieHp = new WaitUntil(() => Stat.Hp <= 0);
         StartCoroutine(nameof(OnDie_co));
+        DamagePrefab = Resources.Load<GameObject>("Damage/" + "Damage");
+        SkillHitPrefab = Resources.Load<GameObject>("Effect/" + "SkillEffect");
+
+        atkBoxSize = new Vector2(1, 1);
+        magicBoxSize = new Vector2(4, 1);
     }
 
     protected override void Update()
@@ -56,14 +65,17 @@ public class PlayerControl : CreatureControl
 
 
     // 공격
-    protected override void Attack()
+    public override void Attack()
     {
-        //기본 공격
-        if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            StopCoroutine(nameof(Attack_co));
-            StartCoroutine(nameof(Attack_co));
-        }
+        // 기본 공격
+        StopCoroutine(nameof(Attack_co));
+        StartCoroutine(nameof(Attack_co));
+    }
+    public void Magic()
+    {
+        // 매직클로
+        StopCoroutine(nameof(Magic_co));
+        StartCoroutine(nameof(Magic_co));
     }
 
     protected override void Move()
@@ -104,7 +116,7 @@ public class PlayerControl : CreatureControl
                 rigid.velocity = dir;
                 rigid.AddForce(10 * Vector2.up, ForceMode2D.Impulse);
                 RopeOff();
-                SoundManager.Instance.PlaySfx(Define.Sfx.Jump);
+                GameManager.Instance.soundManager.PlaySfx(Define.Sfx.Jump);
             }
             else
             {
@@ -145,7 +157,7 @@ public class PlayerControl : CreatureControl
             Prone();
             if (Input.GetButtonDown("Jump") && !isRopeOrLadder)
             {
-                SoundManager.Instance.PlaySfx(Define.Sfx.Jump);
+                GameManager.Instance.soundManager.PlaySfx(Define.Sfx.Jump);
                 // 서있을 때 점프
                 if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
                 {
@@ -249,22 +261,38 @@ public class PlayerControl : CreatureControl
             anim.GetCurrentAnimatorStateInfo(0).IsName("Down") ||
             anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
         {
-            SoundManager.Instance.PlaySfx(Define.Sfx.AttackS);
-            //GameManager.Sound.PlaySfx(Define.Sfx.AttackS);
-            StartCoroutine(nameof(EffectOff_co));
+            GameManager.Instance.soundManager.PlaySfx(Define.Sfx.AttackS);
+
+            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
+            {
+                attackEffectAnimator.SetTrigger(Define.Skill.Attack.ToString());
+            }
 
             Collider2D collider = Physics2D.OverlapBox(atkPos.position, atkBoxSize, 0, LayerMask.GetMask("Enemy"));
             if (collider != null)
             {
                 collider.TryGetComponent(out MonsterControl monster);
-                monster.OnDamaged(transform.position);
-
                 collider.TryGetComponent(out MonsterStat monsterData);
-                int damage = Stat.Atk - monsterData.Def;
+                if (monsterData.Hp <= 0)
+                {
+                    yield break;
+                }
+
+                monster.OnDamaged(transform.position);
+                int damage = (Stat.AD) - monsterData.Def;
+                if (anim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
+                {
+                    damage = (int)(damage * 0.1f);
+                }
                 if (damage < 1)
                 {
                     damage = 1;
                 }
+
+                // 데미지 표시
+                Vector3 position = collider.transform.position;
+                StartCoroutine(DamageEffect_co(damage, position));
+
                 monsterData.Hp -= damage;
                 if (monsterData.Hp <= 0)
                 {
@@ -277,17 +305,108 @@ public class PlayerControl : CreatureControl
             anim.SetBool("isAttack", false);
         }
     }
-    private IEnumerator EffectOff_co()
+    private IEnumerator Magic_co()
     {
-        yield return new WaitForSeconds(0.3f);
-        attackEffect.color = new Color(1, 1, 1, 1);
+        // 공격 가능한 상태일 때만 공격 실행
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
+            anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni) ||
+            anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+        {
+            // mp부족하면 종료
+            if (Stat.Mp < 50)
+            {
+                yield break;
+            }
+            else
+            {
+                Stat.Mp -= 50;
+            }
+
+            GameManager.Instance.soundManager.PlaySfx(Define.Sfx.Magic);
+            attackEffectAnimator.SetTrigger(Define.Skill.MagicClaw.ToString());
+
+            anim.SetBool("isMagic", true);
+            yield return null;
+            anim.SetBool("isMagic", false);
+
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position + transform.localScale.x * 2 * Vector3.left, magicBoxSize, 0, LayerMask.GetMask("Enemy"));
+            int length = colliders.Length;
+            if (length > 0)
+            {
+                // 가장 가까운 적 체크
+                Collider2D closestEnemyCollider = colliders[0];
+                float minDistance = Vector2.Distance(transform.position, colliders[0].transform.position);
+                for (int i = 1; i < length; i++)
+                {
+                    float currentDistance = Vector2.Distance(transform.position, colliders[i].transform.position);
+                    if (currentDistance < minDistance)
+                    {
+                        closestEnemyCollider = colliders[i];
+                        minDistance = currentDistance;
+                    }
+                }
+
+                // 가장 가까운 적에게 공격
+                closestEnemyCollider.TryGetComponent(out MonsterControl monster);
+                closestEnemyCollider.TryGetComponent(out MonsterStat monsterData);
+                if (monsterData.Hp <= 0)
+                {
+                    yield break;
+                }
+
+                monster.OnDamaged(transform.position);
+
+                GameObject SkillHit = Instantiate(SkillHitPrefab);
+                SkillHit.transform.position = closestEnemyCollider.transform.position;
+                SkillHit.GetComponent<Animator>().SetTrigger(Define.Skill.MagicClaw.ToString());
+
+                int damageSum = 0;
+                for (int i = 0; i < 2; i++)
+                {
+                    int damage = (Stat.AP) - monsterData.Def;
+                    if (damage < 1)
+                    {
+                        damage = 1;
+                    }
+                    damageSum += damage;
+
+                    Vector3 position = closestEnemyCollider.transform.position + (i + 1 - 0.5f) * new Vector3(0.7f, 0.3f);
+                    StartCoroutine(DamageEffect_co(damage, position));
+                }
+
+                yield return new WaitForSeconds(0.1f);
+                monster.HitSound();
+                monsterData.Hp -= damageSum;
+                if (monsterData.Hp <= 0)
+                {
+                    Stat.Exp += monsterData.Exp;
+                }
+            }
+        }
+    }
+    private IEnumerator DamageEffect_co(int damage, Vector3 position)
+    {
+        // 데미지 화면에 띄우기
+        GameObject Damage = Instantiate(DamagePrefab);
+        Damage.transform.SetParent(FindObjectOfType<Canvas>().transform, false);
+        Text damageText = Damage.GetComponent<Text>();
+
+        // 수치 설정
+        damageText.text = damage.ToString();
+        // 위치 설정
+        Vector3 screenPoint = Camera.main.WorldToScreenPoint(position + Vector3.up);
+        Damage.transform.position = screenPoint;
+
+        // 데미지 사라짐
         for (float alpha = 1f; alpha >= 0f; alpha -= 1.5f * Time.deltaTime)
         {
-            Color newColor = attackEffect.color;
+            Color newColor = damageText.color;
             newColor.a = alpha;
-            attackEffect.color = newColor;
+            damageText.color = newColor;
             yield return null;
+            Damage.transform.position += 0.5f * Vector3.up;
         }
+        Destroy(Damage);
     }
     private IEnumerator DownJump_co()
     {
@@ -314,7 +433,7 @@ public class PlayerControl : CreatureControl
             // Item를 감지했으면 아이템 루팅
             if (col != null)
             {
-                SoundManager.Instance.PlaySfx(Define.Sfx.PickUpItem);
+                GameManager.Instance.soundManager.PlaySfx(Define.Sfx.PickUpItem);
                 // 이미 루팅중이지만 아직 이동중인 아이템을 다시 획득하지 못하도록 방지하기 위한 레이어 변경
                 col.gameObject.layer = LayerMask.NameToLayer("ItemRoot");
                 // 이중 코루틴을 쓴 이유는 루팅중인 아이템이 있어도 다른 아이템도 루팅할 수 있도록 하기 위해서
@@ -433,5 +552,7 @@ public class PlayerControl : CreatureControl
         base.OnDrawGizmos();
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(atkPos.position, atkBoxSize);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(transform.position + transform.localScale.x * 2 * Vector3.left, magicBoxSize);
     }
 }

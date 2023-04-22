@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QuickSlotManager : MonoBehaviour
 {
@@ -50,6 +51,7 @@ public class QuickSlotManager : MonoBehaviour
         quickSlotReferences[6] = grandchildObject.GetComponent<QuickSlot>();
         grandchildObject = childObject.Find("Pdn");
         quickSlotReferences[7] = grandchildObject.GetComponent<QuickSlot>();
+        LoadData(player);
     }
 
     private void Update()
@@ -61,7 +63,7 @@ public class QuickSlotManager : MonoBehaviour
         // 퀵슬롯
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            quickSlotReference = quickSlotReferences[(int)quickSlot.Shift];            
+            GameManager.Instance.player.GetComponent<PlayerControl>().Magic();
         }
         if (Input.GetKeyDown(KeyCode.Insert))
         {
@@ -75,11 +77,10 @@ public class QuickSlotManager : MonoBehaviour
         {
             quickSlotReference = quickSlotReferences[(int)quickSlot.Pup];
         }
-        //if (Input.GetKeyDown(KeyCode.LeftControl))
-        //{
-
-
-        //}
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            GameManager.Instance.player.GetComponent<PlayerControl>().Attack();
+        }
         if (Input.GetKeyDown(KeyCode.Delete))
         {
             quickSlotReference = quickSlotReferences[(int)quickSlot.Del];
@@ -105,9 +106,61 @@ public class QuickSlotManager : MonoBehaviour
                         itemUsePlayer.PlayOneShot(itemUseClip);
                         Item tmpItem = player.inventory.items[itemIndex];
                         player.Hp += tmpItem._hp;
+                        player.Mp += tmpItem._mp;
                         player.inventory.RemoveItem(tmpItem);
                     }
                 }
+            }
+        }
+    }
+
+    public void LoadData(Player data)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            // 자식 오브젝트인 Icon을 찾습니다.
+            Transform iconTransform = quickSlotReferences[i].transform.Find("Icon");
+
+            // Icon의 Image 컴포넌트를 가져옵니다.
+            Image iconImage = iconTransform.GetComponent<Image>();
+
+            string iconID = data.quickSlot[i].ToString();
+            if (data.quickSlot[i] != 0)
+            {
+                if (iconID[0].Equals('2'))
+                {
+                    iconImage.sprite = Resources.Load<Sprite>("ItemIcon/" + iconID);
+                }
+                else if (iconID[0].Equals('8'))
+                {
+                    iconImage.sprite = Resources.Load<Sprite>("SkillIcon/" + iconID);
+                }
+                iconImage.color = new Color(1, 1, 1, 1);
+            }
+            else
+            {
+                iconImage.sprite = null;
+            }
+        }
+    }
+
+    public void SaveData(ref Player data)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            // 자식 오브젝트인 Icon을 찾습니다.
+            Transform iconTransform = quickSlotReferences[i].transform.Find("Icon");
+
+            // Icon의 Image 컴포넌트를 가져옵니다.
+            Image iconImage = iconTransform.GetComponent<Image>();
+
+            if (iconImage.sprite != null)
+            {
+                data.quickSlot[i] = int.Parse(iconImage.sprite.name);
+            }
+            else
+            {
+                data.quickSlot[i] = 0;
             }
         }
     }

@@ -51,6 +51,18 @@ PrefabInstance:
       propertyPath: sfxClips.Array.data[1]
       value: 
       objectReference: {fileID: 8300000, guid: 34d7446174ceeef428058c2f044ca1f0, type: 3}
+    - target: {fileID: 2155090993528461045, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
+      propertyPath: itemImage.Array.data[0]
+      value: 2000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 2155090993528461045, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
+      propertyPath: itemImage.Array.data[1]
+      value: 2000000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2155090993528461045, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
+      propertyPath: itemImage.Array.data[2]
+      value: 4000003
+      objectReference: {fileID: 0}
     - target: {fileID: 2155090993528461047, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
       propertyPath: m_Size.y
       value: 0.5

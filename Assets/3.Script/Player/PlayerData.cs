@@ -21,8 +21,10 @@ public class PlayerData
     public int intelligence;
     public int dexterity;
     public int luck;
+    public int abilityPoint;
     public int exp;
     public int gold;
     public Define.Scene scene;
     public Inventory inventory;
+    public int[] quickSlot;
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
@@ -24,7 +25,7 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnBtnClick()
     {
-        SoundManager.Instance.PlaySfx(Define.Ui.Click);
+        GameManager.Instance.soundManager.PlaySfx(Define.Ui.Click);
         switch (currentType)
         {
             case BTNType.Login:
@@ -45,8 +46,8 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             case BTNType.Dice:
                 RollringDice();
                 break;
-            case BTNType.Play:                
-                SceneManagerEX.LoadScene(Define.Scene.HenesysTown);
+            case BTNType.Play:
+                SceneManager.LoadScene(Define.Scene.HenesysTown.ToString());
                 break;
             case BTNType.Create:
                 SetCameraPosition(10);
@@ -82,7 +83,7 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        SoundManager.Instance.PlaySfx(Define.Ui.Over);
+        GameManager.Instance.soundManager.PlaySfx(Define.Ui.Over);
     }
 
     public void OnPointerExit(PointerEventData eventData)

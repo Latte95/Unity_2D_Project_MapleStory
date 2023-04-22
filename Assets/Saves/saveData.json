@@ -1,27 +1,123 @@
 {
-    "level": 1,
-    "hp": 91,
+    "level": 2,
+    "hp": 100,
     "maxHp": 100,
-    "mp": 100,
+    "mp": 140,
     "maxMp": 100,
     "attack": 10,
-    "defense": 5,
+    "defense": 6,
     "speed": 1.7999999523162842,
     "jumpForce": 25.0,
     "playerPosition": {
-        "x": -7.579999923706055,
-        "y": 3.854999542236328,
+        "x": -2.140000104904175,
+        "y": 0.75,
         "z": 0.0
     },
     "strong": 4,
     "intelligence": 4,
     "dexterity": 4,
     "luck": 4,
-    "exp": 80,
-    "gold": 2115,
-    "scene": 2,
+    "abilityPoint": 4,
+    "exp": 6,
+    "gold": 1271,
+    "scene": 1,
     "inventory": {
         "items": [
+            {
+                "_itemID": 2000003,
+                "_itemName": "파란 포션",
+                "_itemDescription": "MP를 50 증가시킨다",
+                "_atk": 0,
+                "_def": 0,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 50,
+                "_price": 20,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 33472
+                },
+                "itemType": 1
+            },
+            {
+                "_itemID": 1302000,
+                "_itemName": "검",
+                "_itemDescription": "한손검",
+                "_atk": 5,
+                "_def": 0,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 25842
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1040002,
+                "_itemName": "하얀 반팔 면티",
+                "_itemDescription": "하얀 반팔 면티",
+                "_atk": 0,
+                "_def": 5,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 24384
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1040002,
+                "_itemName": "하얀 반팔 면티",
+                "_itemDescription": "하얀 반팔 면티",
+                "_atk": 0,
+                "_def": 5,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 24384
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1060002,
+                "_itemName": "파란 청 바지",
+                "_itemDescription": "파란 청 바지",
+                "_atk": 0,
+                "_def": 3,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 20,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 22908
+                },
+                "itemType": 0
+            },
             {
                 "_itemID": 2000000,
                 "_itemName": "빨간 포션",
@@ -37,9 +133,28 @@
                 "_price": 10,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 18468
+                    "instanceID": 21956
                 },
                 "itemType": 1
+            },
+            {
+                "_itemID": 4000004,
+                "_itemName": "물컹물컹한 액체",
+                "_itemDescription": "점성이 높아 끈적끈적한 액체이다.",
+                "_atk": 0,
+                "_def": 0,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 150,
+                "_quantity": 2,
+                "itemIcon": {
+                    "instanceID": 21596
+                },
+                "itemType": 2
             }
         ],
         "newItem": {
@@ -61,5 +176,15 @@
             },
             "itemType": 0
         }
-    }
+    },
+    "quickSlot": [
+        8000000,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2000003,
+        0
+    ]
 }

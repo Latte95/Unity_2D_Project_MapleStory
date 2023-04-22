@@ -14,16 +14,20 @@ public enum BTNType
     Create,
     BackToFirst,
     Item,
+    Etc
 }
 
 public class MainUI : MonoBehaviour
 {
     public GameObject inventoryUI;
+    public GameObject StatusUI;
     bool activeInventory = false;
+    bool activeStatus = false;
 
     private void Start()
     {
         inventoryUI.SetActive(activeInventory);
+        StatusUI.SetActive(activeStatus);
     }
 
     private void Update()
@@ -33,10 +37,15 @@ public class MainUI : MonoBehaviour
             activeInventory = !activeInventory;
             inventoryUI.SetActive(activeInventory);
         }
-        if(Input.GetKeyDown(KeyCode.Escape) && activeInventory)
+        if (Input.GetKeyDown(KeyCode.P))
         {
-            activeInventory = !activeInventory;
-            inventoryUI.SetActive(activeInventory);
+            activeStatus = !activeStatus;
+            StatusUI.SetActive(activeStatus);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            inventoryUI.SetActive(false);
+            StatusUI.SetActive(false);
         }
     }
 }

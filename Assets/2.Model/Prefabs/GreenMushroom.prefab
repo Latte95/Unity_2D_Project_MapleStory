@@ -246,7 +246,7 @@ MonoBehaviour:
   dir: 0
   isEndPlat: 0
   itemPrefab: {fileID: 3237959173466570023, guid: 364028372d82cf8469239591a3d67d30, type: 3}
-  itemImage: 80841e0081841e00
+  itemImage: 81841e0081841e00
   moneyImage: 40548900415489004254890043548900
   minMoney: 1000
   maxMoney: 3000

@@ -25,11 +25,6 @@ public class DataManager : MonoBehaviour
     private const int Iterations = 10000;
 
     // æ∆¿Ã≈€
-    //public string[] var_name;
-    //public float[] var;
-    //public string[] switch_name;
-    //public bool[] switches;
-    //public List<Item> itemList = new List<Item>();
     public ItemDataBase itemDataBase;
 
     // Initialize
@@ -51,7 +46,6 @@ public class DataManager : MonoBehaviour
         }
         #endregion
         path = Path.Combine(Application.dataPath, "Saves/");
-        dataPersistenceObjects = FindAllDataPersistenceObjects();
     }
 
     private void OnEnable()
@@ -60,9 +54,14 @@ public class DataManager : MonoBehaviour
         nowPlayer = FindObjectOfType<Player>();
     }
 
+    private void Start()
+    {
+        dataPersistenceObjects = FindAllDataPersistenceObjects();
+    }
+
     public void LoadGame()
     {
-        if(nowPlayer == null)
+        if (nowPlayer == null)
         {
             nowPlayer = FindObjectOfType<Player>();
         }

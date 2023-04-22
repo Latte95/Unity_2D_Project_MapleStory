@@ -21,12 +21,17 @@ public class Define
 
     public enum Sfx
     {
-        AttackS, AttackL, Buff, Dead, Jump, LevelUp, PickUpItem, Portal, 
-        QuestAlert, QuestClear, Transform, UseItem,
+        Click, Over, Buff, Dead, Jump, LevelUp, PickUpItem, Portal, 
+        QuestAlert, QuestClear, Transform, UseItem, AttackS, Magic,
     }
 
     public enum Ui
     {
         Click, Over
+    }
+
+    public enum Skill
+    {
+        Attack, MagicClaw,
     }
 }

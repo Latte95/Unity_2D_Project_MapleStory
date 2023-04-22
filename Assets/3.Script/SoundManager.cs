@@ -2,19 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoBehaviour
 {
-    private static SoundManager instance;
-    public static SoundManager Instance
-    {
-        get
-        {
-            Init();
-            return instance;
-        }
-    }
-
     [Header("#BGM")]
     public AudioClip bgmClip;
     public float bgmVolume;
@@ -27,39 +18,40 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
+        bgmClip = Resources.Load<AudioClip>("BGM/" + SceneManager.GetActiveScene().name);
         Init();
-        instance.PlayBgm();
+        PlayBgm();
     }
 
-    static void Init()
+    void Init()
     {
-        if (instance == null)
-        {
-            // 게임 매니저를 찾아서 없으면 오브젝트 생성하고 스크립트 붙이기
-            GameObject sm = GameObject.Find("SoundManager");
-            if (sm == null)
-            {
-                sm = new GameObject { name = "SoundManager" };
-                sm.AddComponent<SoundManager>();
-            }
+        //if (instance == null)
+        //{
+        //    // 사운드 매니저를 찾아서 없으면 오브젝트 생성하고 스크립트 붙이기
+        //    GameObject sm = GameObject.Find("SoundManager");
+        //    if (sm == null)
+        //    {
+        //        sm = new GameObject { name = "SoundManager" };
+        //        sm.AddComponent<SoundManager>();
+        //    }
 
-            //DontDestroyOnLoad(sm);
-            sm.TryGetComponent(out instance);
-        }
+        //    //DontDestroyOnLoad(sm);
+        //    sm.TryGetComponent(out instance);
+        //}
 
         GameObject bgmObject = new GameObject("BgmPlayer");
-        bgmObject.transform.parent = instance.transform;
-        instance.bgmPlayer = bgmObject.AddComponent<AudioSource>();
-        instance.bgmPlayer.playOnAwake = false;
-        instance.bgmPlayer.loop = true;
-        instance.bgmPlayer.volume = instance.bgmVolume;
-        instance.bgmPlayer.clip = instance.bgmClip;
+        bgmObject.transform.parent =  transform;
+        bgmPlayer = bgmObject.AddComponent<AudioSource>();
+        bgmPlayer.playOnAwake = false;
+        bgmPlayer.loop = true;
+        bgmPlayer.volume = bgmVolume;
+        bgmPlayer.clip = bgmClip;
 
         GameObject sfxObject = new GameObject("SfxPlayer");
-        sfxObject.transform.parent = instance.transform;
-        instance.sfxPlayer = sfxObject.AddComponent<AudioSource>();
-        instance.sfxPlayer.playOnAwake = false;
-        instance.sfxPlayer.volume = instance.sfxVolume;
+        sfxObject.transform.parent = transform;
+        sfxPlayer = sfxObject.AddComponent<AudioSource>();
+        sfxPlayer.playOnAwake = false;
+        sfxPlayer.volume = sfxVolume;
     }
 
     public void PlayBgm()

@@ -14,11 +14,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
     private MainUI _ui;
     public static MainUI UI => Instance._ui;
 
-    public GameObject canvasPrefab;
     public GameObject player;
+    public GameObject canvasPrefab;
     public GameObject playerPrefab;
+    public GameObject soundPrefab;
     public Player nowPlayer;
-    private SoundManager soundManager;
+    public SoundManager soundManager;
     private Portal portal;
     private Image fadeImage;
 
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         // 세이브
         if (Input.GetKeyDown(KeyCode.F11))
         {
+            FindObjectOfType<QuickSlotManager>().SaveData(ref nowPlayer);
             DataManager.instance.SaveGame();
         }
         // 데이터 초기화
@@ -87,7 +89,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
     public void LoadData(Player data)
     {
         player.transform.position = data.playerPosition;
-        string currentSceneName = SceneManager.GetActiveScene().name;
+        //string currentSceneName = SceneManager.GetActiveScene().name;
     }
     public void SaveData(ref Player data)
     {
@@ -109,8 +111,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
 
     public void LoadSceneAndData(Define.Scene targetScene)
     {
-        SoundManager.Instance.PlaySfx(Define.Sfx.Portal);
-
         if (portal != null)
         {
             player.transform.position = portal.position;
@@ -145,6 +145,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         // soundManager 할당
         if (soundManager == null)
         {
+            GameObject soundInstance = Instantiate(soundPrefab);
             soundManager = FindObjectOfType<SoundManager>();
         }
 
@@ -224,6 +225,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
             // Portal 감지하면 씬로드
             if (col != null)
             {
+                soundManager.PlaySfx(Define.Sfx.Portal);
                 col.TryGetComponent(out portal);
                 FadeOutAndLoadScene(portal.scene);
             }

@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6042216052380571450
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6042216052380571449}
+  - component: {fileID: 6042216052380571451}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6042216052380571449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6042216052380571450}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.9373522, y: 1.1413373, z: -1.4050102}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6042216052380571451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6042216052380571450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d5aa56e684e16a4ca2c2faa707ef389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmClip: {fileID: 8300000, guid: 845844b5c4ec5c743916ce5c5706947d, type: 3}
+  bgmVolume: 0.2
+  sfxClips:
+  - {fileID: 8300000, guid: 4f6b01e299190224982a4d423f2ba90e, type: 3}
+  - {fileID: 8300000, guid: 8698bdd5142000b4e9ad617f39965d73, type: 3}
+  - {fileID: 8300000, guid: c0b8118714adfa647828c5f4e5c3cd4c, type: 3}
+  - {fileID: 8300000, guid: d41d1c7e9b1f52e488d7dbde235a7836, type: 3}
+  - {fileID: 8300000, guid: 182ad07eb1bbd7242a478e44f3ce31fe, type: 3}
+  - {fileID: 8300000, guid: c6a7b210b0915c9439858edb5e9f555f, type: 3}
+  - {fileID: 8300000, guid: a609c21c81668eb4a8a035728e2b768d, type: 3}
+  - {fileID: 8300000, guid: 891b96d7ef570dd488c0c063a3986942, type: 3}
+  - {fileID: 8300000, guid: 72123ccf8837d2a4cb02bdb0125b6448, type: 3}
+  - {fileID: 8300000, guid: 7a2354ac20dbdc84b94f8f2d8f236780, type: 3}
+  - {fileID: 8300000, guid: 385e6d075a2e26a4fa6a0a9a34bf44c3, type: 3}
+  - {fileID: 8300000, guid: 1dd081d1960d8e3498bd47826014a140, type: 3}
+  - {fileID: 8300000, guid: 468b925c9ab093f4e9401c593467cd30, type: 3}
+  - {fileID: 8300000, guid: ebb77fd30d1a67343bbb5b2c0065e9e4, type: 3}
+  sfxVolume: 0.5

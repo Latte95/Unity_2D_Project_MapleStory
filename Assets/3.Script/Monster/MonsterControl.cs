@@ -17,6 +17,8 @@ public class MonsterControl : CreatureControl
 
     public GameObject itemPrefab;
     public int[] itemImage;
+    [SerializeField]
+    private int[] itemProbability;
     public int[] moneyImage;
     public int minMoney;
     public int maxMoney;
@@ -66,7 +68,7 @@ public class MonsterControl : CreatureControl
     }
 
     // 지금은 몬스터 공격이 없지만, 공격패턴을 갖는 몬스터를 만들때를 대비
-    protected override void Attack() { }
+    public override void Attack() { }
 
     protected override void Move()
     {
@@ -102,10 +104,14 @@ public class MonsterControl : CreatureControl
             // 죽는 중이 아닐때만 피격당함
             if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
             {
-                sfxPlayer.PlayOneShot(sfxClips[0]);
+                HitSound();
                 anim.SetTrigger("isHit");
             }
         }
+    }
+    public void HitSound()
+    {
+        sfxPlayer.PlayOneShot(sfxClips[0]);
     }
 
     // 땅 밟은지 체크
@@ -183,23 +189,37 @@ public class MonsterControl : CreatureControl
         yield return dieHp;
         // 피격 애니메이션에 의해 죽는 애니메이션 무시되는 것 방지
         yield return null;
+        rigid.velocity = Vector2.zero;
         anim.SetTrigger("isDie");
         sfxPlayer.PlayOneShot(sfxClips[1]);
 
-        // 아이템 드랍 로직
+        // 포션 드랍
         GameObject itemInstance = Instantiate(itemPrefab);
         itemInstance.transform.position = transform.position + 0.2f * Vector3.left;
-        int rand = Random.Range(1, 10);
-        if (rand < 8)
+        int rand = Random.Range(0, itemProbability[0] + itemProbability[1]);
+        if (rand < itemProbability[0])
         {
-            rand = 0;
+            itemInstance.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ItemIcon/" + itemImage[0].ToString());
         }
         else
         {
-            rand = 1;
+            itemInstance.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ItemIcon/" + itemImage[1].ToString());
         }
-        itemInstance.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ItemIcon/" + itemImage[rand].ToString());
 
+        // 기타템 드랍
+        if (itemImage.Length > 2)
+        {
+            rand = Random.Range(0, 100);
+            if (rand < itemProbability[2])
+            {
+                GameObject etcInstance = Instantiate(itemPrefab);
+                itemInstance.transform.position = transform.position + 0.4f * Vector3.left;
+                itemInstance.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ItemIcon/" + itemImage[2].ToString());
+            }
+        }
+
+
+        // 메소 드랍
         GameObject moneyInstance = Instantiate(itemPrefab);
         moneyInstance.transform.position = transform.position + 0.2f * Vector3.right;
         moneyInstance.GetComponent<FieldItem>().money = Random.Range(minMoney, maxMoney + 1);
@@ -225,7 +245,6 @@ public class MonsterControl : CreatureControl
 
 
         // 죽는 애니메이션 끝나면 비활성화
-        transform.position = -25 * Vector2.one;
         yield return dieAni;
         gameObject.SetActive(false);
     }

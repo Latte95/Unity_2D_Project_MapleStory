@@ -91,6 +91,7 @@ public class Inventory
                 if (items[itemIndex].quantity > 0)
                 {
                     items[itemIndex].quantity--;
+                    OnItemAdded?.Invoke(newItem);
                 }
                 // 수량이 0이 되면 완전히 제거
                 if (items[itemIndex].quantity <= 0)
@@ -105,7 +106,6 @@ public class Inventory
                 items[itemIndex].quantity = 0;
                 items.RemoveAt(itemIndex);
             }
-            OnItemAdded?.Invoke(newItem);
             newItem = null;
         }
     }
