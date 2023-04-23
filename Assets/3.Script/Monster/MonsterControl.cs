@@ -13,6 +13,7 @@ public class MonsterControl : CreatureControl
 
     [SerializeField]
     private bool isEndPlat = false;
+    public bool onHP = false;
 
 
     public GameObject itemPrefab;
@@ -103,6 +104,7 @@ public class MonsterControl : CreatureControl
         if (!isImmobile)
         {
             base.OnDamaged(targetPos);
+            onHP = true;
             // 죽는 중이 아닐때만 피격당함
             if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
             {
@@ -185,6 +187,7 @@ public class MonsterControl : CreatureControl
         // 무적시간 경과 후 원래 상태로 돌아옴
         yield return invincibleTime_wait;
         isImmobile = false;
+        onHP = false;
     }
     protected override IEnumerator OnDie_co()
     {

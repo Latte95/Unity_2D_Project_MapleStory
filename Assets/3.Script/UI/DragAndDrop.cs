@@ -9,12 +9,10 @@ public class DragAndDrop : MonoBehaviour, IPointerClickHandler
     [SerializeField]
     private Vector3 cameraPosition;
 
-    public Image icon;
 
     private void Awake()
     {
         cameraPosition = Camera.main.transform.position;
-        TryGetComponent(out icon);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
