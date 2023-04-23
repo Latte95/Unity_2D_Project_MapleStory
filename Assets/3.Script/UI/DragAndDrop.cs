@@ -17,42 +17,25 @@ public class DragAndDrop : MonoBehaviour, IPointerClickHandler
         TryGetComponent(out icon);
     }
 
-    //public void OnBeginDrag(PointerEventData eventData)
-    //{
-    //    Debug.Log("드래그 시작");
-    //    previousParent = transform.parent;
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        Debug.Log("드래그 시작");
+    }
 
-    //    transform.SetParent(canvas);
-    //    // 안 가려지도록 마지막 자식으로 설정
-    //    transform.SetAsLastSibling();
+    public void OnDrag(PointerEventData eventData)
+    {
+        Debug.Log("드래그 중");
+    }
 
-    //    canvasGroup.alpha = 0.6f;
-    //    // 레이캐스트에 감지 안 되도록
-    //    canvasGroup.blocksRaycasts = false;
-    //}
+    public void OnDrop(PointerEventData eventData)
+    {
+        Debug.Log("드랍");
+    }
 
-    //public void OnDrag(PointerEventData eventData)
-    //{
-    //    Debug.Log("드래그 중");
-    //    rect.position = eventData.position;
-    //}
-
-    //public void OnDrop(PointerEventData eventData)
-    //{
-    //    Debug.Log("드랍");
-    //}
-
-    //public void OnEndDrag(PointerEventData eventData)
-    //{
-    //    Debug.Log("드래그 종료");
-    //    if(transform.Equals(canvas))
-    //    {
-    //        transform.SetParent(previousParent);
-    //        rect.position = previousParent.GetComponent<RectTransform>().position;
-    //    }
-    //    canvasGroup.alpha = 1.0f;
-    //    canvasGroup.blocksRaycasts = true;
-    //}
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        Debug.Log("드래그 종료");
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {

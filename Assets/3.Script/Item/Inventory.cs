@@ -27,6 +27,7 @@ public class Inventory
 
     public Item newItem;
     public event Action<Item> OnItemAdded;
+    public event Action OnItemRemoved;
 
 
     // 인벤토리에 아이템 추가 (구매, 착용, 드랍 등등)
@@ -61,9 +62,9 @@ public class Inventory
         else if (items.Count < 40)
         {
             // 그냥 아이템 추가
-            items.Add(item);
+            items.Add((EquipableItem)item);
             item.quantity = 1;
-            newItem = item;
+            newItem = (EquipableItem)item;
         }
         // 인벤 꽉참
         else
@@ -102,6 +103,36 @@ public class Inventory
             }
             // 장비 아이템은 그냥 완전히 제거
             else
+            {
+                items[itemIndex].quantity = 0;
+                items.RemoveAt(itemIndex);
+            }
+            newItem = null;
+            OnItemRemoved?.Invoke();
+        }
+    }
+
+    public void DropItem(int itemId, int cnt)
+    {
+        // 같은 이름을 가진 아이템이 있는지 찾기
+        int itemIndex = items.FindIndex(invenItem => invenItem._itemID == itemId);
+        if(items[itemIndex].quantity < cnt)
+        {
+            return;
+        }
+
+        // 인벤토리에 삭제할 아이템이 있다면
+        if (itemIndex >= 0)
+        {
+            newItem = items[itemIndex];
+            // 버릴 개수만큼 제거
+            if (items[itemIndex].quantity > 0)
+            {
+                items[itemIndex].quantity -= cnt;
+                OnItemAdded?.Invoke(newItem);
+            }
+            // 수량이 0이 되면 완전히 제거
+            if (items[itemIndex].quantity <= 0)
             {
                 items[itemIndex].quantity = 0;
                 items.RemoveAt(itemIndex);

@@ -9,8 +9,8 @@
     "speed": 1.7999999523162842,
     "jumpForce": 25.0,
     "playerPosition": {
-        "x": -9.571069717407227,
-        "y": -0.6226942539215088,
+        "x": -2.140000104904175,
+        "y": -0.4220002293586731,
         "z": 0.0
     },
     "strong": 6,
@@ -20,7 +20,7 @@
     "abilityPoint": 0,
     "exp": 6,
     "gold": 1271,
-    "scene": 2,
+    "scene": 1,
     "inventory": {
         "items": [
             {
@@ -38,7 +38,7 @@
                 "_price": 20,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 25294
+                    "instanceID": 26162
                 },
                 "itemType": 1
             },
@@ -57,7 +57,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 25892
+                    "instanceID": 18566
                 },
                 "itemType": 0
             },
@@ -76,7 +76,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 24294
+                    "instanceID": 25156
                 },
                 "itemType": 0
             },
@@ -95,7 +95,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 24294
+                    "instanceID": 25156
                 },
                 "itemType": 0
             },
@@ -114,7 +114,7 @@
                 "_price": 100,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 22806
+                    "instanceID": 23648
                 },
                 "itemType": 0
             },
@@ -133,7 +133,7 @@
                 "_price": 10,
                 "_quantity": 1,
                 "itemIcon": {
-                    "instanceID": 18738
+                    "instanceID": 18756
                 },
                 "itemType": 1
             },
@@ -152,9 +152,85 @@
                 "_price": 150,
                 "_quantity": 2,
                 "itemIcon": {
-                    "instanceID": 21480
+                    "instanceID": 22318
                 },
                 "itemType": 2
+            },
+            {
+                "_itemID": 1302000,
+                "_itemName": "검",
+                "_itemDescription": "한손검",
+                "_atk": 0,
+                "_def": 0,
+                "_str": 5,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 18566
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1040002,
+                "_itemName": "하얀 반팔 면티",
+                "_itemDescription": "하얀 반팔 면티",
+                "_atk": 0,
+                "_def": 5,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 25156
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1040002,
+                "_itemName": "하얀 반팔 면티",
+                "_itemDescription": "하얀 반팔 면티",
+                "_atk": 0,
+                "_def": 5,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 0,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 25156
+                },
+                "itemType": 0
+            },
+            {
+                "_itemID": 1060002,
+                "_itemName": "파란 청 바지",
+                "_itemDescription": "파란 청 바지",
+                "_atk": 0,
+                "_def": 3,
+                "_str": 0,
+                "_dex": 0,
+                "_int": 0,
+                "_luk": 0,
+                "_hp": 0,
+                "_mp": 10,
+                "_price": 100,
+                "_quantity": 1,
+                "itemIcon": {
+                    "instanceID": 23648
+                },
+                "itemType": 0
             }
         ],
         "newItem": {

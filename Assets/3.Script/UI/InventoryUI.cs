@@ -47,6 +47,7 @@ public class InventoryUI : MonoBehaviour
         InitializeSlot();
         // 인벤토리 켜진 상태로 아이템 추가시 슬롯에 바로바로 채워짐
         inventory.OnItemAdded += UpdateUI;
+        inventory.OnItemRemoved += InitializeSlot;
         // 메소 획득 갱신
         if (GameManager.Instance.player != null)
         {
@@ -56,6 +57,7 @@ public class InventoryUI : MonoBehaviour
     private void OnDisable()
     {
         inventory.OnItemAdded -= UpdateUI;
+        inventory.OnItemRemoved -= InitializeSlot;
         GameManager.Instance.player.GetComponent<PlayerControl>().OnMoneyAdded -= InitializeSlot;
     }
 
@@ -66,6 +68,7 @@ public class InventoryUI : MonoBehaviour
         // 인벤토리 정렬, 인벤토리 꺼진 상태로 추가된 아이템을 갱신하기 위함
         InitializeSlot();
         inventory.OnItemAdded += UpdateUI;
+        inventory.OnItemRemoved += InitializeSlot;
     }
 
     private void InitializeSlot()
