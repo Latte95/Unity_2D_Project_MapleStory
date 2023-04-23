@@ -79,6 +79,12 @@ public class GameManager : MonoBehaviour, IDataPersistence
             DataManager.instance.SaveGame();
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            soundManager.PlaySfx(Define.Sfx.Transform);
+            player.transform.position += player.transform.localScale.x * 3 * Vector3.left;
+        }
+
         // ¿Â∫Ò »πµÊ
         if (Input.GetKeyDown(KeyCode.F6))
         {
@@ -197,6 +203,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         // Set the name of the instantiated object to match the original prefab
         canvasInstance.name = canvasPrefab.name;
         fadeImage = canvasInstance.transform.Find("Fade").GetComponent<Image>();
+        fadeImage.gameObject.SetActive(true);
         // Fade out
         Color newColor = fadeImage.color;
         newColor.a = 1;
@@ -215,6 +222,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
             fadeImage.color = newColor;
             yield return null;
         }
+        fadeImage.gameObject.SetActive(false);
     }
     private IEnumerator InputUpArrow_co()
     {

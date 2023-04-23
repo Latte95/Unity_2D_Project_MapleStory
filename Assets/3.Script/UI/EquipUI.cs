@@ -16,17 +16,6 @@ public class EquipUI : MonoBehaviour
     EquipSlot[] equipSlotReferences = new EquipSlot[(int)equipSlot.Cnt];
     EquipSlot equipSlotReference;
 
-    void Start()
-    {
-        //player = GameManager.Instance.nowPlayer;
-
-        //for (int i = 0; i < (int)equipSlot.Cnt; i++)
-        //{
-        //    equipSlotReferences[i] = transform.Find(((equipSlot)i).ToString()).GetComponent<EquipSlot>();
-        //}
-        //LoadData(player);
-    }
-
     private void OnEnable()
     {
         if (player == null)

@@ -26,7 +26,7 @@ public class EquipSlot : MonoBehaviour
                 if (icon.sprite != null)
                 {
                     GameManager.Instance.nowPlayer.inventory.GetItem(int.Parse(icon.sprite.name));
-                    DifStat(tmpItem);
+                    DifStat(int.Parse(icon.sprite.name));
                 }
                 icon.sprite = cursorManager.cursorImage.sprite;
                 icon.color = new Color(1, 1, 1, 1);
@@ -73,8 +73,11 @@ public class EquipSlot : MonoBehaviour
             GameManager.Instance.nowPlayer.Mp += tmpItem._mp;
         }
     }
-    private void DifStat(Item tmpItem)
+    private void DifStat(int itemID)
     {
+        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID == itemID);
+        EquipableItem tmpItem = (EquipableItem)DataManager.instance.itemDataBase.itemList[itemIndex];
+
         if (tmpItem._atk != 0)
         {
             GameManager.Instance.nowPlayer.Atk -= tmpItem._atk;

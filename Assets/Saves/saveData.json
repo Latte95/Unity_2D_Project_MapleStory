@@ -1,26 +1,26 @@
 {
-    "level": 3,
+    "level": 1,
     "hp": 100,
     "maxHp": 100,
     "mp": 140,
     "maxMp": 100,
     "attack": 10,
-    "defense": 7,
+    "defense": 5,
     "speed": 1.7999999523162842,
     "jumpForce": 25.0,
     "playerPosition": {
-        "x": -18.926271438598634,
-        "y": 3.857767105102539,
+        "x": -2.140000104904175,
+        "y": -0.4220002293586731,
         "z": 0.0
     },
     "strong": 4,
     "intelligence": 4,
     "dexterity": 4,
     "luck": 4,
-    "abilityPoint": 8,
-    "exp": 75,
+    "abilityPoint": 0,
+    "exp": 0,
     "gold": 1000,
-    "scene": 2,
+    "scene": 1,
     "inventory": {
         "items": [],
         "newItem": {
