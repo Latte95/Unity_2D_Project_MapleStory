@@ -638,6 +638,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973a2149fe673e54ea14faf7574fb224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterHPPrefabs: {fileID: 6611831259473080356, guid: 4247b4aaac503bb4b9110e3c5caaa819, type: 3}
+  CanvasTrans: {fileID: 0}
   enemyPrefabs:
   - {fileID: 5180292556998340346, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
   - {fileID: 2155090993528461052, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
@@ -690,6 +692,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973a2149fe673e54ea14faf7574fb224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterHPPrefabs: {fileID: 6611831259473080356, guid: 4247b4aaac503bb4b9110e3c5caaa819, type: 3}
+  CanvasTrans: {fileID: 0}
   enemyPrefabs:
   - {fileID: 5180292556998340346, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
   - {fileID: 2155090993528461052, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
@@ -900,6 +904,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973a2149fe673e54ea14faf7574fb224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterHPPrefabs: {fileID: 6611831259473080356, guid: 4247b4aaac503bb4b9110e3c5caaa819, type: 3}
+  CanvasTrans: {fileID: 0}
   enemyPrefabs:
   - {fileID: 5180292556998340346, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
   - {fileID: 2155090993528461052, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
@@ -962,6 +968,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973a2149fe673e54ea14faf7574fb224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterHPPrefabs: {fileID: 6611831259473080356, guid: 4247b4aaac503bb4b9110e3c5caaa819, type: 3}
+  CanvasTrans: {fileID: 0}
   enemyPrefabs:
   - {fileID: 5180292556998340346, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
   - {fileID: 2155090993528461052, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
@@ -1076,6 +1084,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973a2149fe673e54ea14faf7574fb224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterHPPrefabs: {fileID: 6611831259473080356, guid: 4247b4aaac503bb4b9110e3c5caaa819, type: 3}
+  CanvasTrans: {fileID: 0}
   enemyPrefabs:
   - {fileID: 5180292556998340346, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
   - {fileID: 2155090993528461052, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
@@ -3958,6 +3968,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973a2149fe673e54ea14faf7574fb224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterHPPrefabs: {fileID: 6611831259473080356, guid: 4247b4aaac503bb4b9110e3c5caaa819, type: 3}
+  CanvasTrans: {fileID: 0}
   enemyPrefabs:
   - {fileID: 4236158770113695298, guid: 6ec396a69ceccdb4bbfcda4d265266f7, type: 3}
   - {fileID: 1304116597308682942, guid: a076f191a2784a1408d77e935755a1f8, type: 3}
@@ -4151,6 +4163,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 792105714980504226, guid: 10f18c8094c8f024390311777a7d1398, type: 3}
   soundPrefab: {fileID: 6042216052380571450, guid: b20fb91e02099294bb4219507489bb9b, type: 3}
   nowPlayer: {fileID: 0}
+  soundManager: {fileID: 0}
 --- !u!4 &1227954160
 Transform:
   m_ObjectHideFlags: 0
@@ -9295,6 +9308,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973a2149fe673e54ea14faf7574fb224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterHPPrefabs: {fileID: 6611831259473080356, guid: 4247b4aaac503bb4b9110e3c5caaa819, type: 3}
+  CanvasTrans: {fileID: 0}
   enemyPrefabs:
   - {fileID: 4236158770113695298, guid: 6ec396a69ceccdb4bbfcda4d265266f7, type: 3}
   - {fileID: 1304116597308682942, guid: a076f191a2784a1408d77e935755a1f8, type: 3}
@@ -9511,6 +9526,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973a2149fe673e54ea14faf7574fb224, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterHPPrefabs: {fileID: 6611831259473080356, guid: 4247b4aaac503bb4b9110e3c5caaa819, type: 3}
+  CanvasTrans: {fileID: 0}
   enemyPrefabs:
   - {fileID: 5180292556998340346, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
   - {fileID: 2155090993528461052, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}

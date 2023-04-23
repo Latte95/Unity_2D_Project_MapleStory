@@ -15,8 +15,9 @@ public class ItemDataBase
         itemList.Add(new EquipableItem(01040002, "하얀 반팔 면티", "하얀 반팔 면티", 0, 5, 0, 0, 0, 0, 0, 0, 100, Item.ItemType.Equip, EquipableItem.EQUIPTYPE.Clothes));
         itemList.Add(new EquipableItem(1060002, "파란 청 바지", "파란 청 바지", 0, 3, 0, 0, 0, 0, 0, 10, 100, Item.ItemType.Equip, EquipableItem.EQUIPTYPE.Pants));
         itemList.Add(new Item(04000000, "파란 달팽이의 껍질", "파란 달팽이의 껍질을 벗긴 것이다.", 0, 0, 0, 0, 0, 0, 0, 0, 50, Item.ItemType.Etc));
-        itemList.Add(new Item(04000001, "주황버섯의 갓", "주황버섯의 갓을 자른 것이다.", 0, 0, 0, 0, 0, 0, 0, 0, 500, Item.ItemType.Etc));
+        itemList.Add(new Item(04000001, "주황버섯의 갓", "주황버섯의 갓을 자른 것이다.", 0, 0, 0, 0, 0, 0, 0, 0, 300, Item.ItemType.Etc));
         itemList.Add(new Item(04000003, "나뭇가지", "나무의 가지를 꺾어온 것이다.", 0, 0, 0, 0, 0, 0, 0, 0, 100, Item.ItemType.Etc));
         itemList.Add(new Item(04000004, "물컹물컹한 액체", "점성이 높아 끈적끈적한 액체이다.", 0, 0, 0, 0, 0, 0, 0, 0, 150, Item.ItemType.Etc));
+        itemList.Add(new Item(04000012, "초록버섯의 갓", "초록버섯의 갓을 자른 것이다.", 0, 0, 0, 0, 0, 0, 0, 0, 700, Item.ItemType.Etc));
     }
 }

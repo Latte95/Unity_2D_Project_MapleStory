@@ -39,9 +39,9 @@ public class Player : Stat
             {
                 mp = 0;
             }
-            else if (mp > maxMp)
+            else if (mp > MaxMp)
             {
-                mp = maxMp;
+                mp = MaxMp;
             }
         }
     }
@@ -93,7 +93,7 @@ public class Player : Stat
         maxHp = 100;
         hp = maxHp;
         maxMp = 100;
-        mp = maxMp;
+        mp = MaxMp;
         attack = 10;
         defense = 5;
         speed = 1.8f;
@@ -109,6 +109,7 @@ public class Player : Stat
         abilityPoint = 0;
         inventory.items.Clear();
         quickSlot = new int[8];
+        quickSlot[0] = 8000000;
         equipSlot = new int[5];
     }
 
@@ -177,8 +178,8 @@ public class Player : Stat
         {
             yield return leverUp_wait;
             GameManager.Instance.soundManager.PlaySfx(Define.Sfx.LevelUp);
-            level++;
             exp += -LevelUpExp;
+            level++;
             //levelUpExp = 100 + (level * level + 10);
             levelUpEffect.SetActive(true);
             StartCoroutine(nameof(EffectOff_co));

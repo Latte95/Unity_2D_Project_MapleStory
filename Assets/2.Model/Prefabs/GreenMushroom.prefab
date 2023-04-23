@@ -246,7 +246,8 @@ MonoBehaviour:
   dir: 0
   isEndPlat: 0
   itemPrefab: {fileID: 3237959173466570023, guid: 364028372d82cf8469239591a3d67d30, type: 3}
-  itemImage: 81841e0081841e00
+  itemImage: 83841e0081841e000c093d00
+  itemProbability: 500000001400000014000000
   moneyImage: 40548900415489004254890043548900
   minMoney: 1000
   maxMoney: 3000
@@ -360,7 +361,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   hp: 10
-  maxHp: 20
+  maxHp: 50
   attack: 12
   defense: 5
   speed: 1

@@ -31,6 +31,8 @@ public class MonsterControl : CreatureControl
         TryGetComponent(out Stat);
         Stat.Init();
 
+        gameObject.layer = LayerMask.NameToLayer("Enemy");
+
         // 사운드 세팅
         TryGetComponent(out sfxPlayer);
         sfxPlayer.playOnAwake = false;
@@ -189,6 +191,7 @@ public class MonsterControl : CreatureControl
         yield return dieHp;
         // 피격 애니메이션에 의해 죽는 애니메이션 무시되는 것 방지
         yield return null;
+        gameObject.layer = invincibleLayer;
         rigid.velocity = Vector2.zero;
         anim.SetTrigger("isDie");
         sfxPlayer.PlayOneShot(sfxClips[1]);
@@ -213,8 +216,8 @@ public class MonsterControl : CreatureControl
             if (rand < itemProbability[2])
             {
                 GameObject etcInstance = Instantiate(itemPrefab);
-                itemInstance.transform.position = transform.position + 0.4f * Vector3.left;
-                itemInstance.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ItemIcon/" + itemImage[2].ToString());
+                etcInstance.transform.position = transform.position + 0.6f * Vector3.left;
+                etcInstance.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ItemIcon/" + itemImage[2].ToString());
             }
         }
 

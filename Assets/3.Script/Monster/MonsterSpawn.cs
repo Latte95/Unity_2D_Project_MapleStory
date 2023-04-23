@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class MonsterSpawn : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject monsterHPPrefabs;
+    [SerializeField]
+    private Transform CanvasTrans;
+
     // 오브젝트 풀링
     // 몬스터 종류 저장
     public GameObject[] enemyPrefabs;
@@ -63,18 +68,33 @@ public class MonsterSpawn : MonoBehaviour
 
     private void Start()
     {
+        if (CanvasTrans == null && GameObject.Find("Canvas"))
+        {
+            CanvasTrans = GameObject.Find("Canvas").transform;
+        }
         StartCoroutine(SpawnEnemy_co());
+    }
+
+    private void SpawnEnemyHP(MonsterStat enemy)
+    {
+        GameObject sliderClone = Instantiate(monsterHPPrefabs);
+
+        sliderClone.transform.SetParent(CanvasTrans);
+        sliderClone.transform.localScale = Vector3.one;
+
+        if (sliderClone.TryGetComponent(out MonsterHPPositionSetter positionSetter))
+        {
+            positionSetter.SetUp(enemy.gameObject);
+        }
+
+        if (sliderClone.TryGetComponent(out MonsterHPViewer hpViewer))
+        {
+            hpViewer.SetUp(enemy);
+        }
     }
 
     private IEnumerator SpawnEnemy_co()
     {
-        //yield return 
-        // 지속적으로 new 키워드를 사용해서 생성하는 경우 모조리 다 가비지 수집에 대상이 된다.
-        // 그래서 WaitForSeconds를 캐싱해서 사용한다.
-        //WaitForSeconds wfs = new WaitForSeconds(timeBetSpawn); => 랜덤 불가능한듯하여 캐싱x
-
-        // 스폰 시간을 랜덤하게 설정
-        timeBetSpawn = Random.Range(timeBetSpawnMin, timeBetSpawnMax);
         while (true)
         {
             timeBetSpawn = Random.Range(timeBetSpawnMin, timeBetSpawnMax);
@@ -96,6 +116,10 @@ public class MonsterSpawn : MonoBehaviour
                 {
                     // 활성화
                     enemies[currentIndex].SetActive(true);
+                    if (enemies[currentIndex].TryGetComponent(out MonsterStat enemy))
+                    {
+                        SpawnEnemyHP(enemy);
+                    }
                     // 위치설정
                     enemies[currentIndex].transform.position = transform.position;
                     break;

@@ -96,11 +96,15 @@ public class QuickSlotManager : MonoBehaviour
 
                     if (itemIndex >= 0)
                     {
-                        itemUsePlayer.PlayOneShot(itemUseClip);
                         Item tmpItem = player.inventory.items[itemIndex];
-                        player.Hp += tmpItem._hp;
-                        player.Mp += tmpItem._mp;
-                        player.inventory.RemoveItem(tmpItem);
+                        if ((tmpItem._hp > 0 && !player.Hp.Equals(player.MaxHp)) ||
+                            (tmpItem._mp > 0 && !player.Mp.Equals(player.MaxMp)))
+                        {
+                            itemUsePlayer.PlayOneShot(itemUseClip);
+                            player.Hp += tmpItem._hp;
+                            player.Mp += tmpItem._mp;
+                            player.inventory.RemoveItem(tmpItem);
+                        }
                     }
                 }
             }

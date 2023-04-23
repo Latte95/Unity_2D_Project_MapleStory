@@ -360,8 +360,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 1
-  hp: 10
-  maxHp: 10
+  hp: 0
+  maxHp: 30
   attack: 7
   defense: 3
   speed: 1.5
