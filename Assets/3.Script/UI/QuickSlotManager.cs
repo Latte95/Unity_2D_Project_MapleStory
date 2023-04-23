@@ -15,9 +15,10 @@ public class QuickSlotManager : MonoBehaviour
         Del,
         End,
         Pdn,
+        Cnt,
     }
     Player player;
-    QuickSlot[] quickSlotReferences = new QuickSlot[8];
+    QuickSlot[] quickSlotReferences = new QuickSlot[(int)quickSlot.Cnt];
     QuickSlot quickSlotReference;
 
     [SerializeField]
@@ -32,25 +33,17 @@ public class QuickSlotManager : MonoBehaviour
 
     private void Start()
     {
-        player = FindObjectOfType<Player>();
+        player = GameManager.Instance.nowPlayer;
         Transform childObject = transform.GetChild(0);
+        Transform grandchildObject = null;
 
-        Transform grandchildObject = childObject.Find("Shift");
-        quickSlotReferences[0] = grandchildObject.GetComponent<QuickSlot>();
-        grandchildObject = childObject.Find("Ins");
-        quickSlotReferences[1] = grandchildObject.GetComponent<QuickSlot>();
-        grandchildObject = childObject.Find("Hm");
-        quickSlotReferences[2] = grandchildObject.GetComponent<QuickSlot>();
-        grandchildObject = childObject.Find("Pup");
-        quickSlotReferences[3] = grandchildObject.GetComponent<QuickSlot>();
-        grandchildObject = childObject.Find("Ctrl");
-        quickSlotReferences[4] = grandchildObject.GetComponent<QuickSlot>();
-        grandchildObject = childObject.Find("Del");
-        quickSlotReferences[5] = grandchildObject.GetComponent<QuickSlot>();
-        grandchildObject = childObject.Find("End");
-        quickSlotReferences[6] = grandchildObject.GetComponent<QuickSlot>();
-        grandchildObject = childObject.Find("Pdn");
-        quickSlotReferences[7] = grandchildObject.GetComponent<QuickSlot>();
+        for(int i = 0; i<(int)quickSlot.Cnt;i++)
+        {
+        grandchildObject = childObject.Find(((quickSlot)i).ToString());
+        quickSlotReferences[i] = grandchildObject.GetComponent<QuickSlot>();
+
+        }
+
         LoadData(player);
     }
 
@@ -118,10 +111,8 @@ public class QuickSlotManager : MonoBehaviour
     {
         for (int i = 0; i < 8; i++)
         {
-            // 자식 오브젝트인 Icon을 찾습니다.
+            // 자식 오브젝트 Icon 검색
             Transform iconTransform = quickSlotReferences[i].transform.Find("Icon");
-
-            // Icon의 Image 컴포넌트를 가져옵니다.
             Image iconImage = iconTransform.GetComponent<Image>();
 
             string iconID = data.quickSlot[i].ToString();
@@ -146,7 +137,7 @@ public class QuickSlotManager : MonoBehaviour
 
     public void SaveData(ref Player data)
     {
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < (int)quickSlot.Cnt; i++)
         {
             // 자식 오브젝트인 Icon을 찾습니다.
             Transform iconTransform = quickSlotReferences[i].transform.Find("Icon");

@@ -67,6 +67,9 @@ public class GameManager : MonoBehaviour, IDataPersistence
         if (Input.GetKeyDown(KeyCode.F11))
         {
             FindObjectOfType<QuickSlotManager>().SaveData(ref nowPlayer);
+            _ui.EquipUI.SetActive(true);
+            FindObjectOfType<EquipUI>().SaveData(ref nowPlayer);
+            _ui.EquipUI.SetActive(_ui.activeEquip);
             DataManager.instance.SaveGame();
         }
         // 데이터 초기화

@@ -22,9 +22,9 @@ public class MainUI : MonoBehaviour
     public GameObject inventoryUI;
     public GameObject StatusUI;
     public GameObject EquipUI;
-    bool activeInventory = false;
-    bool activeStatus = false;
-    bool activeEquip = false;
+    public bool activeInventory = false;
+    public bool activeStatus = false;
+    public bool activeEquip = false;
 
     private void Start()
     {
@@ -52,9 +52,12 @@ public class MainUI : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            inventoryUI.SetActive(false);
-            StatusUI.SetActive(false);
-            EquipUI.SetActive(false);
+            activeInventory = false;
+            inventoryUI.SetActive(activeInventory);
+            activeStatus = false;
+            StatusUI.SetActive(activeStatus);
+            activeEquip = false;
+            EquipUI.SetActive(activeEquip);
         }
     }
 }
