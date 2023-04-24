@@ -31,6 +31,7 @@ public class UserItem : MonoBehaviour
             newSlot.icon.color = new Color(1, 1, 1, 0);
             newSlot.itemName.text = null;
             newSlot.itemPrice.text = null;
+            newSlot.itemQuantity.text = null;
 
             slot[i] = newSlot;
         }
@@ -91,6 +92,7 @@ public class UserItem : MonoBehaviour
             slot[i].icon.color = new Color(1, 1, 1, 1);
             slot[i].itemName.text = player.inventory.items[i]._itemName;
             slot[i].itemPrice.text = (player.inventory.items[i]._price*0.5f).ToString();
+            slot[i].itemQuantity.text = "x" + player.inventory.items[i].quantity.ToString();
         }
         for (int i = itemCnt; i < slotCnt; i++)
         {
@@ -98,29 +100,12 @@ public class UserItem : MonoBehaviour
             slot[i].icon.color = new Color(1, 1, 1, 0);
             slot[i].itemName.text = null;
             slot[i].itemPrice.text = null;
+            slot[i].itemQuantity.text = null;
         }
     }
 
     private void UpdateUI(Item newItem)
     {
-        //int itemIndex = Array.FindIndex(slot, s => s.icon.sprite == newItem.itemIcon);
-        int itemIndex = player.inventory.items.FindIndex(item => item._itemID == newItem._itemID);
-
-        if (itemIndex >= 0)
-        {
-            //이미 있는 아이템이면 갯수만 증가
-            if (GameManager.Instance.nowPlayer.inventory.items[itemIndex].quantity > 1)
-            {
-                slot[itemIndex].itemName.text = player.inventory.items[itemIndex]._itemName;
-                slot[itemIndex].itemPrice.text = ((int)(player.inventory.items[itemIndex]._price * 0.5f)).ToString();
-            }
-            else
-            {
-                slot[itemIndex].icon.sprite = newItem.itemIcon;
-                slot[itemIndex].icon.color = new Color(1, 1, 1, 1);
-                slot[itemIndex].itemName.text = player.inventory.items[itemIndex]._itemName;
-                slot[itemIndex].itemPrice.text = ((int)(player.inventory.items[itemIndex]._price * 0.5f)).ToString();
-            }
-        }
+        InitializeSlot();
     }
 }

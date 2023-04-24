@@ -8,6 +8,7 @@ public class ShopSlot : MonoBehaviour
     public Image icon;
     public Text itemName;
     public Text itemPrice;
+    public Text itemQuantity;
     public CursorManager cursorManager;
 
     private void Start()
