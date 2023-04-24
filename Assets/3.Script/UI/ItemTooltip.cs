@@ -24,7 +24,7 @@ public class ItemTooltip : MonoBehaviour
 
     public void SetUpTootip(int itemID)
     {
-        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID == itemID);
+        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID.Equals(itemID));
         Item tmpItem = DataManager.instance.itemDataBase.itemList[itemIndex];
 
         icon.sprite = tmpItem.itemIcon;

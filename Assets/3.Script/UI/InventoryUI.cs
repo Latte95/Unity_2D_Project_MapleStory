@@ -113,7 +113,7 @@ public class InventoryUI : MonoBehaviour
         for (int i = 0; i < itemCnt; i++)
         {
             Item item = GameManager.Instance.nowPlayer.inventory.items[i];
-            if ((int)item.itemType != tab)
+            if (!((int)item.itemType).Equals(tab))
             {
                 continue;
             }

@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
         else
         {
-            if (Instance != this)
+            if (!Instance.Equals(this))
             {
                 Destroy(this.gameObject);
             }

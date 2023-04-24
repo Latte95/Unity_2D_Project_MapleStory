@@ -41,7 +41,7 @@ public class EquipUI : MonoBehaviour
             Image iconImage = equipSlotReferences[i].transform.GetComponent<Image>();
 
             string iconID = data.equipSlot[i].ToString();
-            if (data.equipSlot[i] != 0)
+            if (!data.equipSlot[i].Equals(0))
             {
                 iconImage.sprite = Resources.Load<Sprite>("ItemIcon/" + iconID);
                 iconImage.color = new Color(1, 1, 1, 1);
