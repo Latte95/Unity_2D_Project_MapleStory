@@ -9,57 +9,69 @@ public class MonsterControl : CreatureControl
     AudioSource sfxPlayer;
 
     private MonsterStat Stat;
-    public int dir = 0;
+    private int dir = 0;
 
-    [SerializeField]
     private bool isEndPlat = false;
     public bool onHP = false;
 
-
-    public GameObject itemPrefab;
-    public int[] itemImage;
+    #region 드롭템
+    [Header("#Item")]
+    [SerializeField]
+    private GameObject itemPrefab;
+    [SerializeField]
+    private int[] itemImage;
     [SerializeField]
     private int[] itemProbability;
-    public int[] moneyImage;
-    public int minMoney;
-    public int maxMoney;
+    [SerializeField]
+    private int[] moneyImage;
+    [SerializeField]
+    private int minMoney;
+    [SerializeField]
+    private int maxMoney;
+    #endregion 템
 
-    private new void OnEnable()
+    private new void Awake()
     {
-        base.OnEnable();
-
-        // 리스폰 될 때 Hp 초기화
+        base.Awake();
         TryGetComponent(out Stat);
-        Stat.Init();
-
-        gameObject.layer = LayerMask.NameToLayer("Enemy");
 
         // 사운드 세팅
         TryGetComponent(out sfxPlayer);
         sfxPlayer.playOnAwake = false;
 
+        dieHp_wait = new WaitUntil(() => Stat.Hp <= 0);
+    }
+
+    // 리스폰마다 초기화 할 것들
+    private new void OnEnable()
+    {
+        base.OnEnable();
+
+        // 리스폰 될 때 Hp 초기화
+        Stat.Init();
+
+        gameObject.layer = LayerMask.NameToLayer("Enemy");
+
+        // 이동
         StartCoroutine(nameof(Direct_co));
-        // 점프
         StartCoroutine(nameof(Jump_co));
 
-        dieHp = new WaitUntil(() => Stat.Hp <= 0);
+        // 사망 판단
         StartCoroutine(nameof(OnDie_co));
     }
-    private new void Start()
-    {
-        base.Start();
-        // 이동 방향 결정
-    }
+
     protected override void Update()
     {
         IsOnGround();
         base.Update();
     }
+
     private void FixedUpdate()
     {
-        // 캐릭터 바로앞의 충돌을 감지할 박스캐스트
-        RaycastHit2D raycast = Physics2D.Raycast(transform.position + 0.5f * (-transform.localScale.x * 0.6f) * Vector3.right, Vector2.down, 1f, LayerMask.GetMask(platLayer));
-        // 바닥 없으면 멈춤 
+        // 몬스터 앞 바닥 체크
+        RaycastHit2D raycast = Physics2D.Raycast(transform.position + 0.5f * (-transform.localScale.x * 0.6f) * Vector3.right, Vector2.down, 1f,
+                                                LayerMask.GetMask(platLayer));
+
         if (raycast.collider != null)
         {
             isEndPlat = false;
@@ -75,27 +87,26 @@ public class MonsterControl : CreatureControl
 
     protected override void Move()
     {
-        // 이동
-        // 가만히 있거나 걷는 중에만 이동 가능
-        if (isEndPlat && dir * transform.localScale.x < 0 && !anim.GetCurrentAnimatorStateInfo(0).IsName("Jump") && !lastGroundTag.Equals("Other"))
+        bool isJump = anim.GetCurrentAnimatorStateInfo(0).IsName(jumpAni);
+        bool isWalk = anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni);
+        bool isIdle = anim.GetCurrentAnimatorStateInfo(0).IsName(idleAni);
+
+        // 바닥 끝에서 뒤돌기
+        if (isEndPlat && dir * transform.localScale.x < 0 && !isJump && !lastGroundTag.Equals(platLayer[2]))
         {
             dir *= -1;
         }
-        if ((anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni)) &&
-            !isImmobile)
+
+        // 이동
+        if ((isIdle || isWalk) && !isImmobile)
         {
             movement.MoveTo(dir * Vector2.right);
         }
-        // 점프중이 아닐때만 이동 멈춤
-        // => 점프중에 x축 속도 변화 x
-        else if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Jump"))
+        // 점프중 속도 유지
+        else
         {
             movement.MoveTo(new Vector2(rigid.velocity.x / Stat.Speed, 0));
         }
-    }
-
-    protected override void GroundAct()
-    {
     }
 
     // 데미지 입음
@@ -104,9 +115,10 @@ public class MonsterControl : CreatureControl
         if (!isImmobile)
         {
             base.OnDamaged(targetPos);
+            // HP바 표시
             onHP = true;
             // 죽는 중이 아닐때만 피격당함
-            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
+            if (!anim.GetCurrentAnimatorStateInfo(0).IsName(dieAni))
             {
                 HitSound();
                 anim.SetTrigger("isHit");
@@ -133,11 +145,12 @@ public class MonsterControl : CreatureControl
                 anim.SetBool("isGrounded", true);
                 isGrounded = true;
                 isImmobile = false;
+                // 새로운 땅 밟았으면 해당 벽과 충돌
                 if (!raycastHit.collider.tag.Equals(lastGroundTag))
                 {
-                    Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(raycastHit.collider.gameObject.tag), false);
+                    lastGroundTag = raycastHit.collider.gameObject.tag;
+                    Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(lastGroundTag), false);
                 }
-                lastGroundTag = raycastHit.collider.gameObject.tag;
             }
 
             // 경사면 체크
@@ -191,7 +204,7 @@ public class MonsterControl : CreatureControl
     }
     protected override IEnumerator OnDie_co()
     {
-        yield return dieHp;
+        yield return dieHp_wait;
         // 피격 애니메이션에 의해 죽는 애니메이션 무시되는 것 방지
         yield return null;
         gameObject.layer = invincibleLayer;
@@ -251,7 +264,7 @@ public class MonsterControl : CreatureControl
 
 
         // 죽는 애니메이션 끝나면 비활성화
-        yield return dieAni;
+        yield return dieAni_wait;
         gameObject.SetActive(false);
     }
     private IEnumerator Direct_co()
@@ -278,6 +291,7 @@ public class MonsterControl : CreatureControl
 
     protected override void OnDrawGizmos()
     {
+        base.OnDrawGizmos();
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(transform.position + 0.5f * (-transform.localScale.x * 0.6f) * Vector3.right, Vector2.down);
     }

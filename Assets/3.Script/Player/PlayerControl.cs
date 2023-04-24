@@ -38,7 +38,7 @@ public class PlayerControl : CreatureControl
         attackEffectAnimator = transform.Find("AttackEffect").gameObject.GetComponent<Animator>();
         ignorePlatTime_wait = new WaitForSeconds(0.2f);
 
-        dieHp = new WaitUntil(() => Stat.Hp <= 0);
+        dieHp_wait = new WaitUntil(() => Stat.Hp <= 0);
         inputZ_wait = new WaitUntil(() => Input.GetKey(KeyCode.Z));
         inputUpOrDownArrow_wait = new WaitUntil(() => Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow));
         itemRootDelay_wait = new WaitForSeconds(0.1f);
@@ -48,7 +48,7 @@ public class PlayerControl : CreatureControl
 
         StartCoroutine(nameof(RootItem_co));
         StartCoroutine(nameof(InputUpOrDownArrow_co));
-        dieHp = new WaitUntil(() => Stat.Hp <= 0);
+        dieHp_wait = new WaitUntil(() => Stat.Hp <= 0);
         StartCoroutine(nameof(OnDie_co));
         DamagePrefab = Resources.Load<GameObject>("Damage/" + "Damage");
         SkillHitPrefab = Resources.Load<GameObject>("Effect/" + "SkillEffect");
@@ -61,6 +61,9 @@ public class PlayerControl : CreatureControl
     {
         IsOnGround();
         base.Update();
+
+        // 땅에서 할 행동들. 공통 : 점프 / 플레이어 : 엎드리기
+        GroundAct();
     }
 
 
@@ -82,6 +85,7 @@ public class PlayerControl : CreatureControl
     {
         bool isIdleOrWalking = (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni) || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"));
         bool isRopeOrLadder = (anim.GetBool("isRope") || anim.GetBool("isLadder"));
+        bool isJump = anim.GetCurrentAnimatorStateInfo(0).IsName(jumpAni);
         bool leftArrowPressed = Input.GetKey(KeyCode.LeftArrow);
         bool rightArrowPressed = Input.GetKey(KeyCode.RightArrow);
         bool upPressed = Input.GetKey(KeyCode.UpArrow);
@@ -144,7 +148,7 @@ public class PlayerControl : CreatureControl
         }
     }
 
-    protected override void GroundAct()
+    protected void GroundAct()
     {
         if (isGrounded)
         {
@@ -532,7 +536,7 @@ public class PlayerControl : CreatureControl
     {
         while (true)
         {
-            yield return dieHp;
+            yield return dieHp_wait;
             yield return null;
             anim.SetTrigger("isDie");
             rigid.velocity = Vector2.zero;

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 플레이어와 몬스터 공통 스탯
 [System.Serializable]
 public class Stat : MonoBehaviour
 {

@@ -15,7 +15,7 @@ public class Item : ICloneable
         Money,
     }
 
-    // 소비 아이템 최대 보유 가능 개수
+    // 아이템 보유 가능 최대 개수
     const int MAX_CONSUMABLE_NUMBER = 99;
 
     // 장비랑 소비 아이템 공통 특성
@@ -48,8 +48,6 @@ public class Item : ICloneable
     }
     public Sprite itemIcon;
     public ItemType itemType;
-    //public GameObject itemPrefab;
-
 
     // 공통 특성 초기화
     public Item(int _itemID, string _name, string _itemDescription, int _atk, int _def, int _str, int _dex, int _int, int _luk, int _hp, int _mp, int _price, ItemType _itemType, int _quantity = 1)

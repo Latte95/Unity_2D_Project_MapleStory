@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 8291932495889988602}
   - component: {fileID: 8291932495889988601}
   - component: {fileID: 8291932495889988600}
+  - component: {fileID: 1479636994466084715}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -224,6 +225,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa4bc1e4e0097a4f9c254ab1809efa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1479636994466084715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8291932495889988604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b62da449e091b44ea0a7935ecae72d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltip: {fileID: 0}
 --- !u!1 &8291932496016302734
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,6 +332,7 @@ MonoBehaviour:
   icon: {fileID: 8291932495889988602}
   itemName: {fileID: 8291932496695043036}
   itemPrice: {fileID: 8291932495359199348}
+  itemQuantity: {fileID: 0}
   cursorManager: {fileID: 0}
 --- !u!1 &8291932496695043038
 GameObject:

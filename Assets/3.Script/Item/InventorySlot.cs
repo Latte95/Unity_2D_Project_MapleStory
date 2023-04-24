@@ -11,7 +11,7 @@ public class InventorySlot : MonoBehaviour
 
     private void Start()
     {
-        cursorManager = FindObjectOfType<CursorManager>(); // Find the CursorManager in the scene
+        cursorManager = FindObjectOfType<CursorManager>();
         icon = transform.Find("Image").GetComponent<Image>();
     }
 

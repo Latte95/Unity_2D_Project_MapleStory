@@ -86,7 +86,7 @@ public class Inventory
         {
             newItem = items[itemIndex];
             // 소비 아이템
-            if (item.itemType.Equals(Item.ItemType.Consume))
+            if (!item.itemType.Equals(Item.ItemType.Equip))
             {
                 // 보유 하고 있으면 1개씩 제거하고
                 if (items[itemIndex].quantity > 0)
