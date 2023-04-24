@@ -33,7 +33,7 @@ public class ShopClick : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
 
             // 더블클릭
-            if (hit.collider != null && hit.collider.gameObject == gameObject)
+            if (hit.collider != null && hit.collider.gameObject.Equals(gameObject))
             {
                 if (!isClickWaiting)
                 {

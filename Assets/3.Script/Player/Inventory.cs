@@ -20,7 +20,7 @@ public class Inventory
         if (!item.itemType.Equals(Item.ItemType.Equip))
         {
             // 같은 이름을 가진 아이템이 있는지 찾기
-            int itemIndex = items.FindIndex(invenItem => invenItem._itemName == item._itemName);
+            int itemIndex = items.FindIndex(invenItem => invenItem._itemName.Equals(item._itemName));
 
             // 아이템이 있으면 수량증가
             if (itemIndex >= 0)
@@ -63,7 +63,7 @@ public class Inventory
     public void RemoveItem(Item item)
     {
         // 같은 이름을 가진 아이템이 있는지 찾기
-        int itemIndex = items.FindIndex(invenItem => invenItem._itemName == item._itemName);
+        int itemIndex = items.FindIndex(invenItem => invenItem._itemName.Equals(item._itemName));
 
         // 인벤토리에 삭제할 아이템이 있다면
         if (itemIndex >= 0)
@@ -98,7 +98,7 @@ public class Inventory
     public void DropItem(int itemId, int cnt)
     {
         // 같은 이름을 가진 아이템이 있는지 찾기
-        int itemIndex = items.FindIndex(invenItem => invenItem._itemID == itemId);
+        int itemIndex = items.FindIndex(invenItem => invenItem._itemID.Equals(itemId));
         if(items[itemIndex].quantity < cnt)
         {
             return;
@@ -126,20 +126,20 @@ public class Inventory
 
     public void GetItem(int itemID)
     {
-        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID == itemID);
+        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID.Equals(itemID));
         Item tmpItem = (Item)DataManager.instance.itemDataBase.itemList[itemIndex].Clone();
         AddItem(tmpItem);
     }
     public void GetItem(string itemName)
     {
-        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemName == itemName);
+        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemName.Equals(itemName));
         Item tmpItem = (Item)DataManager.instance.itemDataBase.itemList[itemIndex].Clone();
         AddItem(tmpItem);
     }
 
     public void GetItem(int itemID, int quantity)
     {
-        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID == itemID);
+        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID.Equals(itemID));
         Item tmpItem = (Item)DataManager.instance.itemDataBase.itemList[itemIndex].Clone();
         if (tmpItem.itemType.Equals(Item.ItemType.Consume))
         {
@@ -156,7 +156,7 @@ public class Inventory
     }
     public void GetItem(string itemName, int quantity)
     {
-        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemName == itemName);
+        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemName.Equals(itemName));
         Item tmpItem = (Item)DataManager.instance.itemDataBase.itemList[itemIndex].Clone();
         if (tmpItem.itemType.Equals(Item.ItemType.Consume))
         {

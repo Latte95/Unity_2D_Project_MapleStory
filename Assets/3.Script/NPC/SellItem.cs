@@ -72,7 +72,7 @@ public class SellItem : MonoBehaviour
         itemCnt = shopUi.items.Count;
         for (int i = 0; i < itemCnt; i++)
         {
-            int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID == shopUi.items[i]);
+            int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID.Equals(shopUi.items[i]));
             Item item = DataManager.instance.itemDataBase.itemList[itemIndex];
             slot[i].icon.sprite = item.itemIcon;
             slot[i].icon.color = new Color(1, 1, 1, 1);

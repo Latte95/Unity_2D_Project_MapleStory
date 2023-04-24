@@ -20,7 +20,7 @@ public class EquipSlot : MonoBehaviour
         // 새 아이템 착용
         if (cursorManager.cursorImage.sprite.name[0].Equals('1'))
         {
-            int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID == int.Parse(cursorManager.cursorImage.sprite.name));
+            int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID.Equals(int.Parse(cursorManager.cursorImage.sprite.name)));
             EquipableItem tmpItem = (EquipableItem)DataManager.instance.itemDataBase.itemList[itemIndex];
             if (gameObject.name.Equals(tmpItem.equipType.ToString()))
             {
@@ -89,7 +89,7 @@ public class EquipSlot : MonoBehaviour
     }
     private void DifStat(int itemID)
     {
-        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID == itemID);
+        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID.Equals(itemID));
         EquipableItem tmpItem = (EquipableItem)DataManager.instance.itemDataBase.itemList[itemIndex];
 
         if (tmpItem._atk != 0)

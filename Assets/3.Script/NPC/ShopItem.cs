@@ -28,7 +28,7 @@ public class ShopItem : MonoBehaviour
         {
             int.TryParse(GetComponent<Image>().sprite.name, out itemID);
         }
-        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID == itemID);
+        int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID.Equals(itemID));
         Item tmpItem = DataManager.instance.itemDataBase.itemList[itemIndex];
 
         if (player.Gold > tmpItem._price)
@@ -40,7 +40,7 @@ public class ShopItem : MonoBehaviour
     }
     public void SellClick()
     {
-        int itemIndex = player.inventory.items.FindIndex(item => item._itemID == int.Parse(GetComponent<Image>().sprite.name));
+        int itemIndex = player.inventory.items.FindIndex(item => item._itemID.Equals(int.Parse(GetComponent<Image>().sprite.name)));
         Item tmpItem = player.inventory.items[itemIndex];
 
         player.Gold += (int)(tmpItem._price * 0.5f);

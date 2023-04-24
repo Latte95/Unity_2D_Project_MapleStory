@@ -92,7 +92,7 @@ public class QuickSlotManager : MonoBehaviour, IDataPersistence
             {
                 if (quickSlotReference.icon.sprite.name[0].Equals('2'))
                 {
-                    int itemIndex = player.inventory.items.FindIndex(invenItem => invenItem._itemID == int.Parse(quickSlotReference.icon.sprite.name));
+                    int itemIndex = player.inventory.items.FindIndex(invenItem => invenItem._itemID.Equals(int.Parse(quickSlotReference.icon.sprite.name)));
 
                     if (itemIndex >= 0)
                     {
