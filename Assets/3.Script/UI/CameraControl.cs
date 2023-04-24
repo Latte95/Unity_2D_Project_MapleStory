@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraControl : MonoBehaviour
 {
     // 플레이어와의 위치 차이
-    Vector3 delta;
+    private Vector3 delta;
 
     private void Awake()
     {

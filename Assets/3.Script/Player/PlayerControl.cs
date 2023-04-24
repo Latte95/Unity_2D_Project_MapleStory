@@ -85,7 +85,6 @@ public class PlayerControl : CreatureControl
     {
         bool isIdleOrWalking = (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni) || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"));
         bool isRopeOrLadder = (anim.GetBool("isRope") || anim.GetBool("isLadder"));
-        bool isJump = anim.GetCurrentAnimatorStateInfo(0).IsName(jumpAni);
         bool leftArrowPressed = Input.GetKey(KeyCode.LeftArrow);
         bool rightArrowPressed = Input.GetKey(KeyCode.RightArrow);
         bool upPressed = Input.GetKey(KeyCode.UpArrow);
@@ -120,7 +119,7 @@ public class PlayerControl : CreatureControl
                 rigid.velocity = dir;
                 rigid.AddForce(10 * Vector2.up, ForceMode2D.Impulse);
                 RopeOff();
-                GameManager.Instance.soundManager.PlaySfx(Define.Sfx.Jump);
+                GameManager.SoundManager.PlaySfx(Define.Sfx.Jump);
             }
             else
             {
@@ -161,7 +160,7 @@ public class PlayerControl : CreatureControl
             Prone();
             if (Input.GetButtonDown("Jump") && !isRopeOrLadder)
             {
-                GameManager.Instance.soundManager.PlaySfx(Define.Sfx.Jump);
+                GameManager.SoundManager.PlaySfx(Define.Sfx.Jump);
                 // 서있을 때 점프
                 if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
                 {
@@ -258,16 +257,18 @@ public class PlayerControl : CreatureControl
 
     private IEnumerator Attack_co()
     {
-        // 공격 가능한 상태일 때만 공격 실행
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") ||
-            anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni) ||
-            anim.GetCurrentAnimatorStateInfo(0).IsName("Jump") ||
-            anim.GetCurrentAnimatorStateInfo(0).IsName("Down") ||
-            anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
-        {
-            GameManager.Instance.soundManager.PlaySfx(Define.Sfx.AttackS);
+        bool isIdle = anim.GetCurrentAnimatorStateInfo(0).IsName(idleAni);
+        bool isWalk = anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni);
+        bool isJump = anim.GetCurrentAnimatorStateInfo(0).IsName(jumpAni);
+        bool isDown = anim.GetCurrentAnimatorStateInfo(0).IsName("Down");
+        bool isHit = anim.GetCurrentAnimatorStateInfo(0).IsName("Hit");
 
-            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
+        // 공격 가능한 상태일 때만 공격 실행
+        if (isIdle || isWalk || isJump ||isDown ||isHit)
+        {
+            GameManager.SoundManager.PlaySfx(Define.Sfx.AttackS);
+
+            if (!isDown)
             {
                 attackEffectAnimator.SetTrigger(Define.Skill.Attack.ToString());
             }
@@ -284,7 +285,7 @@ public class PlayerControl : CreatureControl
 
                 monster.OnDamaged(transform.position);
                 int damage = (Stat.AD) - monsterData.Def;
-                if (anim.GetCurrentAnimatorStateInfo(0).IsName("Down"))
+                if (isDown)
                 {
                     damage = (int)(damage * 0.1f);
                 }
@@ -326,7 +327,7 @@ public class PlayerControl : CreatureControl
                 Stat.Mp -= 50;
             }
 
-            GameManager.Instance.soundManager.PlaySfx(Define.Sfx.Magic);
+            GameManager.SoundManager.PlaySfx(Define.Sfx.Magic);
             attackEffectAnimator.SetTrigger(Define.Skill.MagicClaw.ToString());
 
             anim.SetBool("isMagic", true);
@@ -437,7 +438,7 @@ public class PlayerControl : CreatureControl
             // Item를 감지했으면 아이템 루팅
             if (col != null)
             {
-                GameManager.Instance.soundManager.PlaySfx(Define.Sfx.PickUpItem);
+                GameManager.SoundManager.PlaySfx(Define.Sfx.PickUpItem);
                 // 이미 루팅중이지만 아직 이동중인 아이템을 다시 획득하지 못하도록 방지하기 위한 레이어 변경
                 col.gameObject.layer = LayerMask.NameToLayer("ItemRoot");
                 // 이중 코루틴을 쓴 이유는 루팅중인 아이템이 있어도 다른 아이템도 루팅할 수 있도록 하기 위해서
@@ -540,6 +541,7 @@ public class PlayerControl : CreatureControl
             yield return null;
             anim.SetTrigger("isDie");
             rigid.velocity = Vector2.zero;
+            Stat.Exp -= (int)(Stat.LevelUpExp * 0.05);
             yield return recover_wait;
             Recovery();
         }

@@ -10,7 +10,6 @@ using System.Security.Cryptography;
 
 public class DataManager : MonoBehaviour
 {
-    // Singleton
     public static DataManager instance;
 
     public Player nowPlayer;
@@ -27,7 +26,6 @@ public class DataManager : MonoBehaviour
     // 아이템
     public ItemDataBase itemDataBase;
 
-    // Initialize
     private void Awake()
     {
         #region Singleton
@@ -67,42 +65,27 @@ public class DataManager : MonoBehaviour
         }
         fileName = "saveData.json";
 
-        // Generate a key based on the file name and salt
+        // 키 생성
         using (var pbkdf2 = new Rfc2898DeriveBytes(fileName, salt, Iterations))
         {
             key = pbkdf2.GetBytes(keySizes);
         }
 
-        // Load player data from JSON
+        // Json 읽기
         PlayerData playerData = Load();
+        // 읽은 데이터 플레이어에 덮어쓰기
         if (playerData != null)
         {
             nowPlayer.SetData(playerData);
         }
-        // Update all data persistence objects
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
         {
             dataPersistenceObj.LoadData(nowPlayer);
         }
     }
-
-    // Save data to save file and update all data persistence objects
-    public void SaveGame()
-    {
-        // Update all data persistence objects
-        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
-        {
-            dataPersistenceObj.SaveData(ref nowPlayer);
-        }
-        // Save player data as JSON
-        Save(nowPlayer.ToPlayerData());
-    }
-
-    // Reads data stored in a json file
     public PlayerData Load()
     {
         string fullPath = Path.Combine(path, fileName);
-        //Player loadedData = null;
         PlayerData loadedData = null;
         try
         {
@@ -113,9 +96,9 @@ public class DataManager : MonoBehaviour
                     using (StreamReader reader = new StreamReader(stream))
                     {
                         string encryptedData = reader.ReadToEnd();
-                        //string decryptedData = Decrypt(encryptedData);
-                        loadedData = JsonUtility.FromJson<PlayerData>(encryptedData);
-                        //loadedData = JsonUtility.FromJson<Player>(encryptedData);
+                        // 복호화
+                        string decryptedData = Decrypt(encryptedData);
+                        loadedData = JsonUtility.FromJson<PlayerData>(decryptedData);
                     }
                 }
             }
@@ -127,21 +110,31 @@ public class DataManager : MonoBehaviour
         return loadedData;
     }
 
-    // Save data as a json file
+
+    public void SaveGame()
+    {
+        // 저장해야 될 데이터들 Player데이터에 대입
+        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
+        {
+            dataPersistenceObj.SaveData(ref nowPlayer);
+        }
+        // Json 데이터로 저장
+        Save(nowPlayer.ToPlayerData());
+    }  
     public void Save(PlayerData data)
     {
         string fullPath = Path.Combine(path, fileName);
         try
         {
-            // Create the directory the file will be written to if it doesn't already exist
+            // 저장 경로 없으면 새로 만듦
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
-            // Serialize player information in JSON and save to a file
             string dataToStore = JsonUtility.ToJson(data, true);
+            // 데이터 암호화
             string encryptedData = Encrypt(dataToStore);
             using (StreamWriter writer = new StreamWriter(fullPath, false))
             {
-                writer.Write(dataToStore);
+                writer.Write(encryptedData);
             }
         }
         catch (Exception e)
@@ -150,27 +143,24 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    // Encrypts the given string using AES encryption
-    // and returns the result as a Base64-encoded string.
+    // AES
     private string Encrypt(string data)
     {
-        // Convert the input string to a byte array
+        // 데이터(문자열)를 Byte배열로 변환
         byte[] plainTextBytes = Encoding.UTF8.GetBytes(data);
 
-        // Create a new instance of the AES encryption algorithm
         using (Aes aes = Aes.Create())
         {
-            // Generate a key and initialization vector (IV)
-            // using a PBKDF2 key derivation function with the given key, salt, and iterations
+            // 키와 IV 생성
+            // PBKDF2 키 파생 함수 이용
             using (var pbkdf2 = new Rfc2898DeriveBytes(key, salt, Iterations))
             {
-                // Set the key and IV properties of the AES algorithm
+                // bit -> Byte
                 aes.Key = pbkdf2.GetBytes(aes.KeySize / 8);
                 aes.IV = pbkdf2.GetBytes(aes.BlockSize / 8);
             }
 
-            // Encrypt the input byte array using the AES algorithm
-            // and write the result to a memory stream
+            // 암호화
             using (MemoryStream ms = new MemoryStream())
             {
                 using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
@@ -179,34 +169,24 @@ public class DataManager : MonoBehaviour
                     cs.FlushFinalBlock();
                 }
 
-                // Convert the encrypted byte array to a Base64-encoded string and return it
+                // Byte배열을 다시 문자열로 변환
                 byte[] cipherTextBytes = ms.ToArray();
                 return Convert.ToBase64String(cipherTextBytes);
             }
         }
     }
-
-    // Decrypts the given Base64-encoded string using AES encryption
-    // and returns the result as a plain text string
     private string Decrypt(string encryptedData)
     {
-        // Convert the input string from Base64 to a byte array
         byte[] cipherTextBytes = Convert.FromBase64String(encryptedData);
 
-        // Create a new instance of the AES encryption algorithm
         using (Aes aes = Aes.Create())
         {
-            // Generate a key and initialization vector (IV)
-            // using a PBKDF2 key derivation function with the given key, salt, and iterations
             using (var pbkdf2 = new Rfc2898DeriveBytes(key, salt, Iterations))
             {
-                // Set the key and IV properties of the AES algorithm
                 aes.Key = pbkdf2.GetBytes(aes.KeySize / 8);
                 aes.IV = pbkdf2.GetBytes(aes.BlockSize / 8);
             }
 
-            // Decrypt the input byte array using the AES algorithm
-            // and write the result to a memory stream
             using (MemoryStream ms = new MemoryStream())
             {
                 using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write))
@@ -215,15 +195,12 @@ public class DataManager : MonoBehaviour
                     cs.FlushFinalBlock();
                 }
 
-                // Convert the decrypted byte array to a plain text string and return it
                 byte[] plainTextBytes = ms.ToArray();
                 return Encoding.UTF8.GetString(plainTextBytes, 0, plainTextBytes.Length);
             }
         }
     }
 
-
-    // Sava data file initialize
     public void ClearData()
     {
         nowPlayer.Init(4,4,4,4);

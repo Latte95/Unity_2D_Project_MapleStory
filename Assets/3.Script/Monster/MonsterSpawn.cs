@@ -68,9 +68,9 @@ public class MonsterSpawn : MonoBehaviour
 
     private void Start()
     {
-        if (CanvasTrans == null && GameObject.Find("Canvas"))
+        if (CanvasTrans == null && GameObject.FindGameObjectWithTag("UI"))
         {
-            CanvasTrans = GameObject.Find("Canvas").transform;
+            CanvasTrans = GameObject.FindGameObjectWithTag("UI").transform;
         }
         StartCoroutine(SpawnEnemy_co());
     }

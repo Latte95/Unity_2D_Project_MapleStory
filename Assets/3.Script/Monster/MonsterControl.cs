@@ -7,6 +7,7 @@ public class MonsterControl : CreatureControl
     [SerializeField]
     protected AudioClip[] sfxClips;
     AudioSource sfxPlayer;
+    private Transform fieldItemTrans;
 
     private MonsterStat Stat;
     private int dir = 0;
@@ -38,6 +39,8 @@ public class MonsterControl : CreatureControl
         // 사운드 세팅
         TryGetComponent(out sfxPlayer);
         sfxPlayer.playOnAwake = false;
+
+        fieldItemTrans = GameObject.FindGameObjectWithTag("FieldItems").transform;
 
         dieHp_wait = new WaitUntil(() => Stat.Hp <= 0);
     }
@@ -214,6 +217,7 @@ public class MonsterControl : CreatureControl
 
         // 포션 드랍
         GameObject itemInstance = Instantiate(itemPrefab);
+        itemInstance.transform.SetParent(fieldItemTrans, false);
         itemInstance.transform.position = transform.position + 0.2f * Vector3.left;
         int rand = Random.Range(0, itemProbability[0] + itemProbability[1]);
         if (rand < itemProbability[0])
@@ -232,6 +236,7 @@ public class MonsterControl : CreatureControl
             if (rand < itemProbability[2])
             {
                 GameObject etcInstance = Instantiate(itemPrefab);
+                etcInstance.transform.SetParent(fieldItemTrans, false);
                 etcInstance.transform.position = transform.position + 0.6f * Vector3.left;
                 etcInstance.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("ItemIcon/" + itemImage[2].ToString());
             }
@@ -240,6 +245,7 @@ public class MonsterControl : CreatureControl
 
         // 메소 드랍
         GameObject moneyInstance = Instantiate(itemPrefab);
+        moneyInstance.transform.SetParent(fieldItemTrans, false);
         moneyInstance.transform.position = transform.position + 0.2f * Vector3.right;
         moneyInstance.GetComponent<FieldItem>().money = Random.Range(minMoney, maxMoney + 1);
         int moneyIndex = moneyInstance.GetComponent<FieldItem>().money;

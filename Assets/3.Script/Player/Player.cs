@@ -177,7 +177,7 @@ public class Player : Stat
         while (true)
         {
             yield return leverUp_wait;
-            GameManager.Instance.soundManager.PlaySfx(Define.Sfx.LevelUp);
+            GameManager.SoundManager.PlaySfx(Define.Sfx.LevelUp);
             exp += -LevelUpExp;
             level++;
             //levelUpExp = 100 + (level * level + 10);

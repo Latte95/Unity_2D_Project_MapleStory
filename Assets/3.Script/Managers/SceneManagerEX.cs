@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,10 +11,8 @@ public class SceneManagerEX : MonoBehaviour
     public GameObject playerPrefab;
 
 
-    public static void LoadScene(Define.Scene type)
-    {
-        loadScene = System.Enum.GetName(typeof(Define.Scene), type);
-    }
-
-    
+    //public static void LoadScene(Define.Scene type)
+    //{
+    //    loadScene = System.Enum.GetName(typeof(Define.Scene), type);
+    //}    
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+// 툴팁 띄울 슬롯들이 가지고 있는 스크립트
 public class TooltipController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public ItemTooltip tooltip;
@@ -11,9 +12,10 @@ public class TooltipController : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void Start()
     {
-        tooltip = GameObject.Find("Canvas").transform.Find("Tooltip").GetComponent<ItemTooltip>();
+        tooltip = GameObject.FindGameObjectWithTag("UI").transform.Find("Tooltip").GetComponent<ItemTooltip>();
         TryGetComponent(out icon);
     }
+    // 창 사라지면 툴팁도 끔
     private void OnDisable()
     {
         if (tooltip != null)
@@ -24,6 +26,7 @@ public class TooltipController : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        // 아이콘 있을 경우만 툴팁 표시
         if(icon.sprite == null)
         {
             return;

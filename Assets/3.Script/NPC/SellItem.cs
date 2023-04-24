@@ -11,14 +11,16 @@ public class SellItem : MonoBehaviour
     private Transform SlotTrans;
     [SerializeField]
     private GameObject SlotPrefabs;
+    [SerializeField]
+    public ShopUI shopUi;
     private Player player;
 
     private int slotCnt = 10;
     private int itemCnt = 0;
 
-    public ShopUI shopUi;
     private void Awake()
     {
+        // 판매 아이템 슬롯 생성
         slot = new ShopSlot[slotCnt];
         for (int i = 0; i < slotCnt; i++)
         {
@@ -49,7 +51,6 @@ public class SellItem : MonoBehaviour
             GameManager.Instance.player.GetComponent<PlayerControl>().OnMoneyAdded += InitializeSlot;
         }
     }
-
     private void OnDisable()
     {
         if (player != null)
@@ -60,11 +61,13 @@ public class SellItem : MonoBehaviour
 
     public void InitializeSlot()
     {
+        // 선택 NPC에 맞게 판매 아이템 할당
         StartCoroutine(nameof(InitializeSlot_co));
     }
 
     private IEnumerator InitializeSlot_co()
     {
+        // 바로 실행하면 shoupUi 초기화가 안 돼있음
         yield return new WaitForSeconds(0.01f);
         itemCnt = shopUi.items.Count;
         for (int i = 0; i < itemCnt; i++)

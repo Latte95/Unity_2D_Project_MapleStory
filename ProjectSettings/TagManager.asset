@@ -11,6 +11,10 @@ TagManager:
   - Front
   - ItemRoot
   - Shop
+  - FieldItems
+  - UI
+  - NPC UI
+  - Shop UI
   layers:
   - Default
   - TransparentFX

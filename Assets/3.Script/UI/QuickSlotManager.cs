@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuickSlotManager : MonoBehaviour
+public class QuickSlotManager : MonoBehaviour, IDataPersistence
 {
     public enum quickSlot
     {
@@ -115,7 +115,6 @@ public class QuickSlotManager : MonoBehaviour
     {
         for (int i = 0; i < 8; i++)
         {
-            // 자식 오브젝트 Icon 검색
             Transform iconTransform = quickSlotReferences[i].transform.Find("Icon");
             Image iconImage = iconTransform.GetComponent<Image>();
 
@@ -143,10 +142,8 @@ public class QuickSlotManager : MonoBehaviour
     {
         for (int i = 0; i < (int)quickSlot.Cnt; i++)
         {
-            // 자식 오브젝트인 Icon을 찾습니다.
             Transform iconTransform = quickSlotReferences[i].transform.Find("Icon");
 
-            // Icon의 Image 컴포넌트를 가져옵니다.
             Image iconImage = iconTransform.GetComponent<Image>();
 
             if (iconImage.sprite != null)

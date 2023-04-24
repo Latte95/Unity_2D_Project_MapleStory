@@ -11,9 +11,9 @@ public class ShopUI : MonoBehaviour
 
     private void OnEnable()
     {
-        if (canvas == null && GameObject.Find("Canvas"))
+        if (canvas == null && GameObject.FindGameObjectWithTag("UI"))
         {
-            canvas = GameObject.Find("Canvas");
+            canvas = GameObject.FindGameObjectWithTag("UI");
         }
         if (canvas != null)
         {

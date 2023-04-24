@@ -18,6 +18,7 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
+        // 배경음 불러오기
         bgmClip = Resources.Load<AudioClip>("BGM/" + SceneManager.GetActiveScene().name);
         Init();
         PlayBgm();
@@ -25,20 +26,6 @@ public class SoundManager : MonoBehaviour
 
     void Init()
     {
-        //if (instance == null)
-        //{
-        //    // 사운드 매니저를 찾아서 없으면 오브젝트 생성하고 스크립트 붙이기
-        //    GameObject sm = GameObject.Find("SoundManager");
-        //    if (sm == null)
-        //    {
-        //        sm = new GameObject { name = "SoundManager" };
-        //        sm.AddComponent<SoundManager>();
-        //    }
-
-        //    //DontDestroyOnLoad(sm);
-        //    sm.TryGetComponent(out instance);
-        //}
-
         GameObject bgmObject = new GameObject("BgmPlayer");
         bgmObject.transform.parent =  transform;
         bgmPlayer = bgmObject.AddComponent<AudioSource>();
@@ -56,6 +43,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBgm()
     {
+        // 원래 재생중이던 것 멈추고 재생
         if (bgmPlayer.isPlaying)
         {
             bgmPlayer.Stop();
@@ -66,12 +54,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySfx<T>(T sfx) where T : Enum
     {
+        // 한번만 재생
         sfxPlayer.PlayOneShot(sfxClips[Convert.ToInt32(sfx)]);
-    }
-
-    public void Clear()
-    {
-        bgmPlayer.Stop();
-        sfxPlayer.Stop();
     }
 }

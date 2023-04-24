@@ -561,7 +561,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -5518,7 +5518,7 @@ GameObject:
   - component: {fileID: 781772451}
   m_Layer: 5
   m_Name: Shop
-  m_TagString: Untagged
+  m_TagString: Shop UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7459,7 +7459,7 @@ GameObject:
   - component: {fileID: 1334794177}
   m_Layer: 5
   m_Name: NPC canvas
-  m_TagString: Untagged
+  m_TagString: NPC UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7591,13 +7591,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c782cb95e503b5479d5bbaa964561f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageData: {fileID: 0}
   player: {fileID: 0}
   canvasPrefab: {fileID: 5894082575767310063, guid: 3b488d0ca190bd141a5f67cdc86594c7, type: 3}
   playerPrefab: {fileID: 792105714980504226, guid: 10f18c8094c8f024390311777a7d1398, type: 3}
   soundPrefab: {fileID: 6042216052380571450, guid: b20fb91e02099294bb4219507489bb9b, type: 3}
   nowPlayer: {fileID: 0}
-  soundManager: {fileID: 0}
 --- !u!114 &1345687390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14417,7 +14415,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

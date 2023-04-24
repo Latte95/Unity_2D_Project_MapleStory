@@ -18,9 +18,9 @@ public class InventorySlot : MonoBehaviour
 
     public void OnSlotClicked()
     {        
-        if (icon.sprite != null) // Check if there's an item in the slot
+        if (icon.sprite != null)
         {
-            cursorManager.SetCursorImage(icon.sprite); // Set the cursor image to the item's icon
+            cursorManager.SetCursorImage(icon.sprite);
         }
     }
 }

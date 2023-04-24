@@ -11,7 +11,7 @@ public class ShopItem : MonoBehaviour
 
     private void OnEnable()
     {
-        gold = GameObject.Find("NPC canvas").transform.Find("Shop").transform.Find("Gold").GetComponent<Text>();
+        gold = GameObject.FindGameObjectWithTag("NPC UI").transform.Find("Shop").transform.Find("Gold").GetComponent<Text>();
     }
 
     private void Start()

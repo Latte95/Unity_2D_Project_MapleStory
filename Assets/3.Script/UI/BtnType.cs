@@ -25,7 +25,7 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnBtnClick()
     {
-        GameManager.Instance.soundManager.PlaySfx(Define.Ui.Click);
+        GameManager.SoundManager.PlaySfx(Define.Ui.Click);
         switch (currentType)
         {
             case BTNType.Login:
@@ -83,7 +83,7 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        GameManager.Instance.soundManager.PlaySfx(Define.Ui.Over);
+        GameManager.SoundManager.PlaySfx(Define.Ui.Over);
     }
 
     public void OnPointerExit(PointerEventData eventData)

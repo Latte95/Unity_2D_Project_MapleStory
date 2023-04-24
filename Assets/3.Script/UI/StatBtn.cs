@@ -10,7 +10,7 @@ public class StatBtn : MonoBehaviour
         {
             return;
         }
-        GameManager.Instance.soundManager.PlaySfx(Define.Ui.Click);
+        GameManager.SoundManager.PlaySfx(Define.Ui.Click);
         string parentName = transform.parent.name;
         switch (parentName)
         {

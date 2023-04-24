@@ -8,25 +8,9 @@ using UnityEngine.UI;
 public class Inventory
 {
     public List<Item> items;
-    //public DataManager dataManager;
-    public DataManager dataManager
-    {
-        get
-        {
-            if (DataManager.instance != null)
-            {
-                return DataManager.instance;
-            }
-            else
-            {
-                Debug.LogError("DataManager instance not found.");
-                return null;
-            }
-        }
-    }
 
     public Item newItem;
-    public event Action<Item> OnItemAdded;
+    public event Action OnItemAdded;
     public event Action OnItemRemoved;
 
 
@@ -71,7 +55,7 @@ public class Inventory
         {
             return;
         }
-        OnItemAdded?.Invoke(newItem);
+        OnItemAdded?.Invoke();
         newItem = null;
     }
 
@@ -92,7 +76,6 @@ public class Inventory
                 if (items[itemIndex].quantity > 0)
                 {
                     items[itemIndex].quantity--;
-                    OnItemAdded?.Invoke(newItem);
                 }
                 // 수량이 0이 되면 완전히 제거
                 if (items[itemIndex].quantity <= 0)
@@ -129,10 +112,10 @@ public class Inventory
             if (items[itemIndex].quantity > 0)
             {
                 items[itemIndex].quantity -= cnt;
-                OnItemAdded?.Invoke(newItem);
+                OnItemAdded?.Invoke();
             }
             // 수량이 0이 되면 완전히 제거
-            if (items[itemIndex].quantity <= 0)
+            else
             {
                 items[itemIndex].quantity = 0;
                 items.RemoveAt(itemIndex);

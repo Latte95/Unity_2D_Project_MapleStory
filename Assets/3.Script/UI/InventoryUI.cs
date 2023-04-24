@@ -46,7 +46,7 @@ public class InventoryUI : MonoBehaviour
     {
         InitializeSlot();
         // 인벤토리 켜진 상태로 아이템 추가시 슬롯에 바로바로 채워짐
-        inventory.OnItemAdded += UpdateUI;
+        inventory.OnItemAdded += InitializeSlot;
         inventory.OnItemRemoved += InitializeSlot;
         // 메소 획득 갱신
         if (GameManager.Instance.player != null)
@@ -56,7 +56,7 @@ public class InventoryUI : MonoBehaviour
     }
     private void OnDisable()
     {
-        inventory.OnItemAdded -= UpdateUI;
+        inventory.OnItemAdded -= InitializeSlot;
         inventory.OnItemRemoved -= InitializeSlot;
         if (GameManager.Instance != null && GameManager.Instance.nowPlayer != null)
         {
@@ -70,7 +70,7 @@ public class InventoryUI : MonoBehaviour
         itemCnt = GameManager.Instance.nowPlayer.inventory.items.Count;
         // 인벤토리 정렬, 인벤토리 꺼진 상태로 추가된 아이템을 갱신하기 위함
         InitializeSlot();
-        inventory.OnItemAdded += UpdateUI;
+        inventory.OnItemAdded += InitializeSlot;
         inventory.OnItemRemoved += InitializeSlot;
     }
 
@@ -161,70 +161,5 @@ public class InventoryUI : MonoBehaviour
     {
         tab = (int)slotTab.Etc;
         InitializeSlot();
-    }
-    private void UpdateUI(Item newItem)
-    {
-        if (newItem == null || (int)newItem.itemType != tab)
-        {
-            return;
-        }
-        int itemIndex = Array.FindIndex(slot, s => s.icon.sprite == newItem.itemIcon);
-        if (newItem is EquipableItem)
-        {
-            itemIndex = -1;
-        }
-
-
-        if (itemIndex >= 0)
-        {
-            // 새 아이템 획득시 슬롯 재정렬
-            if (!slot[itemIndex].icon.sprite.name.Equals(newItem.itemIcon.name))
-            {
-                int length = slot.Length;
-                for (int i = 0; i < length; i++)
-                {
-                    if (slot[i].icon.sprite == null)
-                    {
-                        slot[i].icon.sprite = newItem.itemIcon;
-                        slot[i].icon.color = new Color(1, 1, 1, 1);
-                        slot[i].itemCount_Text.text = null;
-                        return;
-                    }
-                }
-                return;
-            }
-            // 이미 있는 아이템이면 갯수만 증가
-            slot[itemIndex].icon.sprite = newItem.itemIcon;
-            slot[itemIndex].icon.color = new Color(1, 1, 1, 1);
-            if (GameManager.Instance.nowPlayer.inventory.items[itemIndex].quantity > 1)
-            {
-                slot[itemIndex].itemCount_Text.text = "x" + GameManager.Instance.nowPlayer.inventory.items[itemIndex].quantity.ToString();
-            }
-            else if (GameManager.Instance.nowPlayer.inventory.items[itemIndex].quantity.Equals(1))
-            {
-                slot[itemIndex].itemCount_Text.text = null;
-            }
-            else
-            {
-                slot[itemIndex].icon.sprite = null;
-                slot[itemIndex].icon.color = new Color(1, 1, 1, 0);
-                slot[itemIndex].itemCount_Text.text = null;
-            }
-        }
-        // 장비아이템 
-        else
-        {
-            int length = slot.Length;
-            for (int i = 0; i < length; i++)
-            {
-                if (slot[i].icon.sprite == null)
-                {
-                    slot[i].icon.sprite = newItem.itemIcon;
-                    slot[i].icon.color = new Color(1, 1, 1, 1);
-                    slot[i].itemCount_Text.text = null;
-                    return;
-                }
-            }
-        }
     }
 }

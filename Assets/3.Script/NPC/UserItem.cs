@@ -44,7 +44,7 @@ public class UserItem : MonoBehaviour
             InitializeSlot();
         }
 
-        inventory.OnItemAdded += UpdateUI;
+        inventory.OnItemAdded += InitializeSlot;
         inventory.OnItemRemoved += InitializeSlot;
         // ¸Þ¼Ò È¹µæ °»½Å
         if (GameManager.Instance != null && GameManager.Instance.nowPlayer != null)
@@ -63,7 +63,7 @@ public class UserItem : MonoBehaviour
     }
     private void OnDisable()
     {
-        inventory.OnItemAdded -= UpdateUI;
+        inventory.OnItemAdded -= InitializeSlot;
         inventory.OnItemRemoved -= InitializeSlot;
         if (player != null)
         {
@@ -78,7 +78,7 @@ public class UserItem : MonoBehaviour
             inventory = player.inventory;
             InitializeSlot();
         }
-        inventory.OnItemAdded += UpdateUI;
+        inventory.OnItemAdded += InitializeSlot;
         inventory.OnItemRemoved += InitializeSlot;
     }
 
@@ -102,10 +102,5 @@ public class UserItem : MonoBehaviour
             slot[i].itemPrice.text = null;
             slot[i].itemQuantity.text = null;
         }
-    }
-
-    private void UpdateUI(Item newItem)
-    {
-        InitializeSlot();
     }
 }

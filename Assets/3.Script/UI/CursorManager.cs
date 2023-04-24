@@ -6,22 +6,17 @@ using UnityEngine.UI;
 public class CursorManager : MonoBehaviour
 {
     private RectTransform transform_cursor;
-    public Sprite defaultCursorImage; // 기본 커서 이미지
-    public Sprite clickedCursorImage;
     public Image cursorImage;
-
-    private WaitForSeconds waitShort_wait;
 
     private void Start()
     {
-        // 씬 전환시 널참조 방지. 발생 이유는 모르겠음...
+        // 게임 시작시 널참조 방지. 발생 이유는 모르겠음...
         if (GameManager.UI == null)
         {
             return;
         }
         Init_Cursor();
         transform_cursor.TryGetComponent(out cursorImage);
-        waitShort_wait = new WaitForSeconds(0.1f);
     }
 
     private void Update()
@@ -29,6 +24,7 @@ public class CursorManager : MonoBehaviour
         Update_MousePosition();
         if (Input.GetMouseButtonDown(0))
         {
+            // 마우스 커서 이미지가 아닐 때 클릭하면 다시 커서 이미지로 되돌림
             if (!cursorImage.sprite.name.Equals("Cursor_nomal"))
             {
                 SetCursorImage(Resources.Load<Sprite>("Cursor_nomal"));
@@ -36,6 +32,7 @@ public class CursorManager : MonoBehaviour
         }
     }
 
+    // 커서 이미지 설정
     public void Init_Cursor()
     {
         Cursor.visible = false;
@@ -43,7 +40,6 @@ public class CursorManager : MonoBehaviour
 
         if (cursorGameObject != null)
         {
-            // Assign the RectTransform component of the Cursor game object to transform_cursor
             transform_cursor = cursorGameObject.GetComponent<RectTransform>();
             transform_cursor.pivot = Vector2.up;
 
