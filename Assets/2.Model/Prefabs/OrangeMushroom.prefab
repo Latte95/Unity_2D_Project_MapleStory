@@ -245,6 +245,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 57f15f2719c20ee4499e778372f6cf71, type: 3}
   dir: 0
   isEndPlat: 0
+  onHP: 0
   itemPrefab: {fileID: 3237959173466570023, guid: 364028372d82cf8469239591a3d67d30, type: 3}
   itemImage: 80841e0083841e0001093d00
   itemProbability: 500000001400000050000000
@@ -361,10 +362,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   hp: 0
-  maxHp: 30
-  attack: 7
-  defense: 3
+  maxHp: 125
+  attack: 20
+  defense: 20
   speed: 1.5
   jumpForce: 23
-  exp: 50
+  exp: 85
   gold: 0

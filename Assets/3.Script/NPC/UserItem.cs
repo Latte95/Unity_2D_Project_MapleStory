@@ -46,7 +46,7 @@ public class UserItem : MonoBehaviour
         inventory.OnItemAdded += UpdateUI;
         inventory.OnItemRemoved += InitializeSlot;
         // ¸Þ¼Ò È¹µæ °»½Å
-        if (GameManager.Instance != null)
+        if (GameManager.Instance != null && GameManager.Instance.nowPlayer != null)
         {
             GameManager.Instance.player.GetComponent<PlayerControl>().OnMoneyAdded += InitializeSlot;
         }
@@ -112,14 +112,14 @@ public class UserItem : MonoBehaviour
             if (GameManager.Instance.nowPlayer.inventory.items[itemIndex].quantity > 1)
             {
                 slot[itemIndex].itemName.text = player.inventory.items[itemIndex]._itemName;
-                slot[itemIndex].itemPrice.text = (player.inventory.items[itemIndex]._price * 0.5f).ToString();
+                slot[itemIndex].itemPrice.text = ((int)(player.inventory.items[itemIndex]._price * 0.5f)).ToString();
             }
             else
             {
                 slot[itemIndex].icon.sprite = newItem.itemIcon;
                 slot[itemIndex].icon.color = new Color(1, 1, 1, 1);
                 slot[itemIndex].itemName.text = player.inventory.items[itemIndex]._itemName;
-                slot[itemIndex].itemPrice.text = (player.inventory.items[itemIndex]._price * 0.5f).ToString();
+                slot[itemIndex].itemPrice.text = ((int)(player.inventory.items[itemIndex]._price * 0.5f)).ToString();
             }
         }
     }

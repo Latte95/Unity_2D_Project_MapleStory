@@ -43,7 +43,7 @@ public class SellItem : MonoBehaviour
 
         InitializeSlot();
 
-        if (GameManager.Instance != null)
+        if (GameManager.Instance != null && GameManager.Instance.nowPlayer != null)
         {
             player = GameManager.Instance.nowPlayer;
             GameManager.Instance.player.GetComponent<PlayerControl>().OnMoneyAdded += InitializeSlot;

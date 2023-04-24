@@ -58,7 +58,10 @@ public class InventoryUI : MonoBehaviour
     {
         inventory.OnItemAdded -= UpdateUI;
         inventory.OnItemRemoved -= InitializeSlot;
-        GameManager.Instance.player.GetComponent<PlayerControl>().OnMoneyAdded -= InitializeSlot;
+        if (GameManager.Instance != null && GameManager.Instance.nowPlayer != null)
+        {
+            GameManager.Instance.player.GetComponent<PlayerControl>().OnMoneyAdded -= InitializeSlot;
+        }
     }
 
     private void Start()

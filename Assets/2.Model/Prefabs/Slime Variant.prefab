@@ -49,11 +49,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5180292556998340341, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
       propertyPath: hp
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5180292556998340341, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
       propertyPath: exp
-      value: 30
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5180292556998340341, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
       propertyPath: level
@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5180292556998340341, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
       propertyPath: maxHp
-      value: 8
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 5180292556998340341, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
       propertyPath: speed
@@ -69,11 +69,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5180292556998340341, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
       propertyPath: attack
-      value: 5
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5180292556998340341, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
       propertyPath: defense
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5180292556998340346, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
       propertyPath: m_Name

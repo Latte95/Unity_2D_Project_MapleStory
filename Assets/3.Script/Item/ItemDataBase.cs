@@ -19,6 +19,8 @@ public class ItemDataBase
         itemList.Add(new Item(04000001, "주황버섯의 갓", "주황버섯의 갓을 자른 것이다.", 0, 0, 0, 0, 0, 0, 0, 0, 300, Item.ItemType.Etc));
         itemList.Add(new Item(04000003, "나뭇가지", "나무의 가지를 꺾어온 것이다.", 0, 0, 0, 0, 0, 0, 0, 0, 100, Item.ItemType.Etc));
         itemList.Add(new Item(04000004, "물컹물컹한 액체", "점성이 높아 끈적끈적한 액체이다.", 0, 0, 0, 0, 0, 0, 0, 0, 150, Item.ItemType.Etc));
+        itemList.Add(new Item(04000011, "버섯의 포자", "버섯의 포자이다.", 0, 0, 0, 0, 0, 0, 0, 0, 100, Item.ItemType.Etc));
         itemList.Add(new Item(04000012, "초록버섯의 갓", "초록버섯의 갓을 자른 것이다.", 0, 0, 0, 0, 0, 0, 0, 0, 700, Item.ItemType.Etc));
+        itemList.Add(new Item(04000016, "빨간 달팽이의 껍질", "빨간 달팽이의 껍질을 벗긴 것이다.", 0, 0, 0, 0, 0, 0, 0, 0, 100, Item.ItemType.Etc));
     }
 }

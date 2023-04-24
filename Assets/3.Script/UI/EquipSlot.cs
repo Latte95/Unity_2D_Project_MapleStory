@@ -17,21 +17,35 @@ public class EquipSlot : MonoBehaviour
 
     public void OnSlotClicked()
     {
+        // 새 아이템 착용
         if (cursorManager.cursorImage.sprite.name[0].Equals('1'))
         {
             int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID == int.Parse(cursorManager.cursorImage.sprite.name));
             EquipableItem tmpItem = (EquipableItem)DataManager.instance.itemDataBase.itemList[itemIndex];
             if (gameObject.name.Equals(tmpItem.equipType.ToString()))
             {
+                // 착용한 장비 있으면 인벤토리로 옮기고 스탯 감소
                 if (icon.sprite != null)
                 {
                     GameManager.Instance.nowPlayer.inventory.GetItem(int.Parse(icon.sprite.name));
                     DifStat(int.Parse(icon.sprite.name));
                 }
+                // 새로운 장비 착용
                 icon.sprite = cursorManager.cursorImage.sprite;
                 icon.color = new Color(1, 1, 1, 1);
                 GameManager.Instance.nowPlayer.inventory.RemoveItem(tmpItem);
                 SumStat(tmpItem);
+            }
+        }
+        // 아이템 해제
+        else
+        {
+            if (icon.sprite != null)
+            {
+                GameManager.Instance.nowPlayer.inventory.GetItem(int.Parse(icon.sprite.name));
+                DifStat(int.Parse(icon.sprite.name));
+                icon.sprite = null;
+                icon.color = new Color(1, 1, 1, 0);
             }
         }
     }

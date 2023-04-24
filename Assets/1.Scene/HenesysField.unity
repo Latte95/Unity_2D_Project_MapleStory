@@ -641,8 +641,8 @@ MonoBehaviour:
   monsterHPPrefabs: {fileID: 6611831259473080356, guid: 4247b4aaac503bb4b9110e3c5caaa819, type: 3}
   CanvasTrans: {fileID: 0}
   enemyPrefabs:
-  - {fileID: 5180292556998340346, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
-  - {fileID: 2155090993528461052, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
+  - {fileID: 587223116872822504, guid: 960db3fefd26f154fa2c52e40d8e7f7f, type: 3}
+  - {fileID: 2543817526049088253, guid: c171205547f2ba3458c4e04de3413adc, type: 3}
   count: 0300000003000000
   totalCount: 0
   timeBetSpawnMin: 3
@@ -695,9 +695,9 @@ MonoBehaviour:
   monsterHPPrefabs: {fileID: 6611831259473080356, guid: 4247b4aaac503bb4b9110e3c5caaa819, type: 3}
   CanvasTrans: {fileID: 0}
   enemyPrefabs:
-  - {fileID: 5180292556998340346, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
+  - {fileID: 587223116872822504, guid: 960db3fefd26f154fa2c52e40d8e7f7f, type: 3}
   - {fileID: 2155090993528461052, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
-  count: 0200000003000000
+  count: 0300000002000000
   totalCount: 0
   timeBetSpawnMin: 3
   timeBetSpawnMax: 7
@@ -908,8 +908,8 @@ MonoBehaviour:
   CanvasTrans: {fileID: 0}
   enemyPrefabs:
   - {fileID: 5180292556998340346, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
-  - {fileID: 2155090993528461052, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
-  count: 0300000001000000
+  - {fileID: 2543817526049088253, guid: c171205547f2ba3458c4e04de3413adc, type: 3}
+  count: 0300000002000000
   totalCount: 0
   timeBetSpawnMin: 3
   timeBetSpawnMax: 7
@@ -972,7 +972,7 @@ MonoBehaviour:
   CanvasTrans: {fileID: 0}
   enemyPrefabs:
   - {fileID: 5180292556998340346, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
-  - {fileID: 2155090993528461052, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
+  - {fileID: 2543817526049088253, guid: c171205547f2ba3458c4e04de3413adc, type: 3}
   count: 0200000002000000
   totalCount: 0
   timeBetSpawnMin: 3
@@ -1087,9 +1087,9 @@ MonoBehaviour:
   monsterHPPrefabs: {fileID: 6611831259473080356, guid: 4247b4aaac503bb4b9110e3c5caaa819, type: 3}
   CanvasTrans: {fileID: 0}
   enemyPrefabs:
-  - {fileID: 5180292556998340346, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
+  - {fileID: 6968725428432288994, guid: 4f48b1dfe47e96146b96d42d97b335b0, type: 3}
   - {fileID: 2155090993528461052, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
-  count: 0200000000000000
+  count: 0200000002000000
   totalCount: 0
   timeBetSpawnMin: 3
   timeBetSpawnMax: 7
@@ -9529,9 +9529,9 @@ MonoBehaviour:
   monsterHPPrefabs: {fileID: 6611831259473080356, guid: 4247b4aaac503bb4b9110e3c5caaa819, type: 3}
   CanvasTrans: {fileID: 0}
   enemyPrefabs:
-  - {fileID: 5180292556998340346, guid: b4cf3d7b978bf054e918aa489eac82b9, type: 3}
-  - {fileID: 2155090993528461052, guid: 74e0c67853c7ed54a9f06816f4bdbb81, type: 3}
-  count: 0200000000000000
+  - {fileID: 587223116872822504, guid: 960db3fefd26f154fa2c52e40d8e7f7f, type: 3}
+  - {fileID: 2543817526049088253, guid: c171205547f2ba3458c4e04de3413adc, type: 3}
+  count: 0200000001000000
   totalCount: 0
   timeBetSpawnMin: 3
   timeBetSpawnMax: 7
