@@ -180,7 +180,6 @@ public class Player : Stat
             GameManager.SoundManager.PlaySfx(Define.Sfx.LevelUp);
             exp += -LevelUpExp;
             level++;
-            //levelUpExp = 100 + (level * level + 10);
             levelUpEffect.SetActive(true);
             StartCoroutine(nameof(EffectOff_co));
             abilityPoint += 4;

@@ -10,7 +10,9 @@ public class PlayerControl : CreatureControl
     private Player Stat;
     private GameObject DamagePrefab;
     private GameObject SkillHitPrefab;
-    Animator attackEffectAnimator;
+    [SerializeField]
+    private GameObject levelUpEffect;
+    private Animator attackEffectAnimator;
 
     public Define.MoveDirection currentMoveDirection = Define.MoveDirection.None;
 
@@ -533,18 +535,29 @@ public class PlayerControl : CreatureControl
         yield return offHit_wait;
         anim.SetBool("isNomal", true);
     }
+
+    public event System.Action OnDie;
     protected override IEnumerator OnDie_co()
     {
         while (true)
         {
             yield return dieHp_wait;
             yield return null;
+            OnDie?.Invoke();
+            levelUpEffect.SetActive(true);
+            levelUpEffect.GetComponent<Animator>().SetTrigger("isDie");
+            StartCoroutine(nameof(EffectOff_co));
             anim.SetTrigger("isDie");
             rigid.velocity = Vector2.zero;
             Stat.Exp -= (int)(Stat.LevelUpExp * 0.05);
             yield return recover_wait;
             Recovery();
         }
+    }
+    private IEnumerator EffectOff_co()
+    {
+        yield return new WaitForSeconds(1.8f);
+        levelUpEffect.SetActive(false);
     }
 
     private void Recovery()

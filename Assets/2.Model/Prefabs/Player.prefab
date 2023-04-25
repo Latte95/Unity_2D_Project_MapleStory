@@ -295,16 +295,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c111ca51629116b47ad4d01bca05d29f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {fileID: 792105714980504230}
   boxCastSize: {x: 0.3, y: 0.17}
-  isGrounded: 1
-  isImmobile: 0
-  lastGroundTag: Middle
-  FootTrans: {fileID: 792105714607200095}
+  myLayer: 0
   invincibleTime: 2
+  levelUpEffect: {fileID: 3408038907442813986}
   currentMoveDirection: 0
   atkPos: {fileID: 792105713265180806}
-  attackEffect: {fileID: 6811541131706756466}
 --- !u!114 &792105714980504230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,9 +336,7 @@ MonoBehaviour:
   playerPosition: {x: -3.36, y: 2.3804803, z: 0}
   mp: 100
   maxMp: 100
-  luck: 4
   exp: 0
-  levelUpExp: 111
   gold: 1000
   inventory:
     items: []
@@ -362,6 +356,8 @@ MonoBehaviour:
       _quantity: 0
       itemIcon: {fileID: 0}
       itemType: 0
+  quickSlot: 0000000000000000000000000000000000000000000000000000000000000000
+  equipSlot: 0000000000000000000000000000000000000000
   levelUpEffect: {fileID: 3408038907442813986}
 --- !u!1 &3347923328948441515
 GameObject:

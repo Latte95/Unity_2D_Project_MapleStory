@@ -7608,8 +7608,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e385965cf8e6b4b864e6e00345add3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCursorImage: {fileID: 21300000, guid: 26df7966b1e56ee43b499792d7b4144a, type: 3}
-  clickedCursorImage: {fileID: 21300000, guid: e478d922cedc0d94a996a66cc90d3888, type: 3}
   cursorImage: {fileID: 0}
 --- !u!1 &1345829462
 GameObject:
