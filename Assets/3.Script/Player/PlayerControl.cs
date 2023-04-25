@@ -83,6 +83,7 @@ public class PlayerControl : CreatureControl
         StartCoroutine(nameof(Magic_co));
     }
 
+    // 이동
     protected override void Move()
     {
         bool isIdleOrWalking = (anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") || anim.GetCurrentAnimatorStateInfo(0).IsName(walkAni) || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"));
@@ -148,7 +149,6 @@ public class PlayerControl : CreatureControl
             movement.MoveTo(new Vector2(rigid.velocity.x / Stat.Speed, 0));
         }
     }
-
     protected void GroundAct()
     {
         if (isGrounded)
@@ -174,6 +174,18 @@ public class PlayerControl : CreatureControl
                     StartCoroutine(nameof(DownJump_co));
                 }
             }
+        }
+    }
+    private void Prone()
+    {
+        // 숙이기 애니메이션
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            anim.SetBool("isDown", true);
+        }
+        if (!Input.GetKey(KeyCode.DownArrow) || !isGrounded)
+        {
+            anim.SetBool("isDown", false);
         }
     }
 
@@ -244,18 +256,6 @@ public class PlayerControl : CreatureControl
         }
     }
 
-    private void Prone()
-    {
-        // 숙이기 애니메이션
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            anim.SetBool("isDown", true);
-        }
-        if (!Input.GetKey(KeyCode.DownArrow) || !isGrounded)
-        {
-            anim.SetBool("isDown", false);
-        }
-    }
 
     private IEnumerator Attack_co()
     {
@@ -536,14 +536,13 @@ public class PlayerControl : CreatureControl
         anim.SetBool("isNomal", true);
     }
 
-    public event System.Action OnDie;
     protected override IEnumerator OnDie_co()
     {
         while (true)
         {
             yield return dieHp_wait;
+            // 피격 애니메이션에 의해 죽는 애니메이션 무시되는 것 방지
             yield return null;
-            OnDie?.Invoke();
             GameManager.SoundManager.PlaySfx(Define.Sfx.Dead);
             levelUpEffect.SetActive(true);
             levelUpEffect.GetComponent<Animator>().SetTrigger("isDie");

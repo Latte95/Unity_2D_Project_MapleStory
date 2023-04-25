@@ -284,8 +284,8 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: 7, y: -2}
-        - {x: 7, y: -40}
-        - {x: 40, y: -40}
+        - {x: 7, y: -11}
+        - {x: 40, y: -11}
         - {x: 40, y: -2}
       tessellationDetail: 0
       bones: []
@@ -309,8 +309,8 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -40, y: -2}
-        - {x: -40, y: -40}
-        - {x: 40, y: -40}
+        - {x: -40, y: -11}
+        - {x: 40, y: -11}
         - {x: 40, y: -2}
       tessellationDetail: 0
       bones: []
@@ -334,8 +334,8 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -3, y: -2}
-        - {x: -3, y: -40}
-        - {x: 40, y: -40}
+        - {x: -3, y: -11}
+        - {x: 40, y: -11}
         - {x: 40, y: -2}
       tessellationDetail: 0
       bones: []
@@ -359,8 +359,8 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -40, y: -2}
-        - {x: -40, y: -40}
-        - {x: 40, y: -40}
+        - {x: -40, y: -11}
+        - {x: 40, y: -11}
         - {x: 40, y: -2}
       tessellationDetail: 0
       bones: []
@@ -384,8 +384,8 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -40, y: -2}
-        - {x: -40, y: -40}
-        - {x: 40, y: -40}
+        - {x: -40, y: -11}
+        - {x: 40, y: -11}
         - {x: 40, y: -2}
       tessellationDetail: 0
       bones: []
@@ -409,8 +409,8 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -40, y: -2}
-        - {x: -40, y: -40}
-        - {x: 40, y: -40}
+        - {x: -40, y: -11}
+        - {x: 40, y: -11}
         - {x: 40, y: -2}
       tessellationDetail: 0
       bones: []
@@ -434,8 +434,8 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -40, y: -2}
-        - {x: -40, y: -40}
-        - {x: 40, y: -40}
+        - {x: -40, y: -11}
+        - {x: 40, y: -11}
         - {x: 40, y: -2}
       tessellationDetail: 0
       bones: []
@@ -459,8 +459,8 @@ TextureImporter:
       outline: []
       physicsShape:
       - - {x: -40, y: -2}
-        - {x: -40, y: -40}
-        - {x: -1, y: -40}
+        - {x: -40, y: -11}
+        - {x: -1, y: -11}
         - {x: -1, y: -2}
       tessellationDetail: 0
       bones: []
