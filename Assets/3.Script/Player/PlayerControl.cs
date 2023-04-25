@@ -14,6 +14,7 @@ public class PlayerControl : CreatureControl
     [SerializeField]
     private GameObject levelUpEffect;
     private Animator attackEffectAnimator;
+    private Animator levelEffectAnimator;
 
     public Define.MoveDirection currentMoveDirection = Define.MoveDirection.None;
 
@@ -39,6 +40,7 @@ public class PlayerControl : CreatureControl
         TryGetComponent(out audioJump);
         TryGetComponent(out Stat);
         attackEffectAnimator = transform.Find("AttackEffect").gameObject.GetComponent<Animator>();
+        levelEffectAnimator = levelUpEffect.GetComponent<Animator>();
         ignorePlatTime_wait = new WaitForSeconds(0.2f);
 
         dieHp_wait = new WaitUntil(() => Stat.Hp <= 0);
@@ -366,7 +368,7 @@ public class PlayerControl : CreatureControl
                 }
 
                 monster.OnDamaged(transform.position);
-                StartCoroutine(EffectOff_co(closestEnemyCollider));
+                StartCoroutine(SkillEffectOff_co(closestEnemyCollider));
 
                 int damageSum = 0;
                 for (int i = 0; i < 2; i++)
@@ -392,7 +394,7 @@ public class PlayerControl : CreatureControl
             }
         }
     }
-    private IEnumerator EffectOff_co(Collider2D closestEnemyCollider)
+    private IEnumerator SkillEffectOff_co(Collider2D closestEnemyCollider)
     {
         SkillHit.SetActive(true);
         SkillHit.transform.position = closestEnemyCollider.transform.position;
@@ -571,7 +573,8 @@ public class PlayerControl : CreatureControl
     }
     private IEnumerator EffectOff_co()
     {
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitUntil(() => levelEffectAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.99f);
+        yield return new WaitUntil(() => levelEffectAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.99f);
         levelUpEffect.SetActive(false);
     }
     private void Recovery()
