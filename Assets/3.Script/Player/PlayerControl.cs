@@ -10,6 +10,7 @@ public class PlayerControl : CreatureControl
     private Player Stat;
     private GameObject DamagePrefab;
     private GameObject SkillHitPrefab;
+    private GameObject SkillHit;
     [SerializeField]
     private GameObject levelUpEffect;
     private Animator attackEffectAnimator;
@@ -54,6 +55,8 @@ public class PlayerControl : CreatureControl
         StartCoroutine(nameof(OnDie_co));
         DamagePrefab = Resources.Load<GameObject>("Damage/" + "Damage");
         SkillHitPrefab = Resources.Load<GameObject>("Effect/" + "SkillEffect");
+        SkillHit = Instantiate(SkillHitPrefab);
+        SkillHit.SetActive(false);
 
         atkBoxSize = new Vector2(1, 1);
         magicBoxSize = new Vector2(4, 1);
@@ -119,8 +122,9 @@ public class PlayerControl : CreatureControl
         {
             if (Input.GetButtonDown("Jump"))
             {
-                rigid.velocity = dir;
-                rigid.AddForce(10 * Vector2.up, ForceMode2D.Impulse);
+                movement.MoveTo(dir);
+                rigid.velocity = Vector2.zero;
+                rigid.AddForce(10 * dir * Vector2.right + 10 * Vector2.up, ForceMode2D.Impulse);
                 RopeOff();
                 GameManager.SoundManager.PlaySfx(Define.Sfx.Jump);
             }
@@ -209,12 +213,12 @@ public class PlayerControl : CreatureControl
                 if (!raycastHit.collider.tag.Equals(lastGroundTag))
                 {
                     Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(raycastHit.collider.gameObject.tag), false);
-
+                    Physics2D.IgnoreLayerCollision(invincibleLayer, LayerMask.NameToLayer(raycastHit.collider.gameObject.tag), false);
                 }
                 lastGroundTag = raycastHit.collider.gameObject.tag;
                 if (rigid.velocity.y >= 0.01f)
                 {
-                    rigid.position += 0.4f * Vector2.up;
+                    rigid.position += 0.15f * Vector2.up;
                 }
             }
 
@@ -266,7 +270,7 @@ public class PlayerControl : CreatureControl
         bool isHit = anim.GetCurrentAnimatorStateInfo(0).IsName("Hit");
 
         // 공격 가능한 상태일 때만 공격 실행
-        if (isIdle || isWalk || isJump ||isDown ||isHit)
+        if (isIdle || isWalk || isJump || isDown || isHit)
         {
             GameManager.SoundManager.PlaySfx(Define.Sfx.AttackS);
 
@@ -362,10 +366,7 @@ public class PlayerControl : CreatureControl
                 }
 
                 monster.OnDamaged(transform.position);
-
-                GameObject SkillHit = Instantiate(SkillHitPrefab);
-                SkillHit.transform.position = closestEnemyCollider.transform.position;
-                SkillHit.GetComponent<Animator>().SetTrigger(Define.Skill.MagicClaw.ToString());
+                StartCoroutine(EffectOff_co(closestEnemyCollider));
 
                 int damageSum = 0;
                 for (int i = 0; i < 2; i++)
@@ -391,6 +392,17 @@ public class PlayerControl : CreatureControl
             }
         }
     }
+    private IEnumerator EffectOff_co(Collider2D closestEnemyCollider)
+    {
+        SkillHit.SetActive(true);
+        SkillHit.transform.position = closestEnemyCollider.transform.position;
+        Animator skillani;
+        SkillHit.TryGetComponent(out skillani);
+        skillani.SetTrigger(Define.Skill.MagicClaw.ToString());
+        yield return new WaitUntil(() => skillani.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.99f &&
+                                              skillani.GetCurrentAnimatorStateInfo(0).IsName("MagicClawHit"));
+        SkillHit.SetActive(false);
+    }
     private IEnumerator DamageEffect_co(int damage, Vector3 position)
     {
         // 데미지 화면에 띄우기
@@ -415,15 +427,20 @@ public class PlayerControl : CreatureControl
         }
         Destroy(Damage);
     }
+
     private IEnumerator DownJump_co()
     {
         // 일정 시간동안 충돌 무시함
         // 가장 밑 바닥일 경우 Platform Effector의 UseCollider Mask 체크하여 아래점프 방지
         Physics2D.IgnoreLayerCollision(myLayer, groundLayer, true);
+        Physics2D.IgnoreLayerCollision(invincibleLayer, groundLayer, true);
         Physics2D.IgnoreLayerCollision(myLayer, LayerMask.NameToLayer(lastGroundTag), true);
+        Physics2D.IgnoreLayerCollision(invincibleLayer, LayerMask.NameToLayer(lastGroundTag), true);
         yield return ignorePlatTime_wait;
         Physics2D.IgnoreLayerCollision(myLayer, groundLayer, false);
+        Physics2D.IgnoreLayerCollision(invincibleLayer, groundLayer, false);
     }
+
     private IEnumerator RootItem_co()
     {
         while (true)
@@ -448,8 +465,6 @@ public class PlayerControl : CreatureControl
             }
         }
     }
-
-
     public event Action OnMoneyAdded;
     private IEnumerator MoveItem_co(Collider2D col)
     {
@@ -475,6 +490,7 @@ public class PlayerControl : CreatureControl
         }
         Destroy(col.gameObject);
     }
+
     private IEnumerator InputUpOrDownArrow_co()
     {
         while (true)
@@ -535,7 +551,6 @@ public class PlayerControl : CreatureControl
         yield return offHit_wait;
         anim.SetBool("isNomal", true);
     }
-
     protected override IEnumerator OnDie_co()
     {
         while (true)
@@ -559,7 +574,6 @@ public class PlayerControl : CreatureControl
         yield return new WaitForSeconds(1.8f);
         levelUpEffect.SetActive(false);
     }
-
     private void Recovery()
     {
         anim.Play("Idle");

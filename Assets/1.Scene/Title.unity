@@ -855,6 +855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentType: 7
+  sound: {fileID: 0}
   cameraPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &498496298
 GameObject:
@@ -1402,6 +1403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentType: 0
+  sound: {fileID: 0}
   cameraPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &865585377
 MonoBehaviour:
@@ -2119,6 +2121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentType: 6
+  sound: {fileID: 0}
   cameraPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1198496792
 MonoBehaviour:
@@ -2286,6 +2289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentType: 5
+  sound: {fileID: 0}
   cameraPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1231217861
 MonoBehaviour:
@@ -2852,6 +2856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentType: 1
+  sound: {fileID: 0}
   cameraPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1578929019
 GameObject:
@@ -3023,6 +3028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentType: 2
+  sound: {fileID: 0}
   cameraPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1596492964
 GameObject:
@@ -3239,6 +3245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentType: 8
+  sound: {fileID: 0}
   cameraPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1639780447
 GameObject:
@@ -3597,6 +3604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentType: 8
+  sound: {fileID: 0}
   cameraPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1884045895
 MonoBehaviour:

@@ -51,12 +51,14 @@ public class Movement : MonoBehaviour
             }
         }
 
+        // 이동 범위 제한
         if (stageData != null)
         {
             rigid.position = new Vector3(
                 Mathf.Clamp(transform.position.x, stageData.LimitMin.x, stageData.LimitMax.x),
                 rigid.position.y,
                 0f);
+            // 바닥 뚫고 떨어지면 위치 재설정
             if (rigid.position.y < stageData.LimitMin.y)
             {
                 rigid.position = Vector2.zero;
@@ -64,13 +66,11 @@ public class Movement : MonoBehaviour
         }
     }
 
-
     public void MoveTo(Vector2 h)
     {
         moveDirection = h;
         anim.SetInteger("h", (int)h.x);
     }
-
     public void JumpTo()
     {
         rigid.velocity = Vector3.zero;

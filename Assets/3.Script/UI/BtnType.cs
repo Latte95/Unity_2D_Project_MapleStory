@@ -12,20 +12,21 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public BTNType currentType;
     private Animator anim;
     [SerializeField]
-    private Vector3 cameraPosition;
+    SoundManager sound;
     [SerializeField]
-    //private GameObject UI;
+    private Vector3 cameraPosition;
 
     private void Awake()
     {
         TryGetComponent(out anim);
         TryGetComponent(out button);
         cameraPosition = Camera.main.transform.position;
+        sound = GameObject.Find("SoundManager").GetComponent<SoundManager>();
     }
 
     public void OnBtnClick()
     {
-        GameManager.SoundManager.PlaySfx(Define.Ui.Click);
+        sound.PlaySfx(Define.Ui.Click);
         switch (currentType)
         {
             case BTNType.Login:
@@ -83,7 +84,7 @@ public class BtnType : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        GameManager.SoundManager.PlaySfx(Define.Ui.Over);
+        sound.PlaySfx(Define.Ui.Over);
     }
 
     public void OnPointerExit(PointerEventData eventData)

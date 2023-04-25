@@ -89,13 +89,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
             soundManager.PlaySfx(Define.Sfx.Transform);
             player.transform.position += player.transform.localScale.x * 3 * Vector3.left;
         }
-        // 원활한 테스트 위한 장비 획득
-        if (Input.GetKeyDown(KeyCode.F6))
-        {
-            nowPlayer.inventory.GetItem("검");
-            nowPlayer.inventory.GetItem(01040002, 2);
-            nowPlayer.inventory.GetItem(1060002);
-        }
     }
 
     // 플레이어 위치 저장 및 로드
@@ -148,6 +141,7 @@ public class GameManager : MonoBehaviour, IDataPersistence
         }
         // 플레이어 데이터 저장
         DataManager.instance.SaveGame();
+
 
         // 씬 로드가 완료되면 실행
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -237,6 +231,10 @@ public class GameManager : MonoBehaviour, IDataPersistence
             // Portal 감지하면 씬로드
             if (col != null)
             {
+                FindObjectOfType<QuickSlotManager>().SaveData(ref nowPlayer);
+                _ui.EquipUI.SetActive(true);
+                FindObjectOfType<EquipUI>().SaveData(ref nowPlayer);
+                _ui.EquipUI.SetActive(_ui.activeEquip);
                 soundManager.PlaySfx(Define.Sfx.Portal);
                 col.TryGetComponent(out portal);
                 FadeOutAndLoadScene(portal.scene);

@@ -10,6 +10,14 @@ public class MonsterHPPositionSetter : MonoBehaviour
 
     private Vector3 distance = 70 * Vector3.up;
 
+    private void OnEnable()
+    {
+        foreach (Transform child in transform)
+        {
+            child.gameObject.SetActive(false);
+        }
+    }
+
     public void SetUp(GameObject target)
     {
         this.Target = target;

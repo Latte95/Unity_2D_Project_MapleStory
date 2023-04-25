@@ -28,6 +28,10 @@ public class ShopItem : MonoBehaviour
         {
             int.TryParse(GetComponent<Image>().sprite.name, out itemID);
         }
+        else
+        {
+            return;
+        }
         int itemIndex = DataManager.instance.itemDataBase.itemList.FindIndex(item => item._itemID.Equals(itemID));
         Item tmpItem = DataManager.instance.itemDataBase.itemList[itemIndex];
 
@@ -40,7 +44,15 @@ public class ShopItem : MonoBehaviour
     }
     public void SellClick()
     {
-        int itemIndex = player.inventory.items.FindIndex(item => item._itemID.Equals(int.Parse(GetComponent<Image>().sprite.name)));
+        if (GetComponent<Image>().sprite != null)
+        {
+            int.TryParse(GetComponent<Image>().sprite.name, out itemID);
+        }
+        else
+        {
+            return;
+        }
+        int itemIndex = player.inventory.items.FindIndex(item => item._itemID.Equals(itemID));
         Item tmpItem = player.inventory.items[itemIndex];
 
         player.Gold += (int)(tmpItem._price * 0.5f);

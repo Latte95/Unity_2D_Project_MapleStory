@@ -50,6 +50,7 @@ public class MonsterControl : CreatureControl
     {
         base.OnEnable();
 
+        onHP = false;
         // 리스폰 될 때 Hp 초기화
         Stat.Init();
 

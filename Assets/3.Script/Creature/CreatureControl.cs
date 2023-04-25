@@ -93,9 +93,10 @@ public abstract class CreatureControl : MonoBehaviour
         }
 
         // 벽통과 여부 결정
-        StartCoroutine(nameof(CheckWall_co));
+        CheckWall();
         Move();
     }
+
 
     // 피격당함
     public virtual void OnDamaged(Vector2 targetPos)
@@ -113,6 +114,29 @@ public abstract class CreatureControl : MonoBehaviour
         StartCoroutine(nameof(OffDamaged_co));
     }
 
+    private void CheckWall()
+    {
+        int dir = 0;
+        // 바로 앞 충돌체 감지하는 레이캐스트
+        if(transform.localScale.x<0)
+        {
+            dir = 1;
+        }
+        else
+        {
+            dir = -1;
+        }
+        RaycastHit2D raycastHit = Physics2D.BoxCast(transform.position + 0.5f * (-transform.localScale.x * 0.6f) * Vector3.right, new Vector2(0.3f, 1f), 0f,
+                                                    dir * Vector2.right, boxCastMaxDistance, LayerMask.GetMask(wallLayer));
+
+        // 태그 다르면 벽 통과 o 
+        if (raycastHit.collider != null && !raycastHit.collider.CompareTag(lastGroundTag))
+        {
+            Physics2D.IgnoreLayerCollision(myLayer, raycastHit.collider.gameObject.layer, true);
+            Physics2D.IgnoreLayerCollision(invincibleLayer, raycastHit.collider.gameObject.layer, true);
+        }
+    }
+
     // 자신이 밟고있는 땅과 다른 계층의 벽은 통과
     IEnumerator CheckWall_co()
     {
@@ -125,6 +149,7 @@ public abstract class CreatureControl : MonoBehaviour
         if (raycastHit.collider != null && !raycastHit.collider.CompareTag(lastGroundTag))
         {
             Physics2D.IgnoreLayerCollision(myLayer, raycastHit.collider.gameObject.layer, true);
+            Physics2D.IgnoreLayerCollision(invincibleLayer, raycastHit.collider.gameObject.layer, true);
         }
 
         yield return null;
