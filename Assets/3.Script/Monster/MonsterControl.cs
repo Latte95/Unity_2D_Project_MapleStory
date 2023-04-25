@@ -186,14 +186,16 @@ public class MonsterControl : CreatureControl
                 if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Die"))
                 {
                     collision.gameObject.TryGetComponent(out PlayerControl playerCon);
-                    playerCon.OnDamaged(transform.position);
-                    int damage = Stat.Atk - player.Def;
-                    if (damage < 1)
+                    if (!playerCon.isImmobile)
                     {
-                        damage = 1;
+                        playerCon.OnDamaged(transform.position);
+                        int damage = Stat.Atk - player.Def;
+                        if (damage < 1)
+                        {
+                            damage = 1;
+                        }
+                        player.Hp -= damage;
                     }
-                    player.Hp -= damage;
-
                 }
             }
         }

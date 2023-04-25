@@ -31,7 +31,7 @@ public abstract class CreatureControl : MonoBehaviour
 
 
     // 피격시 일정 시간동안 이동 불가, 다단히트 방지도 겸함
-    protected bool isImmobile = false;
+    public bool isImmobile = false;
 
     #region 캐싱
     float deltaTime;
