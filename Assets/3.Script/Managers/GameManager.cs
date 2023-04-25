@@ -64,7 +64,6 @@ public class GameManager : MonoBehaviour, IDataPersistence
         FadeOutAndLoadScene(nowPlayer.Scene);
         StartCoroutine(nameof(InputUpArrow_co));
     }
-
     private void Update()
     {
         // 세이브
@@ -89,6 +88,14 @@ public class GameManager : MonoBehaviour, IDataPersistence
             soundManager.PlaySfx(Define.Sfx.Transform);
             player.transform.position += player.transform.localScale.x * 3 * Vector3.left;
         }
+    }
+    private void OnApplicationQuit()
+    {
+        FindObjectOfType<QuickSlotManager>().SaveData(ref nowPlayer);
+        _ui.EquipUI.SetActive(true);
+        FindObjectOfType<EquipUI>().SaveData(ref nowPlayer);
+        _ui.EquipUI.SetActive(_ui.activeEquip);
+        DataManager.instance.SaveGame();
     }
 
     // 플레이어 위치 저장 및 로드
