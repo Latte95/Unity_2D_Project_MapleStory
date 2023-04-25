@@ -544,6 +544,7 @@ public class PlayerControl : CreatureControl
             yield return dieHp_wait;
             yield return null;
             OnDie?.Invoke();
+            GameManager.SoundManager.PlaySfx(Define.Sfx.Dead);
             levelUpEffect.SetActive(true);
             levelUpEffect.GetComponent<Animator>().SetTrigger("isDie");
             StartCoroutine(nameof(EffectOff_co));
