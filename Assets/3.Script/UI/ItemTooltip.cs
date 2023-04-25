@@ -19,7 +19,7 @@ public class ItemTooltip : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Input.mousePosition + 160*Vector3.down + 130*Vector3.right;
+        transform.position = Input.mousePosition + 80*Vector3.down + 65*Vector3.right;
     }
 
     public void SetUpTootip(int itemID)
