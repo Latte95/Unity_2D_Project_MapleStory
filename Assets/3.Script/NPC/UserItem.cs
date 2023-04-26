@@ -91,7 +91,7 @@ public class UserItem : MonoBehaviour
             slot[i].icon.sprite = player.inventory.items[i].itemIcon;
             slot[i].icon.color = new Color(1, 1, 1, 1);
             slot[i].itemName.text = player.inventory.items[i]._itemName;
-            slot[i].itemPrice.text = (player.inventory.items[i]._price*0.5f).ToString();
+            slot[i].itemPrice.text = ((int)(player.inventory.items[i]._price * 0.5f)).ToString();
             slot[i].itemQuantity.text = "x" + player.inventory.items[i].quantity.ToString();
         }
         for (int i = itemCnt; i < slotCnt; i++)

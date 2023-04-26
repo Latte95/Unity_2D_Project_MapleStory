@@ -12,6 +12,8 @@ public class ItemTooltip : MonoBehaviour
     public Text Description_Text;
     public CursorManager cursorManager;
 
+    
+
     private void Start()
     {
         cursorManager = FindObjectOfType<CursorManager>();

@@ -18,9 +18,9 @@ public class ShopClick : MonoBehaviour
 
     private void Start()
     {
-        if (transform.parent.Find("Shop"))
+        if (GameObject.FindGameObjectWithTag("NPC UI").transform.Find("Shop"))
         {
-            shop = transform.parent.Find("Shop");
+            shop = GameObject.FindGameObjectWithTag("NPC UI").transform.Find("Shop");
             shop.gameObject.SetActive(false);
         }
     }
