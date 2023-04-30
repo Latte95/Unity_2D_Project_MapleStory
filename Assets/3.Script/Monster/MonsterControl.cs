@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MonsterControl : CreatureControl
 {
@@ -10,6 +11,7 @@ public class MonsterControl : CreatureControl
     private Transform fieldItemTrans;
 
     private MonsterStat Stat;
+    private GameObject DamagePrefab;
     private int dir = 0;
 
     private bool isEndPlat = false;
@@ -58,7 +60,7 @@ public class MonsterControl : CreatureControl
 
         // 이동
         StartCoroutine(nameof(Direct_co));
-        StartCoroutine(nameof(Jump_co));
+        StartCoroutine(nameof(Jump_co)); DamagePrefab = Resources.Load<GameObject>("Damage/" + "Damage");
 
         // 사망 판단
         StartCoroutine(nameof(OnDie_co));
@@ -195,6 +197,8 @@ public class MonsterControl : CreatureControl
                             damage = 1;
                         }
                         player.Hp -= damage;
+                        Vector3 position = collision.transform.position;
+                        StartCoroutine(DamageEffect_co(damage, position));
                     }
                 }
             }
@@ -296,6 +300,30 @@ public class MonsterControl : CreatureControl
                 movement.JumpTo();
             }
         }
+    }
+    private IEnumerator DamageEffect_co(int damage, Vector3 position)
+    {
+        // 데미지 화면에 띄우기
+        GameObject Damage = Instantiate(DamagePrefab);
+        Damage.transform.SetParent(FindObjectOfType<Canvas>().transform, false);
+        Text damageText = Damage.GetComponent<Text>();
+
+        // 수치 설정
+        damageText.text = damage.ToString();
+        // 위치 설정
+        Vector3 screenPoint = Camera.main.WorldToScreenPoint(position + Vector3.up);
+        Damage.transform.position = screenPoint;
+
+        // 데미지 사라짐
+        for (float alpha = 1f; alpha >= 0f; alpha -= 1.5f * Time.deltaTime)
+        {
+            Color newColor = damageText.color;
+            newColor.a = alpha;
+            damageText.color = newColor;
+            yield return null;
+            Damage.transform.position += 0.5f * Vector3.up;
+        }
+        Destroy(Damage);
     }
 
     protected override void OnDrawGizmos()
